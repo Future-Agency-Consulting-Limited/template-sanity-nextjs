@@ -1,0 +1,10 @@
+# IDE Configuration
+.idea
+
+# dotenv files
+.env
+.env*
+!.env.*.example
+
+# dependencies
+node_modules

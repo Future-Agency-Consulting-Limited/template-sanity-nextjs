@@ -1,0 +1,23 @@
+{
+  "name": "insert-project-name",
+  "private": true,
+  "version": "1.0.0",
+  "description": "INSERT PROJECT DESCRIPTION",
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "build": "pnpm run --parallel build",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "pnpm run --dir apps/studio lint && pnpm run --dir apps/website lint",
+    "lint:fix": "pnpm run --dir apps/studio lint:fix && pnpm run --dir apps/website lint:fix",
+    "deploy": "pnpm run --dir apps/studio deploy && pnpm run --dir apps/website build",
+    "prepare": "git config core.hooksPath .githooks"
+  },
+  "engines": {
+    "node": ">=22.22.0",
+    "pnpm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.0"
+  }
+}

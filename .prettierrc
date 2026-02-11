@@ -1,0 +1,11 @@
+# Prettier configuration
+#
+# uses YAML for prettier configuration
+# see https://prettier.io/docs/en/configuration.html
+
+printWidth: 80 # lines are preferably this long (note this is not max width)
+proseWrap: preserve # don't change line length for markdown
+semi: true
+singleQuote: false
+trailingComma: all
+bracketSpacing: true

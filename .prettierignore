@@ -1,0 +1,17 @@
+# Build artifacts and temp files
+apps/studio/.sanity
+apps/studio/dist
+apps/website/.next
+
+# Dependencies
+node_modules
+
+# Logs
+*.log
+
+# Environment variable files
+.env*
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json

@@ -1,0 +1,43 @@
+{
+  "name": "studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/cli": "^5.5.0",
+    "@sanity/icons": "^3.7.4",
+    "@sanity/vision": "^5.7.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^5.7.0",
+    "sanity-plugin-media": "^4.1.1",
+    "styled-components": "^6.3.8"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^5.0.2",
+    "@types/react": "^19.2.9",
+    "@typescript-eslint/eslint-plugin": "^8.53.1",
+    "@typescript-eslint/parser": "^8.53.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.8.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1"
+  }
+}

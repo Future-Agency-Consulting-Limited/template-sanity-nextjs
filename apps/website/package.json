@@ -1,0 +1,39 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy || (ls -la /opt/buildhome/.config/.wrangler/logs && cat /opt/buildhome/.config/.wrangler/logs/wrangler-*.log)",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+  },
+  "dependencies": {
+    "@next/env": "^16.1.4",
+    "@opennextjs/cloudflare": "^1.14.10",
+    "@sanity/image-url": "^2.0.3",
+    "next": "16.1.4",
+    "next-sanity": "^12.0.14",
+    "react": "~19.2.3",
+    "react-dom": "~19.2.3",
+    "react-fast-marquee": "^1.6.5",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@portabletext/types": "^4.0.1",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^20.19.30",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "19.2.3",
+    "baseline-browser-mapping": "^2.9.16",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "16.0.5",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.59.3"
+  }
+}
