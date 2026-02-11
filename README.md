@@ -4,7 +4,7 @@
 
 Website & CMS Backend built using [Next.js](https://nextjs.org) & [Sanity](https://sanity.io).
 
-## Tech stack
+## Tech Stack
 
 ### Backend
 
@@ -17,7 +17,7 @@ Website & CMS Backend built using [Next.js](https://nextjs.org) & [Sanity](https
 - [Tailwind CSS](https://tailwindcss.com) – Utility-first CSS framework
 -
 
-### Programming languages
+### Programming Languages
 
 - [TypeScript](https://www.typescriptlang.org) – Superset of JavaScript that adds static typing
 
@@ -40,7 +40,7 @@ Please make sure you have the following installed before local setup
   curl -fsSL https://get.pnpm.io/install.sh | sh -
   ```
 
-## Setup
+## Local Development Setup
 
 1. Copy .env files and fill in the required values
 
@@ -70,11 +70,12 @@ Please make sure you have the following installed before local setup
 - Website at [http://localhost:3000](http://localhost:3000)
 - Sanity Studio at [http://localhost:3333](http://localhost:3333)
 
-## Useful commands / basic usage
+## Useful Commands
 
-#TODO
+- Fix formatting issues: `pnpm run format`
+- Fix linting issues: `pnpm run lint:fix`
 
-## Development workflow
+## Development Workflow
 
 #TODO
 
@@ -82,7 +83,7 @@ Please make sure you have the following installed before local setup
 
 #TODO
 
-## Resources / further reading
+## Resources & Further Reading
 
 - [Sanity docs](https://www.sanity.io/docs)
 - [Next.js docs](https://nextjs.org/docs)
