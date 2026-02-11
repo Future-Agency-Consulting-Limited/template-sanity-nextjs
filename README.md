@@ -83,6 +83,13 @@ Please make sure you have the following installed before local setup
 
 #TODO
 
+## Initial Project Setup
+
+If you're creating a new git repository from a project template, you'll need to
+do some additional setup for Sanity and AWS Amplify. (creating accounts, etc.)
+
+Refer to the [New project setup instructions](docs/new_project_setup.md)
+
 ## Resources & Further Reading
 
 - [Sanity docs](https://www.sanity.io/docs)
