@@ -5,7 +5,7 @@ export const structure: StructureResolver = (S) =>
     .title("Content")
     .items([
       // content
-      S.documentTypeListItem("page").title("Pages"),
+      //S.documentTypeListItem("page").title("Pages"),
       S.listItem().title("Reusable Sections").child(
         S.list().title("Reusable Sections"),
         /* add document schemas used by components here, eg CTAs:
@@ -17,7 +17,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       // configuration options
-      S.documentTypeListItem("siteSettings").title("Site Settings"),
+      //S.documentTypeListItem("siteSettings").title("Site Settings"),
       S.divider(),
 
       // all other documents (filtering out documents added above)
