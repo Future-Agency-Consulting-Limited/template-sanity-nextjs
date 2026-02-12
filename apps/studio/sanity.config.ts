@@ -1,11 +1,10 @@
+import { schemaTypes } from "@/schemaTypes";
+import { structure } from "@/structure";
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
 import { media } from "sanity-plugin-media";
 import { presentationTool } from "sanity/presentation";
-
-import { schemaTypes } from "./schemaTypes";
-import { structure } from "./structure";
+import { structureTool } from "sanity/structure";
 
 export default defineConfig({
   name: "amberwolf",
