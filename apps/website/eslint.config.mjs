@@ -5,13 +5,11 @@ import { defineConfig, globalIgnores } from "eslint/config";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-
   {
     rules: {
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
