@@ -7,15 +7,14 @@ import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 
 export default defineConfig({
-  name: "amberwolf",
-  title: "Amberwolf",
+  name: "insert-project-name",
+  title: "INSERT PROJECT NAME",
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
   dataset: process.env.SANITY_STUDIO_DATASET ?? "",
 
   plugins: [
     structureTool({ structure }),
-    media(),
     presentationTool({
       previewUrl: {
         previewMode: {
@@ -24,6 +23,7 @@ export default defineConfig({
         origin: process.env.SANITY_STUDIO_FRONTEND_SITE_URL,
       },
     }),
+    media(),
     visionTool(),
   ],
 
