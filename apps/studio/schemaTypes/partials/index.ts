@@ -5,4 +5,4 @@
  * Sanity studio.
  */
 
-export const partials = [];
+export const partialSchemaTypes = [];

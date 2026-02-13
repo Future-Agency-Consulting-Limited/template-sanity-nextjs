@@ -5,6 +5,7 @@ import { defineConfig } from "sanity";
 import { media } from "sanity-plugin-media";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
+import { singletonTools } from "sanity-plugin-singleton-management";
 
 export default defineConfig({
   name: "insert-project-name",
@@ -25,6 +26,7 @@ export default defineConfig({
     }),
     media(),
     visionTool(),
+    singletonTools(),
   ],
 
   schema: {

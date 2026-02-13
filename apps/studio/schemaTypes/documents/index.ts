@@ -4,5 +4,6 @@
  * Use this file to export all document schema types so they're available in
  * Sanity studio.
  */
+import { siteSettings } from "@/schemaTypes/documents/siteSettings";
 
-export const documents = [];
+export const documentSchemaTypes = [siteSettings];
