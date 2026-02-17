@@ -1,4 +1,4 @@
-import { defineType } from "sanity";
+import { defineType, defineField } from "sanity";
 import { CogIcon } from "@sanity/icons";
 
 // // Define the actions that should be available for singleton documents
@@ -7,7 +7,7 @@ import { CogIcon } from "@sanity/icons";
 // // Define the singleton document types
 // const singletonTypes = new Set(["siteSettings"]);
 
-export const siteSettings = defineType({
+export const siteSettingsType = defineType({
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
@@ -19,10 +19,22 @@ export const siteSettings = defineType({
   fieldsets: [],
 
   fields: [
-    {
+    defineField({
       name: "title",
       title: "Title",
       type: "string",
-    },
+    }),
+    defineField({
+      name: "homePage",
+      type: "reference",
+      to: [{ type: "page" }],
+    }),
   ],
+  preview: {
+    prepare() {
+      return {
+        title: "Site Settings",
+      };
+    },
+  },
 });

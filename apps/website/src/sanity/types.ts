@@ -13,6 +13,59 @@
  */
 
 // Source: schema.json
+export type PageBuilder = Array<
+  {
+    _key: string;
+  } & ExampleSection
+>;
+
+export type Copy = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ExampleSection = {
+  _type: "exampleSection";
+  orientation?: "imageLeft" | "imageRight";
+  title?: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  copy?: Copy;
+};
+
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -20,6 +73,47 @@ export type SiteSettings = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  homePage?: PageReference;
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  content?: PageBuilder;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type MediaTag = {
@@ -29,12 +123,6 @@ export type MediaTag = {
   _updatedAt: string;
   _rev: string;
   name?: Slug;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -73,22 +161,6 @@ export type SanityImageMetadata = {
   thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
 };
 
 export type SanityFileAsset = {
@@ -151,21 +223,102 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | PageBuilder
+  | Copy
+  | SanityImageAssetReference
+  | ExampleSection
+  | PageReference
   | SiteSettings
-  | MediaTag
+  | Page
+  | SanityImageCrop
+  | SanityImageHotspot
   | Slug
+  | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
   | SanityImageMetadata
-  | SanityImageHotspot
-  | SanityImageCrop
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+// Source: ../website/src/sanity/queries/pages.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_id == "siteSettings"][0]{    homePage->{      ...,      content[]{        ...,      }    }  }
+export type HOME_PAGE_QUERY_RESULT =
+  | {
+      homePage: null;
+    }
+  | {
+      homePage: {
+        _id: string;
+        _type: "page";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        title?: string;
+        slug?: Slug;
+        content: Array<{
+          _key: string;
+          _type: "exampleSection";
+          orientation?: "imageLeft" | "imageRight";
+          title?: string;
+          image?: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          copy?: Copy;
+        }> | null;
+        mainImage?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+      } | null;
+    }
+  | null;
+
+// Source: ../website/src/sanity/queries/pages.ts
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0]{  ...,  content[]{    ...,  }}
+export type PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  content: Array<{
+    _key: string;
+    _type: "exampleSection";
+    orientation?: "imageLeft" | "imageRight";
+    title?: string;
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    copy?: Copy;
+  }> | null;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+} | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts
 // Variable: SITE_SETTINGS_QUERY
@@ -178,6 +331,8 @@ export type SITE_SETTINGS_QUERY_RESULT = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '*[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n      }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
+    '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  content[]{\n    ...,\n  }\n}': PAGE_QUERY_RESULT;
     '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
   }
 }

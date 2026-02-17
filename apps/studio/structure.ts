@@ -9,7 +9,7 @@ export const structure: StructureResolver = (S, context) =>
     .title("Content")
     .items([
       /** -- Content Document Types ----------------------------------------- */
-      //S.documentTypeListItem("page").title("Pages"),
+      S.documentTypeListItem("page").title("Pages"),
       S.listItem().title("Reusable Sections").child(
         S.list().title("Reusable Sections"),
         /* add document schemas used by components here, eg CTAs:
@@ -38,6 +38,6 @@ export const structure: StructureResolver = (S, context) =>
        *     filter function below
        */
       ...filteredDocumentListItems({ S, context }).filter(
-        (item) => item.getId() !== "media.tag",
+        (item) => item.getId() !== "media.tag" && item.getId() !== "page",
       ),
     ]);
