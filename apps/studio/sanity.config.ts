@@ -6,22 +6,27 @@ import { media } from "sanity-plugin-media";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { singletonTools } from "sanity-plugin-singleton-management";
+import {
+  SANITY_STUDIO_PROJECT_ID,
+  SANITY_STUDIO_DATASET,
+  SANITY_STUDIO_FRONTEND_SITE_URL,
+} from "@/env";
 
 export default defineConfig({
   name: "insert-project-name",
   title: "INSERT PROJECT NAME",
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
-  dataset: process.env.SANITY_STUDIO_DATASET ?? "",
+  projectId: SANITY_STUDIO_PROJECT_ID,
+  dataset: SANITY_STUDIO_DATASET,
 
   plugins: [
     structureTool({ structure }),
     presentationTool({
       previewUrl: {
         previewMode: {
-          enable: `${process.env.SANITY_STUDIO_FRONTEND_SITE_URL}/api/draft-mode/enable`,
+          enable: `${SANITY_STUDIO_FRONTEND_SITE_URL}/api/draft-mode/enable`,
         },
-        origin: process.env.SANITY_STUDIO_FRONTEND_SITE_URL,
+        origin: SANITY_STUDIO_FRONTEND_SITE_URL,
       },
     }),
     media(),

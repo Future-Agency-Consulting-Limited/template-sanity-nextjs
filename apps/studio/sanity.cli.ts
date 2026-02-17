@@ -1,13 +1,18 @@
 import path from "path";
 import { defineCliConfig } from "sanity/cli";
+import {
+  SANITY_STUDIO_PROJECT_ID,
+  SANITY_STUDIO_DATASET,
+  SANITY_STUDIO_APP_ID,
+} from "@/env";
 
 export default defineCliConfig({
   api: {
-    projectId: process.env.SANITY_STUDIO_PROJECT_ID,
-    dataset: process.env.SANITY_STUDIO_DATASET,
+    projectId: SANITY_STUDIO_PROJECT_ID,
+    dataset: SANITY_STUDIO_DATASET,
   },
   deployment: {
-    appId: process.env.SANITY_STUDIO_APP_ID,
+    appId: SANITY_STUDIO_APP_ID,
 
     /**
      * Enable auto-updates for studios.
