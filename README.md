@@ -74,6 +74,7 @@ Please make sure you have the following installed before local setup
 
 - Fix formatting issues: `pnpm run format`
 - Fix linting issues: `pnpm run lint:fix`
+- Update types: `pnpm run typegen`
 
 ## Development Workflow
 

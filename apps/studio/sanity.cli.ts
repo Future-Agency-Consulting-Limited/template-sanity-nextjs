@@ -22,4 +22,9 @@ export default defineCliConfig({
       },
     },
   },
+  typegen: {
+    path: "../website/src/**/*.{ts,tsx,js,jsx}",
+    schema: "./schema.json",
+    generates: "../website/src/sanity/types.ts",
+  },
 });
