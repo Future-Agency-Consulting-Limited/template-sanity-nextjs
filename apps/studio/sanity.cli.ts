@@ -1,18 +1,15 @@
 import path from "path";
 import { defineCliConfig } from "sanity/cli";
-import {
-  SANITY_STUDIO_PROJECT_ID,
-  SANITY_STUDIO_DATASET,
-  SANITY_STUDIO_APP_ID,
-} from "@/env";
+
+// using process.env for environment variables in the CLI, as they won't have loaded yet if we use `apps/studio/env.ts`
 
 export default defineCliConfig({
   api: {
-    projectId: SANITY_STUDIO_PROJECT_ID,
-    dataset: SANITY_STUDIO_DATASET,
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID,
+    dataset: process.env.SANITY_STUDIO_DATASET,
   },
   deployment: {
-    appId: SANITY_STUDIO_APP_ID,
+    appId: process.env.SANITY_STUDIO_APP_ID,
 
     /**
      * Enable auto-updates for studios.
