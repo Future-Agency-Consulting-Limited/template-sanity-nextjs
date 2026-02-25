@@ -9,7 +9,7 @@ export default defineCliConfig({
     dataset: process.env.SANITY_STUDIO_DATASET,
   },
   deployment: {
-    appId: process.env.SANITY_STUDIO_APP_ID,
+    appId: process.env.SANITY_STUDIO_APP_ID ?? "",
 
     /**
      * Enable auto-updates for studios.
