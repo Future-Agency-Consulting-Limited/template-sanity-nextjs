@@ -15,7 +15,6 @@ Website & CMS Backend built using [Next.js](https://nextjs.org) & [Sanity](https
 - [React](https://reactjs.org) – Library for building user interfaces from components
 - [Next.js](https://nextjs.org) – Framework for server and client rendered React apps and APIs
 - [Tailwind CSS](https://tailwindcss.com) – Utility-first CSS framework
--
 
 ### Programming Languages
 
