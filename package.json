@@ -11,7 +11,8 @@
     "lint": "pnpm run --dir apps/studio lint && pnpm run --dir apps/website lint",
     "lint:fix": "pnpm run --dir apps/studio lint:fix && pnpm run --dir apps/website lint:fix",
     "deploy": "pnpm run --dir apps/studio deploy && pnpm run --dir apps/website build",
-    "prepare": "git config core.hooksPath .githooks"
+    "prepare": "git config core.hooksPath .githooks",
+    "typegen": "pnpm run --dir apps/studio typegen"
   },
   "engines": {
     "node": ">=22.22.0",

@@ -44,7 +44,7 @@ Please make sure you have the following installed before local setup
 
 1. Copy .env files and fill in the required values
 
-- `cp ./apps/studio/.env.local.example ./apps/studio/.env.local`
+- `cp ./apps/studio/.env.local.example ./apps/studio/.env`
 - `cp ./apps/website/.env.local.example ./apps/website/.env`
 
 2. Set the correct node version before running any other commands
@@ -74,6 +74,7 @@ Please make sure you have the following installed before local setup
 
 - Fix formatting issues: `pnpm run format`
 - Fix linting issues: `pnpm run lint:fix`
+- Update types: `pnpm run typegen`
 
 ## Development Workflow
 

@@ -1,5 +1,9 @@
-import { documents } from "@/schemaTypes/documents";
-import { objects } from "@/schemaTypes/objects";
-import { partials } from "@/schemaTypes/partials";
+import { documentSchemaTypes } from "@/schemaTypes/documents";
+import { objectSchemaTypes } from "@/schemaTypes/objects";
+import { partialSchemaTypes } from "@/schemaTypes/partials";
 
-export const schemaTypes = [...documents, ...objects, ...partials];
+export const schemaTypes = [
+  ...documentSchemaTypes,
+  ...objectSchemaTypes,
+  ...partialSchemaTypes,
+];

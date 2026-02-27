@@ -17,14 +17,21 @@ fi
 export PNPM_HOME="$HOME/.local/share/pnpm"
 [ -d "$PNPM_HOME" ] && export PATH="$PNPM_HOME:$PATH"
 
-# 2. Check formatting
+# 2. Typegen
+pnpm run typegen
+if [ $? -ne 0 ]; then
+    echo "Error: Typegen did not complete successfully"
+    exit 1
+fi
+
+# 3. Check formatting
 pnpm run format:check
 if [ $? -ne 0 ]; then
     echo "Error: Formatting check failed. Please run 'pnpm run format' to fix."
     exit 1
 fi
 
-# 3. Linting
+# 4. Linting
 pnpm run lint
 if [ $? -ne 0 ]; then
     echo "Error: Linting failed. Please run 'pnpm run lint:fix' to fix."
