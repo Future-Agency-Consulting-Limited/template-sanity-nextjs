@@ -63,7 +63,7 @@ function useWindowWidth(): number {
  * @returns {TailwindBreakpoint} The current breakpoint, one of "base", "sm", "md", "lg", "xl", or "2xl".
  *
  * @example
- * import useTwBreakpoint from "./useTwBreakpoint";
+ * import { useTwBreakpoint } from "@/utils/tailwind/tailwindBreakpoints";
  *
  * const MyComponent = () => {
  *   const breakpoint = useTwBreakpoint();
@@ -91,7 +91,7 @@ export function useTwBreakpoint(): TailwindBreakpoint {
  * @returns {boolean} True if the window width is at least the specified breakpoint.
  *
  * @example
- * import { useIsAtLeastTwBreakpoint } from "./useTwBreakpoint";
+ * import { useIsAtLeastTwBreakpoint } from "@/utils/tailwind/tailwindBreakpoints";
  *
  * const isLargeScreen = useIsAtLeastTwBreakpoint("lg");
  */
@@ -110,7 +110,7 @@ export function useIsAtLeastTwBreakpoint(
  * @returns {boolean} True if the window width is at most the specified breakpoint.
  *
  * @example
- * import { useIsAtMostTwBreakpoint } from "./useTwBreakpoint";
+ * import { useIsAtMostTwBreakpoint } from "@/utils/tailwind/tailwindBreakpoints";
  *
  * const isSmallScreen = useIsAtMostTwBreakpoint("md");
  */

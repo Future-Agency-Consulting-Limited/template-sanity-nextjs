@@ -34,7 +34,7 @@
  * In a JavaScript or TypeScript file, import the `tw` function and use it in a tagged template literal.
  *
  * @example ```js
- * import { tw } from "utils/tailwind/templateLiteralIntellisense";
+ * import { tw } from "@/utils/tailwind/templateLiteralIntellisense";
  * const myString = tw`w-full bg-red-500`
  * ```
  * @see https://github.com/tailwindlabs/tailwindcss-intellisense#extension-settings
