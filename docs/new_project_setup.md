@@ -32,11 +32,11 @@
      - copy the appId value to `apps/studio/.env` -> `SANITY_STUDIO_APP_ID`
    ```bash
    cd apps/studio
-   pnpm dlx sanity@latest logout
-   pnpm dlx sanity@latest login
-   pnpm dlx sanity@latest projects list
-   pnpm dlx sanity@latest deploy
-   pnpm dlx sanity@latest logout
+   pnpx sanity@latest logout
+   pnpx sanity@latest login
+   pnpx sanity@latest projects list
+   pnpx sanity@latest deploy
+   pnpx sanity@latest logout
    ```
 7. remove the value from `apps/studio/.env` -> `SANITY_AUTH_TOKEN` to prevent accidental future deployments
 
@@ -52,7 +52,7 @@
 
 9. [ ] Create an empty siteSettings document in the dataset:
    ```bash
-   pnpm dlx sanity@latest documents create --id siteSettings --type siteSettings --json '{}'
+   pnpx sanity@latest documents create --id siteSettings --type siteSettings --json '{}'
    ```
 
 ## AWS Amplify
