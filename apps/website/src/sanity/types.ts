@@ -84,7 +84,8 @@ export type Page = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  content?: PageBuilder;
+  metaTitle?: string;
+  metaDescription?: string;
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -92,6 +93,7 @@ export type Page = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  content?: PageBuilder;
 };
 
 export type SanityImageCrop = {
@@ -246,6 +248,13 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: ../website/src/sanity/queries/pages.ts
+// Variable: PAGE_SLUGS_QUERY
+// Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": slug.current }
+export type PAGE_SLUGS_QUERY_RESULT = Array<{
+  slug: string | null;
+}>;
+
+// Source: ../website/src/sanity/queries/pages.ts
 // Variable: HOME_PAGE_QUERY
 // Query: *[_id == "siteSettings"][0]{    homePage->{      ...,      content[]{        ...,      }    }  }
 export type HOME_PAGE_QUERY_RESULT =
@@ -261,6 +270,15 @@ export type HOME_PAGE_QUERY_RESULT =
         _rev: string;
         title?: string;
         slug?: Slug;
+        metaTitle?: string;
+        metaDescription?: string;
+        mainImage?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
         content: Array<{
           _key: string;
           _type: "exampleSection";
@@ -275,20 +293,28 @@ export type HOME_PAGE_QUERY_RESULT =
           };
           copy?: Copy;
         }> | null;
-        mainImage?: {
-          asset?: SanityImageAssetReference;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        };
+      } | null;
+    }
+  | null;
+
+// Source: ../website/src/sanity/queries/pages.ts
+// Variable: HOME_PAGE_METADATA_QUERY
+// Query: *[_id == "siteSettings"][0]{    homePage->{      metaTitle,      metaDescription,    }  }
+export type HOME_PAGE_METADATA_QUERY_RESULT =
+  | {
+      homePage: null;
+    }
+  | {
+      homePage: {
+        metaTitle: string | null;
+        metaDescription: string | null;
       } | null;
     }
   | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{  ...,  content[]{    ...,  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{    ...,    content[]{      ...,    }  }
 export type PAGE_QUERY_RESULT = {
   _id: string;
   _type: "page";
@@ -297,6 +323,15 @@ export type PAGE_QUERY_RESULT = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  metaTitle?: string;
+  metaDescription?: string;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   content: Array<{
     _key: string;
     _type: "exampleSection";
@@ -311,13 +346,15 @@ export type PAGE_QUERY_RESULT = {
     };
     copy?: Copy;
   }> | null;
-  mainImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
+} | null;
+
+// Source: ../website/src/sanity/queries/pages.ts
+// Variable: PAGE_METADATA_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0]{    slug,    metaTitle,    metaDescription,  }
+export type PAGE_METADATA_QUERY_RESULT = {
+  slug: Slug | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts
@@ -331,8 +368,11 @@ export type SITE_SETTINGS_QUERY_RESULT = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n      }\n    }\n  }': HOME_PAGE_QUERY_RESULT;
-    '*[_type == "page" && slug.current == $slug][0]{\n  ...,\n  content[]{\n    ...,\n  }\n}': PAGE_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n    }\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
   }
 }

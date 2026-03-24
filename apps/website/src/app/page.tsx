@@ -6,6 +6,8 @@ import {
 } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 
+export const revalidate = false; // Indefinitely cache this page
+
 /**
  * Generate metadata for the homepage route
  */

@@ -453,11 +453,17 @@
         },
         "optional": true
       },
-      "content": {
+      "metaTitle": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "pageBuilder"
+          "type": "string"
+        },
+        "optional": true
+      },
+      "metaDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       },
@@ -505,6 +511,14 @@
               }
             }
           }
+        },
+        "optional": true
+      },
+      "content": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "pageBuilder"
         },
         "optional": true
       }

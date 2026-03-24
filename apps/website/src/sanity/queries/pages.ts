@@ -1,7 +1,11 @@
 import { defineQuery } from "next-sanity";
 
 export const PAGE_SLUGS_QUERY = defineQuery(`
-  *[_type == "page" && defined(slug.current)]{ "slug": slug.current }
+  *[
+    _type == "page" &&
+    defined(slug.current) &&
+    slug.current != *[_id == "siteSettings"][0].homePage->slug.current
+  ]{ "slug": slug.current }
 `);
 
 export const HOME_PAGE_QUERY = defineQuery(`
