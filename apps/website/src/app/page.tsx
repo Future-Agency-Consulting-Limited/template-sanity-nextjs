@@ -1,6 +1,30 @@
 import { PageBuilder } from "@/components/page-builder";
 import { sanityFetch } from "@/sanity/lib/live";
-import { HOME_PAGE_QUERY } from "@/sanity/queries/pages";
+import {
+  HOME_PAGE_METADATA_QUERY,
+  HOME_PAGE_QUERY,
+} from "@/sanity/queries/pages";
+import { Metadata } from "next";
+
+export const revalidate = false; // Indefinitely cache this page
+
+/**
+ * Generate metadata for the homepage route
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const { data } = await sanityFetch({
+    query: HOME_PAGE_METADATA_QUERY,
+    // Metadata should never contain stega
+    stega: false,
+  });
+
+  const metadata: Metadata = {
+    title: data?.homePage?.metaTitle || "",
+    description: data?.homePage?.metaDescription || "",
+  };
+
+  return metadata;
+}
 
 export default async function Page() {
   const { data: page } = await sanityFetch({
