@@ -41,5 +41,6 @@
  * @param strings
  * @param exprs
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const tw = (strings: TemplateStringsArray, ...exprs: unknown[]) =>
   strings.join("");
