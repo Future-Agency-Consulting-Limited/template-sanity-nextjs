@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol;
+
 // Source: schema.json
 export type PageBuilder = Array<
   {
@@ -82,9 +84,9 @@ export type Page = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
-  metaTitle?: string;
+  title: string;
+  slug: Slug;
+  metaTitle: string;
   metaDescription?: string;
   mainImage?: {
     asset?: SanityImageAssetReference;
@@ -98,23 +100,23 @@ export type Page = {
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
 };
 
 export type SanityImageHotspot = {
   _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type Slug = {
   _type: "slug";
-  current?: string;
+  current: string;
   source?: string;
 };
 
@@ -148,9 +150,9 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
+  height: number;
+  width: number;
+  aspectRatio: number;
 };
 
 export type SanityImageMetadata = {
@@ -176,14 +178,14 @@ export type SanityFileAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   source?: SanityAssetSourceData;
 };
 
@@ -205,14 +207,14 @@ export type SanityImageAsset = {
   title?: string;
   description?: string;
   altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
+  sha1hash: string;
+  extension: string;
+  mimeType: string;
+  size: number;
+  assetId: string;
   uploadId?: string;
-  path?: string;
-  url?: string;
+  path: string;
+  url: string;
   metadata?: SanityImageMetadata;
   source?: SanityAssetSourceData;
 };
@@ -245,13 +247,11 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-export declare const internalGroqTypeReferenceTo: unique symbol;
-
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_SLUGS_QUERY
 // Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": slug.current }
 export type PAGE_SLUGS_QUERY_RESULT = Array<{
-  slug: string | null;
+  slug: string;
 }>;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -268,9 +268,9 @@ export type HOME_PAGE_QUERY_RESULT =
         _createdAt: string;
         _updatedAt: string;
         _rev: string;
-        title?: string;
-        slug?: Slug;
-        metaTitle?: string;
+        title: string;
+        slug: Slug;
+        metaTitle: string;
         metaDescription?: string;
         mainImage?: {
           asset?: SanityImageAssetReference;
@@ -306,7 +306,7 @@ export type HOME_PAGE_METADATA_QUERY_RESULT =
     }
   | {
       homePage: {
-        metaTitle: string | null;
+        metaTitle: string;
         metaDescription: string | null;
       } | null;
     }
@@ -321,9 +321,9 @@ export type PAGE_QUERY_RESULT = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
-  metaTitle?: string;
+  title: string;
+  slug: Slug;
+  metaTitle: string;
   metaDescription?: string;
   mainImage?: {
     asset?: SanityImageAssetReference;
@@ -352,8 +352,8 @@ export type PAGE_QUERY_RESULT = {
 // Variable: PAGE_METADATA_QUERY
 // Query: *[_type == "page" && slug.current == $slug][0]{    slug,    metaTitle,    metaDescription,  }
 export type PAGE_METADATA_QUERY_RESULT = {
-  slug: Slug | null;
-  metaTitle: string | null;
+  slug: Slug;
+  metaTitle: string;
   metaDescription: string | null;
 } | null;
 
