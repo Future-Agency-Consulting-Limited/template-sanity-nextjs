@@ -11,14 +11,27 @@
     "lint": "pnpm run --dir apps/studio lint && pnpm run --dir apps/website lint",
     "lint:fix": "pnpm run --dir apps/studio lint:fix && pnpm run --dir apps/website lint:fix",
     "deploy": "pnpm run --dir apps/studio deploy && pnpm run --dir apps/website build",
-    "prepare": "git config core.hooksPath .githooks",
+    "prepare": "husky install",
     "typegen": "pnpm run --dir apps/studio typegen"
+  },
+  "lint-staged": {
+    "apps/studio/**/*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ],
+    "apps/website/**/*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ],
+    "*.{js,jsx,ts,tsx,json,md,css,html,yml,yaml}": [
+      "prettier --check"
+    ]
   },
   "engines": {
     "node": ">=22.22.0",
     "pnpm": ">=10.0.0"
   },
   "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.0"
   }
 }
