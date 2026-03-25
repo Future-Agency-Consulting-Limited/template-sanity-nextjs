@@ -4,3 +4,7 @@ packages:
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+overrides:
+  flatted@<3.4.0: ">=3.4.0"
+  flatted@<=3.4.1: ">=3.4.2"
+  js-yaml@<3.14.2: ">=3.14.2"
