@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint-check": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "dependencies": {
     "@sanity/image-url": "^2.0.3",

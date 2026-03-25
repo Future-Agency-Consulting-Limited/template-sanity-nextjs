@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "pnpm run --parallel dev",
     "build": "pnpm run --parallel build",
-    "format": "prettier . --write",
-    "format:check": "prettier . --check",
-    "lint": "pnpm run --dir apps/studio lint && pnpm run --dir apps/website lint",
-    "lint:fix": "pnpm run --dir apps/studio lint:fix && pnpm run --dir apps/website lint:fix",
+    "format-check": "prettier . --check",
+    "format-fix": "prettier . --write",
+    "lint-check": "pnpm run --dir apps/studio lint-check && pnpm run --dir apps/website lint-check",
+    "lint-fix": "pnpm run --dir apps/studio lint-fix && pnpm run --dir apps/website lint-fix",
     "deploy": "pnpm run --dir apps/studio deploy && pnpm run --dir apps/website build",
     "prepare": "husky install",
     "typegen": "pnpm run --dir apps/studio typegen"
