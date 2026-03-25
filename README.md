@@ -4,6 +4,9 @@
 
 Website & CMS Backend built using [Next.js](https://nextjs.org) & [Sanity](https://sanity.io).
 
+- Website: [INSERT WEBSITE NAME](https://www.example.com)
+- Sanity Studio CMS: [INSERT SANITY STUDIO NAME](https://example.sanity.studio)
+
 ## Tech Stack
 
 ### Backend
@@ -77,10 +80,34 @@ Please make sure you have the following installed before local setup
 
 ## Development Workflow
 
-#TODO
+1. Create a new branch from `main`
+   name it in the format `<type>/<jira-ticket>-<description>`
+   - eg. `feature/BGR-67-video-player` or `bugfix/LASM-486-homepage-links`
+   - Type can be:
+
+     | Type      | Description                                                            |
+     | --------- | ---------------------------------------------------------------------- |
+     | `feature` | Adding a new feature                                                   |
+     | `bugfix`  | Fixing a bug                                                           |
+     | `hotfix`  | Fixing a production issue. only use this for urgent out-of-band issues |
+     | `release` | Merging multiple branches to prepare for a release to production       |
+
+   - Jira ticket is the board code and number for the ticket, eg. `AO-693` for the Jira ticket https://ecosystem.atlassian.net/browse/AO-693
+   - Description is a short description of the change. It should be `kebab-cased`.
+
+2. Make and test your changes locally
+3. Run `pnpm run format && pnpm run lint:fix && pnpm run typegen` to ensure pre-commit checks pass
+4. Commit and push changes to your branch
+5. Create a pull request with at least one reviewer
+6. Once approved, PR can be merged
+7. PRs merged into `main` will be automatically deployed to production
 
 ## Deployment
 
+PRs merged into `main` will be automatically deployed to production.
+This will deploy the sanity studio and then the website.
+
+If you need to deploy a specific branch of the website, you can...
 #TODO
 
 ## Initial Project Setup
@@ -92,6 +119,7 @@ Refer to the [New project setup instructions](docs/new_project_setup.md)
 
 ## Resources & Further Reading
 
+- Developer docs for this site are in the [/docs directory](docs)
 - [Sanity docs](https://www.sanity.io/docs)
 - [Next.js docs](https://nextjs.org/docs)
 - [TailwindCSS docs](https://tailwindcss.com/docs/styling-with-utility-classes)
