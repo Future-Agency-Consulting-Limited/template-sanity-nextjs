@@ -38,7 +38,7 @@
    pnpx sanity@latest deploy
    pnpx sanity@latest logout
    ```
-7. remove the value from `apps/studio/.env` -> `SANITY_AUTH_TOKEN` to prevent accidental future deployments
+7. [ ] remove the value from `apps/studio/.env` -> `SANITY_AUTH_TOKEN` to prevent accidental future deployments
 
 8. [ ] CORS origins: In Your org -> Your project -> API -> CORS origins,
        you will need to add these entries:
@@ -57,13 +57,16 @@
 
 ## AWS Amplify
 
-1. [ ] Create an AWS account for the client if one hasn't already been created and
-       save the login details in our password manager
+1. [ ] Create an AWS account for the client if one hasn't already been created
+       (or if the client and isn't granting access to their own AWS account)
+       and save the login details in our password manager
 
 2. [ ] Create an AWS Amplify app for the project. Connect it to the GitHub repo for
        the project and use the main branch.
 
-3. [ ] Add environment variables to the Amplify app. You need to add values from: - `apps/studio/.env` - `apps/web/.env`
+3. [ ] Add environment variables to the Amplify app. You need to add values from both:
+   - `apps/studio/.env`
+   - `apps/web/.env`
 
 4. [ ] Run a build and deploy to verify the studio and web apps are working
 
