@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "pnpm run --parallel dev",
     "build": "pnpm run --parallel build",
+    "fix-all": "pnpm run format-fix && pnpm run lint-fix && pnpm run typegen",
     "format-check": "prettier . --check",
     "format-fix": "prettier . --write",
     "lint-check": "pnpm run --dir apps/studio lint-check && pnpm run --dir apps/website lint-check",
@@ -30,8 +31,8 @@
     "pnpm": ">=10.0.0"
   },
   "devDependencies": {
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.8.0"
+    "prettier": "^3.8.1"
   }
 }
