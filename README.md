@@ -46,8 +46,10 @@ Please make sure you have the following installed before local setup
 
 1. Copy .env files and fill in the required values
 
-- `cp ./apps/studio/.env.local.example ./apps/studio/.env`
-- `cp ./apps/website/.env.local.example ./apps/website/.env`
+   ```bash
+   cp ./apps/studio/.env.local.example ./apps/studio/.env
+   cp ./apps/website/.env.local.example ./apps/website/.env
+   ```
 
 2. Set the correct node version before running any other commands
 
