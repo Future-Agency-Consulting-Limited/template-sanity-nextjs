@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
 # Attempt to load nvm (Node Version Manager)
 # Hooks run in a non-interactive shell, so nvm is often not available by default.
@@ -24,18 +25,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 3. Check formatting
-pnpm run format:check
-if [ $? -ne 0 ]; then
-    echo "Error: Formatting check failed. Please run 'pnpm run format' to fix."
-    exit 1
-fi
+# run checks on files staged for commit
+pnpm exec lint-staged
 
-# 4. Linting
-pnpm run lint
-if [ $? -ne 0 ]; then
-    echo "Error: Linting failed. Please run 'pnpm run lint:fix' to fix."
-    exit 1
-fi
-
-exit 0

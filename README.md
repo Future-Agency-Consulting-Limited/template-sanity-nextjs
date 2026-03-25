@@ -76,8 +76,8 @@ Please make sure you have the following installed before local setup
 
 ## Useful Commands
 
-- Fix formatting issues: `pnpm run format`
-- Fix linting issues: `pnpm run lint:fix`
+- Fix formatting issues: `pnpm run format-fix`
+- Fix linting issues: `pnpm run lint-fix`
 - Update types: `pnpm run typegen`
 
 ## Development Workflow
@@ -98,7 +98,7 @@ Please make sure you have the following installed before local setup
    - Description is a short description of the change. It should be `kebab-cased`.
 
 2. Make and test your changes locally
-3. Run `pnpm run format && pnpm run lint:fix && pnpm run typegen` to ensure pre-commit checks pass
+3. Run `pnpm run format-fix && pnpm run lint-fix && pnpm run typegen` to ensure pre-commit checks pass
 4. Commit and push changes to your branch
 5. Create a pull request with at least one reviewer
 6. Once approved, PR can be merged

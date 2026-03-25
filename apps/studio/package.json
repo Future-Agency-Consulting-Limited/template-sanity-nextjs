@@ -6,8 +6,8 @@
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint-check": "eslint .",
+    "lint-fix": "eslint . --fix",
     "dev": "sanity dev",
     "start": "sanity start",
     "build": "sanity build",
