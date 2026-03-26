@@ -6,6 +6,7 @@ import {
 } from "@/sanity/queries/pages";
 import { Metadata } from "next";
 import { headers } from "next/headers";
+import Link from "next/link";
 
 export const revalidate = false; // Indefinitely cache this page
 
@@ -37,7 +38,10 @@ export default async function Page() {
 
   return page?.homePage?.content ? (
     <>
-      <h1>Geo Region: {geoRegion}</h1>
+      <div>
+        <h1>Geo Region: {geoRegion}</h1>
+        <Link href="/test-page">test-page</Link>
+      </div>
       <PageBuilder
         documentId={page?.homePage._id}
         documentType={page?.homePage._type}

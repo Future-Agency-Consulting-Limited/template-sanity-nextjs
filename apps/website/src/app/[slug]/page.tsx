@@ -7,6 +7,7 @@ import {
 } from "@/sanity/queries/pages";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Link from "next/link";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -64,7 +65,11 @@ export default async function Page({
 
   return page?.content ? (
     <>
-      <h1>Geo Region: {geoRegion}</h1>
+      <div>
+        <h1>Geo Region: {geoRegion}</h1>
+        <Link href="/">home</Link>
+      </div>
+
       <PageBuilder
         documentId={page._id}
         documentType={page._type}
