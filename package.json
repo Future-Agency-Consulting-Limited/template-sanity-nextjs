@@ -15,11 +15,11 @@
     "typegen": "pnpm run --dir apps/studio typegen"
   },
   "lint-staged": {
-    "apps/studio/**/*.{js,jsx,ts,tsx}": [
-      "eslint"
+    "apps/studio/**/*.{js,jsx,ts,tsx,mjs}": [
+      "pnpm --dir apps/studio exec eslint"
     ],
-    "apps/website/**/*.{js,jsx,ts,tsx}": [
-      "eslint"
+    "apps/website/**/*.{js,jsx,ts,tsx,mjs}": [
+      "pnpm --dir apps/studio exec eslint"
     ],
     "*.{js,jsx,ts,tsx,json,md,css,html,yml,yaml}": [
       "prettier --check"
