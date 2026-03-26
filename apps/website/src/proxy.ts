@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-//import type { NextRequest } from "next/server";
 
 export const config = {
-  // match all page routes, excluding api routes and static files (or any file with an extension)
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
-  ],
+  matcher: ["/((?!api|_next/static|favicon.ico).*)"],
 };
 
 export function proxy(request: Request) {
