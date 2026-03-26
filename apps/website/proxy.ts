@@ -9,8 +9,7 @@ export const config = {
 };
 
 export function proxy(request: NextRequest) {
-  // @ts-expect-error geo does not exist on NextRequest, but should be available when deployed to Vercel
-  const country = request.geo?.country ?? "UNKNOWN";
+  const country = request.headers.get("x-vercel-ip-country") ?? "UNKNOWN";
 
   console.log(`Visitor from ${country}`);
 
