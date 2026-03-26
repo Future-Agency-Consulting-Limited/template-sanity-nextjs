@@ -55,7 +55,16 @@
    pnpx sanity@latest documents create --id siteSettings --type siteSettings --json '{}'
    ```
 
-## AWS Amplify
+## Hosting
+
+Choose from the following options for hosting the frontend and follow the relevant instructions below:
+
+- AWS Amplify
+- Vercel
+
+If you need to host the frontend on a different platform, you will need to investigate this yourself.
+
+### AWS Amplify
 
 1. [ ] Create an AWS account for the client if one hasn't already been created
        (or if the client and isn't granting access to their own AWS account)
@@ -79,3 +88,29 @@
 7. [ ] Update Amplify to use the custom domain
 
 8. [ ] Enable Basic Auth and store the credentials in our password manager
+
+### Vercel
+
+Note that a paid Vercel account is required to connect to a private GitHub repository.
+
+# TODO these steps only setup the Next.js frontend, they don't handle deploying Sanity Studio
+
+1. [ ] Create a Vercel account for the client if one hasn't already been created
+       (or obtain access if using a client's account) and save the login details
+       in our password manager
+
+2. [ ] Connect the Vercel project to the Dev Team GitHub account and grant
+       access to the specific repository for the project.
+
+3. [ ] Add a new Project and import the repository into Vercel.
+
+4. [ ] Change the root directory to `apps/website`
+
+5. [ ] Set commands
+   - **Build command:** `pnpm run build`
+   - **Output directory:** leave as Next.js default
+   - **Install command:** `pnpm install --frozen-lockfile`
+
+6. [ ] Environment variables - paste in the keys and values from from `apps/website/.env`
+
+7. [ ] Deploy the project and verify it's working
