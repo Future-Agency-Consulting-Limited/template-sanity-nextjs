@@ -6,6 +6,7 @@ import {
   PAGE_SLUGS_QUERY,
 } from "@/sanity/queries/pages";
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -53,16 +54,22 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const headersList = await headers();
+  const geoRegion = headersList.get("x-todl-geo-region") || "Unknown Region";
+
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,
     params: await params,
   });
 
   return page?.content ? (
-    <PageBuilder
-      documentId={page._id}
-      documentType={page._type}
-      content={page.content}
-    />
+    <>
+      <h1>Geo Region: {geoRegion}</h1>
+      <PageBuilder
+        documentId={page._id}
+        documentType={page._type}
+        content={page.content}
+      />
+    </>
   ) : null;
 }
