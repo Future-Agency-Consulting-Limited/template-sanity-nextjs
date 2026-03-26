@@ -20,9 +20,7 @@
 //   return response;
 // }
 
-export const config = {
-  runtime: "nodejs", // optional: use 'nodejs' or omit for 'edge' (default)
-};
+export const config = {};
 
 export function proxy(request: Request) {
   console.log("Request to:", request.url);
