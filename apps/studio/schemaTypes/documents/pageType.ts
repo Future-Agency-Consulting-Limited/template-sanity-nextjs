@@ -1,3 +1,4 @@
+import { documentI18nLanguageField } from "@/schemaParts/fields/documentI18nPlugin";
 import { seoGroup } from "@/schemaParts/groups/seoGroup";
 import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
@@ -28,6 +29,7 @@ export const pageType = defineType({
     },
   ],
   fields: [
+    documentI18nLanguageField(),
     ...seoGroup("seo", "seo"),
     defineField({
       name: "mainImage",
@@ -49,7 +51,16 @@ export const pageType = defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "slug.current",
+      slug: "slug.current",
+      language: "language",
+    },
+    prepare(selection) {
+      const { title, slug, language } = selection;
+
+      return {
+        title,
+        subtitle: `${language ? language + " | " : ""}${slug ?? ""}`,
+      };
     },
   },
 });

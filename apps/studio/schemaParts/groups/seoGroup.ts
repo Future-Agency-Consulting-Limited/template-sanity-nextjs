@@ -12,10 +12,24 @@ export const seoGroup = (group?: string, fieldset?: string) => {
     defineField({
       name: "slug",
       type: "slug",
-      ...(group && { group: group }),
-      ...(fieldset && { fieldset: fieldset }),
+      ...(group && { group }),
+      ...(fieldset && { fieldset }),
       options: {
-        source: "title",
+        source: (doc) => {
+          const title = typeof doc.title === "string" ? doc.title : "";
+          const language = typeof doc.language === "string" ? doc.language : "";
+
+          const region = language.replace(/^en_/, "");
+
+          return region ? `${region}/${title}` : title;
+        },
+        slugify: (input) =>
+          input
+            .toString()
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-/]/g, ""),
       },
       validation: (Rule) => Rule.required(),
     }),

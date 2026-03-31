@@ -5,9 +5,8 @@ import {
   PAGE_QUERY,
   PAGE_SLUGS_QUERY,
 } from "@/sanity/queries/pages";
+import { parseSlugAndLanguage } from "@/utils/slug";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
-import Link from "next/link";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -19,7 +18,9 @@ export async function generateStaticParams() {
     stega: false,
   });
 
-  return data;
+  return data.map((item: { slug: string }) => ({
+    slug: item.slug.split("/").filter(Boolean),
+  }));
 }
 
 /**
@@ -29,12 +30,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { fullSlug, bareSlug } = parseSlugAndLanguage(resolvedParams.slug);
+
   const { data } = await sanityFetch({
     query: PAGE_METADATA_QUERY,
-    params: await params,
-    // Metadata should never contain stega
+    params: { fullSlug, bareSlug },
     stega: false,
   });
 
@@ -53,28 +56,27 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
-  const headersList = await headers();
-  const geoRegion = headersList.get("x-todl-geo-region") || "Unknown Region";
+  const resolvedParams = await params;
+  const { language, fullSlug, bareSlug } = parseSlugAndLanguage(
+    resolvedParams.slug,
+  );
 
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,
-    params: await params,
+    params: {
+      fullSlug,
+      bareSlug,
+      language,
+    },
   });
 
   return page?.content ? (
-    <>
-      <div>
-        <h1>Geo Region: {geoRegion}</h1>
-        <Link href="/">home</Link>
-      </div>
-
-      <PageBuilder
-        documentId={page._id}
-        documentType={page._type}
-        content={page.content}
-      />
-    </>
+    <PageBuilder
+      documentId={page._id}
+      documentType={page._type}
+      content={page.content}
+    />
   ) : null;
 }

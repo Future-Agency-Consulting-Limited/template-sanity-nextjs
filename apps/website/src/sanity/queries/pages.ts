@@ -29,7 +29,15 @@ export const HOME_PAGE_METADATA_QUERY = defineQuery(`
 `);
 
 export const PAGE_QUERY = defineQuery(`
-  *[_type == "page" && slug.current == $slug][0]{
+  *[
+    _type == "page" &&
+    (
+      slug.current == $fullSlug ||
+      slug.current == $bareSlug
+    ) &&
+    (!defined(language) || language == $language)
+  ]
+  | order(defined(language) desc)[0]{
     ...,
     content[]{
       ...,
@@ -38,7 +46,10 @@ export const PAGE_QUERY = defineQuery(`
 `);
 
 export const PAGE_METADATA_QUERY = defineQuery(`
-  *[_type == "page" && slug.current == $slug][0]{
+  *[_type == "page" && (
+    slug.current == $fullSlug ||
+    slug.current == $bareSlug
+  )][0]{
     slug,
     metaTitle,
     metaDescription,
