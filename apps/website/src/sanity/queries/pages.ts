@@ -34,10 +34,7 @@ export const PAGE_QUERY = defineQuery(`
     (
       slug.current == $fullSlug ||
       slug.current == $bareSlug
-    ) &&
-    (!defined(language) || language == $language)
-  ]
-  | order(defined(language) desc)[0]{
+    )][0]{
     ...,
     content[]{
       ...,

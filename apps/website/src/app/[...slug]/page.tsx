@@ -59,16 +59,13 @@ export default async function Page({
   params: Promise<{ slug: string[] }>;
 }) {
   const resolvedParams = await params;
-  const { language, fullSlug, bareSlug } = parseSlugAndLanguage(
-    resolvedParams.slug,
-  );
+  const { fullSlug, bareSlug } = parseSlugAndLanguage(resolvedParams.slug);
 
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,
     params: {
       fullSlug,
       bareSlug,
-      language,
     },
   });
 

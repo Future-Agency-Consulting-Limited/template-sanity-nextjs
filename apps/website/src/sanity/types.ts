@@ -341,7 +341,7 @@ export type HOME_PAGE_METADATA_QUERY_RESULT =
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_QUERY
-// Query: *[    _type == "page" &&    (      slug.current == $fullSlug ||      slug.current == $bareSlug    ) &&    (!defined(language) || language == $language)  ]  | order(defined(language) desc)[0]{    ...,    content[]{      ...,    }  }
+// Query: *[    _type == "page" &&    (      slug.current == $fullSlug ||      slug.current == $bareSlug    )][0]{    ...,    content[]{      ...,    }  }
 export type PAGE_QUERY_RESULT = {
   _id: string;
   _type: "page";
@@ -399,7 +399,7 @@ declare module "@sanity/client" {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
-    '\n  *[\n    _type == "page" &&\n    (\n      slug.current == $fullSlug ||\n      slug.current == $bareSlug\n    ) &&\n    (!defined(language) || language == $language)\n  ]\n  | order(defined(language) desc)[0]{\n    ...,\n    content[]{\n      ...,\n    }\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n    (\n      slug.current == $fullSlug ||\n      slug.current == $bareSlug\n    )][0]{\n    ...,\n    content[]{\n      ...,\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && (\n    slug.current == $fullSlug ||\n    slug.current == $bareSlug\n  )][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
   }
