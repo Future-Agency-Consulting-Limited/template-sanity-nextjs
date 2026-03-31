@@ -1,20 +1,11 @@
-export type SlugLanguage = "emea" | "apac";
+import type { Region } from "@/utils/region";
 
-export function parseSlugAndLanguage(slugParts: string[]) {
+export function parseSlugAndLanguage(region: Region, slugParts: string[]) {
   const cleanSlugParts = slugParts.filter(Boolean);
-  const [firstPart, ...restParts] = cleanSlugParts;
-
-  if (firstPart === "emea" || firstPart === "apac") {
-    return {
-      language: `en_${firstPart}`,
-      fullSlug: cleanSlugParts.join("/"),
-      bareSlug: restParts.join("/"),
-    };
-  }
 
   return {
-    language: undefined,
-    fullSlug: cleanSlugParts.join("/"),
+    language: `en_${region}`,
+    regionSlug: `${region}/${cleanSlugParts.join("/")}`,
     bareSlug: cleanSlugParts.join("/"),
   };
 }

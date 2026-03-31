@@ -5,8 +5,21 @@ import {
   PAGE_QUERY,
   PAGE_SLUGS_QUERY,
 } from "@/sanity/queries/pages";
+import { isValidRegion, Region } from "@/utils/region";
 import { parseSlugAndLanguage } from "@/utils/slug";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+type RouteParams = {
+  region: Region;
+  slug: string[];
+};
+
+function assertValidRegion(region: string): asserts region is Region {
+  if (!isValidRegion(region)) {
+    notFound();
+  }
+}
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -30,14 +43,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<RouteParams>;
 }): Promise<Metadata> {
   const resolvedParams = await params;
-  const { fullSlug, bareSlug } = parseSlugAndLanguage(resolvedParams.slug);
+  const { regionSlug, bareSlug } = parseSlugAndLanguage(
+    resolvedParams.region,
+    resolvedParams.slug,
+  );
 
   const { data } = await sanityFetch({
     query: PAGE_METADATA_QUERY,
-    params: { fullSlug, bareSlug },
+    params: { regionSlug, bareSlug },
     stega: false,
   });
 
@@ -56,15 +72,20 @@ export async function generateMetadata({
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<RouteParams>;
 }) {
   const resolvedParams = await params;
-  const { fullSlug, bareSlug } = parseSlugAndLanguage(resolvedParams.slug);
+  assertValidRegion(resolvedParams.region);
+
+  const { regionSlug, bareSlug } = parseSlugAndLanguage(
+    resolvedParams.region,
+    resolvedParams.slug,
+  );
 
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,
     params: {
-      fullSlug,
+      regionSlug,
       bareSlug,
     },
   });

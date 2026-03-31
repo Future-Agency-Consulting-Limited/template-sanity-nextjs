@@ -32,7 +32,7 @@ export const PAGE_QUERY = defineQuery(`
   *[
     _type == "page" &&
     (
-      slug.current == $fullSlug ||
+      slug.current == $regionSlug ||
       slug.current == $bareSlug
     )][0]{
     ...,
@@ -44,7 +44,7 @@ export const PAGE_QUERY = defineQuery(`
 
 export const PAGE_METADATA_QUERY = defineQuery(`
   *[_type == "page" && (
-    slug.current == $fullSlug ||
+    slug.current == $regionSlug ||
     slug.current == $bareSlug
   )][0]{
     slug,
