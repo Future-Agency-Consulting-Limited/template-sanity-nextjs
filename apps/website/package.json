@@ -15,7 +15,8 @@
     "next-sanity": "^12.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.5.0",
+    "yn": "^5.1.0"
   },
   "devDependencies": {
     "@portabletext/types": "^4.0.2",
