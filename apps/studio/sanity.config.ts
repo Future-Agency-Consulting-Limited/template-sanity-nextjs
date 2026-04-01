@@ -31,7 +31,7 @@ export default defineConfig({
         previewMode: {
           enable: `${SANITY_STUDIO_FRONTEND_SITE_URL}/api/draft-mode/enable`,
         },
-        origin: SANITY_STUDIO_FRONTEND_SITE_URL,
+        initial: `${SANITY_STUDIO_FRONTEND_SITE_URL}/emea`,
       },
     }),
     media(),

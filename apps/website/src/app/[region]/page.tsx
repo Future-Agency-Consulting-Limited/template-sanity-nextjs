@@ -5,8 +5,6 @@ import {
   HOME_PAGE_QUERY,
 } from "@/sanity/queries/pages";
 import { Metadata } from "next";
-import { headers } from "next/headers";
-import Link from "next/link";
 
 export const revalidate = false; // Indefinitely cache this page
 
@@ -29,24 +27,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const headersList = await headers();
-  const geoRegion = headersList.get("x-todl-geo-region") || "Unknown Region";
-
   const { data: page } = await sanityFetch({
     query: HOME_PAGE_QUERY,
   });
 
   return page?.homePage?.content ? (
-    <>
-      <div>
-        <h1>Geo Region: {geoRegion}</h1>
-        <Link href="/test-page">test-page</Link>
-      </div>
-      <PageBuilder
-        documentId={page?.homePage._id}
-        documentType={page?.homePage._type}
-        content={page?.homePage.content}
-      />
-    </>
+    <PageBuilder
+      documentId={page?.homePage._id}
+      documentType={page?.homePage._type}
+      content={page?.homePage.content}
+    />
   ) : null;
 }
