@@ -59,7 +59,7 @@ export const pageType = defineType({
 
       return {
         title,
-        subtitle: `${language ? language + " | " : ""}${slug ?? ""}`,
+        subtitle: `${language ? language : "Global"} | ${slug ?? ""}`,
       };
     },
   },

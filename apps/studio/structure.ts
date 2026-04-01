@@ -38,6 +38,9 @@ export const structure: StructureResolver = (S, context) =>
        *     filter function below
        */
       ...filteredDocumentListItems({ S, context }).filter(
-        (item) => item.getId() !== "media.tag" && item.getId() !== "page",
+        (item) =>
+          item.getId() !== "media.tag" &&
+          item.getId() !== "page" &&
+          item.getId() !== "translation.metadata",
       ),
     ]);
