@@ -1,10 +1,10 @@
+import { env } from "@/env/client";
 import type { MetadataRoute } from "next";
-import { NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_ALLOW_CRAWLER_BOTS } from "@/env";
 
 export default function robots(): MetadataRoute.Robots {
-  const sitemapUrl = `${NEXT_PUBLIC_SITE_URL}/sitemap.xml`;
+  const sitemapUrl = `${env.NEXT_PUBLIC_SITE_URL}/sitemap.xml`;
 
-  if (!NEXT_PUBLIC_ALLOW_CRAWLER_BOTS) {
+  if (!env.NEXT_PUBLIC_ALLOW_CRAWLER_BOTS) {
     return {
       rules: {
         userAgent: "*",
