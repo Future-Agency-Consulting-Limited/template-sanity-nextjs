@@ -364,6 +364,20 @@ export type SITE_SETTINGS_QUERY_RESULT = Array<{
   title: string | null;
 }>;
 
+// Source: ../website/src/sanity/queries/sitemap.ts
+// Variable: SITEMAP_QUERY
+// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]    {      "slug": slug.current,      _updatedAt    }  ]
+export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      slug: string;
+      _updatedAt: string;
+    }
+  | {
+      slug: "";
+      _updatedAt: string | null;
+    }
+>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -374,5 +388,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }
 }
