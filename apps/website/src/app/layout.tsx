@@ -1,8 +1,18 @@
-import { draftMode } from "next/headers";
-import { VisualEditing } from "next-sanity/visual-editing";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
+import { env } from "@/env/client";
 import { SanityLive } from "@/sanity/lib/live";
+import type { Metadata } from "next";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { draftMode } from "next/headers";
 import "@/globals.css";
+
+export function generateMetadata(): Metadata {
+  return {
+    verification: {
+      google: env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
