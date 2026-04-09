@@ -8,13 +8,21 @@ const siteUrlSchema = z
   .refine(
     (value) => {
       const { hostname } = new URL(value);
-
       return hostname === "localhost" || z.regexes.domain.test(hostname);
     },
     {
       message: "Must be a valid http(s) URL using localhost or a real domain",
     },
   );
+
+const optionalTrimmedStringSchema: z.ZodType<string | undefined> = z.preprocess(
+  (value) => {
+    if (typeof value !== "string") return value;
+    const trimmed = value.trim();
+    return trimmed === "" ? undefined : trimmed;
+  },
+  z.string().optional(),
+);
 
 /**
  * Client-side environment variable schema.
@@ -30,12 +38,13 @@ const siteUrlSchema = z
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_SANITY_API_VERSION: z.iso.date(),
-    NEXT_PUBLIC_SANITY_DATASET: z.string().min(1),
-    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
+    NEXT_PUBLIC_SANITY_DATASET: z.string().trim().min(1),
+    NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().trim().min(1),
     NEXT_PUBLIC_SANITY_STUDIO_URL: siteUrlSchema,
     NEXT_PUBLIC_SITE_URL: siteUrlSchema,
     NEXT_PUBLIC_REVALIDATE: z.coerce.number<number>().int().positive(),
     NEXT_PUBLIC_ALLOW_CRAWLER_BOTS: z.stringbool(),
+    NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: optionalTrimmedStringSchema,
   },
   runtimeEnv: {
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
@@ -45,5 +54,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_REVALIDATE: process.env.NEXT_PUBLIC_REVALIDATE,
     NEXT_PUBLIC_ALLOW_CRAWLER_BOTS: process.env.NEXT_PUBLIC_ALLOW_CRAWLER_BOTS,
+    NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 });
