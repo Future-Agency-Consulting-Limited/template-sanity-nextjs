@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import "@/globals.css";
+import HubSpotTracking from "@/components/HubSpotTracking";
+import { Suspense } from "react";
+import HubSpotPageView from "@/components/HubSpotPageView";
 
 export function generateMetadata(): Metadata {
   return {
@@ -34,6 +37,10 @@ export default async function RootLayout({
           )}
         </main>
         {/*<Footer />*/}
+        <HubSpotTracking />
+        <Suspense fallback={null}>
+          <HubSpotPageView />
+        </Suspense>
       </body>
     </html>
   );
