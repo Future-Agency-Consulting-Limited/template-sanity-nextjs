@@ -5,9 +5,10 @@ import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import "@/globals.css";
-import HubSpotTracking from "@/components/HubSpotTracking";
+import HubspotTracking from "@/components/HubspotTracking";
 import { Suspense } from "react";
-import HubSpotPageView from "@/components/HubSpotPageView";
+import HubspotPageView from "@/components/HubspotPageView";
+import { HubspotProvider } from "next-hubspot";
 
 export function generateMetadata(): Metadata {
   return {
@@ -26,20 +27,22 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         {/*<Header />*/}
-        <main className="bg-white min-h-screen">
-          {children}
-          <SanityLive />
-          {(await draftMode()).isEnabled && (
-            <>
-              <DisableDraftMode />
-              <VisualEditing />
-            </>
-          )}
-        </main>
+        <HubspotProvider>
+          <main className="bg-white min-h-screen">
+            {children}
+            <SanityLive />
+            {(await draftMode()).isEnabled && (
+              <>
+                <DisableDraftMode />
+                <VisualEditing />
+              </>
+            )}
+          </main>
+        </HubspotProvider>
         {/*<Footer />*/}
-        <HubSpotTracking />
+        <HubspotTracking />
         <Suspense fallback={null}>
-          <HubSpotPageView />
+          <HubspotPageView />
         </Suspense>
       </body>
     </html>
