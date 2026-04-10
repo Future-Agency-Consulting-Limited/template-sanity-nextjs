@@ -15,7 +15,7 @@ declare global {
  * Intended to be used as part of a Single Page Application (SPA), as HubSpot's
  * tracking only automatically fires for a full page load.
  */
-export default function HubSpotPageView() {
+export default function HubspotPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
