@@ -26,8 +26,8 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/*<Header />*/}
         <HubspotProvider>
+          {/*<Header />*/}
           <main className="bg-white min-h-screen">
             {children}
             <SanityLive />
@@ -38,8 +38,8 @@ export default async function RootLayout({
               </>
             )}
           </main>
+          {/*<Footer />*/}
         </HubspotProvider>
-        {/*<Footer />*/}
         <HubspotTracking />
         <Suspense fallback={null}>
           <HubspotPageView />
