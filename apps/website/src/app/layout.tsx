@@ -26,6 +26,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
+        <HubspotTracking />
+        <Suspense fallback={null}>
+          <HubspotPageView />
+        </Suspense>
         <HubspotProvider>
           {/*<Header />*/}
           <main className="bg-white min-h-screen">
@@ -40,10 +44,6 @@ export default async function RootLayout({
           </main>
           {/*<Footer />*/}
         </HubspotProvider>
-        <HubspotTracking />
-        <Suspense fallback={null}>
-          <HubspotPageView />
-        </Suspense>
       </body>
     </html>
   );

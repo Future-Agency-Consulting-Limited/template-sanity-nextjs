@@ -8,11 +8,12 @@ export interface HubspotFormProps {
 }
 
 export default function HubspotForm({ formId }: HubspotFormProps) {
+  const formWrapperId = `hubspot-form-wrapper-${formId}`;
   const { isFormCreated, isError, error } = useHubspotForm({
     portalId: env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID,
     formId: formId,
-    target: "#hubspot-form-wrapper",
+    target: `#${formWrapperId}`,
   });
 
-  return <div id="hubspot-form-wrapper" />;
+  return <div id={formWrapperId} />;
 }
