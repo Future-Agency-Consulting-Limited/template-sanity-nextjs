@@ -45,6 +45,7 @@ export const env = createEnv({
     NEXT_PUBLIC_REVALIDATE: z.coerce.number<number>().int().positive(),
     NEXT_PUBLIC_ALLOW_CRAWLER_BOTS: z.stringbool(),
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: optionalTrimmedStringSchema,
+    NEXT_PUBLIC_HUBSPOT_PORTAL_ID: z.string().trim(),
   },
   runtimeEnv: {
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
@@ -56,5 +57,6 @@ export const env = createEnv({
     NEXT_PUBLIC_ALLOW_CRAWLER_BOTS: process.env.NEXT_PUBLIC_ALLOW_CRAWLER_BOTS,
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:
       process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    NEXT_PUBLIC_HUBSPOT_PORTAL_ID: process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID,
   },
 });
