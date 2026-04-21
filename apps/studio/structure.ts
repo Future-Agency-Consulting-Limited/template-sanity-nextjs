@@ -10,14 +10,20 @@ export const structure: StructureResolver = (S, context) =>
     .items([
       /** -- Content Document Types ----------------------------------------- */
       S.documentTypeListItem("page").title("Pages"),
-      S.listItem().title("Reusable Sections").child(
-        S.list().title("Reusable Sections"),
-        /* add document schemas used by components here, eg CTAs:
+      S.listItem()
+        .title("Reusable Sections")
+        .child(
+          S.list()
+            .title("Reusable Sections")
+            /* add document schemas used by components here, eg CTAs:
           ```typescript
           .items([S.documentTypeListItem("cta").title("CTAs")]),
           ```
         */
-      ),
+            .items([
+              S.documentTypeListItem("hubspotForm").title("HubSpot Forms"),
+            ]),
+        ),
 
       S.divider(),
       /** -- Settings Document Types----------------------------------------- */
@@ -41,6 +47,7 @@ export const structure: StructureResolver = (S, context) =>
         (item) =>
           item.getId() !== "media.tag" &&
           item.getId() !== "page" &&
-          item.getId() !== "translation.metadata",
+          item.getId() !== "translation.metadata" &&
+          item.getId() !== "hubspotForm",
       ),
     ]);

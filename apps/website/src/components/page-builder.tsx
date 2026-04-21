@@ -5,6 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY_RESULT } from "@/sanity/types";
 import { createDataAttribute } from "next-sanity";
 import { useOptimistic } from "next-sanity/hooks";
+import HubspotForm from "@/components/HubspotForm";
 
 type PageBuilderProps = {
   content: NonNullable<PAGE_QUERY_RESULT>["content"];
@@ -70,9 +71,24 @@ export function PageBuilder({
                 <ExampleSection {...block} />
               </DragHandle>
             );
-          default:
-            // This is a fallback for when we don't have a block type
-            return <div key={block._key}>Block not found: {block._type}</div>;
+          case "hubspotForm":
+            return (
+              <DragHandle key={block._key}>
+                <HubspotForm formId={block.formId} />
+              </DragHandle>
+            );
+          default: {
+            const fallbackBlock = block as {
+              _key: string;
+              _type: string;
+            };
+
+            return (
+              <div key={fallbackBlock._key}>
+                Block not found: {fallbackBlock._type}
+              </div>
+            );
+          }
         }
       })}
     </main>

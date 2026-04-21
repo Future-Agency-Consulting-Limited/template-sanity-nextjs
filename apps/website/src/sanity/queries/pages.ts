@@ -14,6 +14,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
       ...,
       content[]{
         ...,
+        _type == "reference" => @->
       }
     }
   }
@@ -38,6 +39,7 @@ export const PAGE_QUERY = defineQuery(`
     ...,
     content[]{
       ...,
+      _type == "reference" => @->
     }
   }
 `);
