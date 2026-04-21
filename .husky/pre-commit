@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+
+# temp override
+#exit 0
+
 # Attempt to load nvm (Node Version Manager)
 # Hooks run in a non-interactive shell, so nvm is often not available by default.
 export NVM_DIR="$HOME/.nvm"

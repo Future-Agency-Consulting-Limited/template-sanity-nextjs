@@ -15,10 +15,20 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type HubspotFormReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "hubspotForm";
+};
+
 export type PageBuilder = Array<
-  {
-    _key: string;
-  } & ExampleSection
+  | ({
+      _key: string;
+    } & ExampleSection)
+  | ({
+      _key: string;
+    } & HubspotFormReference)
 >;
 
 export type Copy = Array<{
@@ -59,6 +69,16 @@ export type ExampleSection = {
     _type: "image";
   };
   copy?: Copy;
+};
+
+export type HubspotForm = {
+  _id: string;
+  _type: "hubspotForm";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  formId: string;
 };
 
 export type PageReference = {
@@ -250,10 +270,12 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | HubspotFormReference
   | PageBuilder
   | Copy
   | SanityImageAssetReference
   | ExampleSection
+  | HubspotForm
   | PageReference
   | SiteSettings
   | TranslationMetadata
@@ -282,7 +304,7 @@ export type PAGE_SLUGS_QUERY_RESULT = Array<{
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "siteSettings"][0]{    homePage->{      ...,      content[]{        ...,      }    }  }
+// Query: *[_id == "siteSettings"][0]{    homePage->{      ...,      content[]{        ...,        _type == "reference" => @->      }    }  }
 export type HOME_PAGE_QUERY_RESULT =
   | {
       homePage: null;
@@ -306,20 +328,34 @@ export type HOME_PAGE_QUERY_RESULT =
           crop?: SanityImageCrop;
           _type: "image";
         };
-        content: Array<{
-          _key: string;
-          _type: "exampleSection";
-          orientation?: "imageLeft" | "imageRight";
-          title?: string;
-          image?: {
-            asset?: SanityImageAssetReference;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            _type: "image";
-          };
-          copy?: Copy;
-        }> | null;
+        content: Array<
+          | {
+              _key: string;
+              _ref: string;
+              _type: "hubspotForm";
+              _weak?: boolean;
+              _id: string;
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              title: string;
+              formId: string;
+            }
+          | {
+              _key: string;
+              _type: "exampleSection";
+              orientation?: "imageLeft" | "imageRight";
+              title?: string;
+              image?: {
+                asset?: SanityImageAssetReference;
+                media?: unknown;
+                hotspot?: SanityImageHotspot;
+                crop?: SanityImageCrop;
+                _type: "image";
+              };
+              copy?: Copy;
+            }
+        > | null;
       } | null;
     }
   | null;
@@ -341,7 +377,7 @@ export type HOME_PAGE_METADATA_QUERY_RESULT =
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_QUERY
-// Query: *[    _type == "page" &&    (      slug.current == $regionSlug ||      slug.current == $bareSlug    )][0]{    ...,    content[]{      ...,    }  }
+// Query: *[    _type == "page" &&    (      slug.current == $regionSlug ||      slug.current == $bareSlug    )][0]{    ...,    content[]{      ...,      _type == "reference" => @->    }  }
 export type PAGE_QUERY_RESULT = {
   _id: string;
   _type: "page";
@@ -360,20 +396,34 @@ export type PAGE_QUERY_RESULT = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  content: Array<{
-    _key: string;
-    _type: "exampleSection";
-    orientation?: "imageLeft" | "imageRight";
-    title?: string;
-    image?: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    copy?: Copy;
-  }> | null;
+  content: Array<
+    | {
+        _key: string;
+        _ref: string;
+        _type: "hubspotForm";
+        _weak?: boolean;
+        _id: string;
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        title: string;
+        formId: string;
+      }
+    | {
+        _key: string;
+        _type: "exampleSection";
+        orientation?: "imageLeft" | "imageRight";
+        title?: string;
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        copy?: Copy;
+      }
+  > | null;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -392,15 +442,30 @@ export type SITE_SETTINGS_QUERY_RESULT = Array<{
   title: string | null;
 }>;
 
+// Source: ../website/src/sanity/queries/sitemap.ts
+// Variable: SITEMAP_QUERY
+// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]    {      "slug": slug.current,      _updatedAt    }  ]
+export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      slug: string;
+      _updatedAt: string;
+    }
+  | {
+      slug: "";
+      _updatedAt: string | null;
+    }
+>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
-    '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _type == "reference" => @->\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
-    '\n  *[\n    _type == "page" &&\n    (\n      slug.current == $regionSlug ||\n      slug.current == $bareSlug\n    )][0]{\n    ...,\n    content[]{\n      ...,\n    }\n  }\n': PAGE_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n    (\n      slug.current == $regionSlug ||\n      slug.current == $bareSlug\n    )][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && (\n    slug.current == $regionSlug ||\n    slug.current == $bareSlug\n  )][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }
 }
