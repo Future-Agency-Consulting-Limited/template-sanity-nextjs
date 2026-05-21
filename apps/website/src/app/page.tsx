@@ -21,6 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const metadata: Metadata = {
     title: data?.homePage?.metaTitle || "",
     description: data?.homePage?.metaDescription || "",
+    robots: {
+      index: !data?.homePage?.noIndex,
+      follow: !data?.homePage?.noFollow,
+    },
   };
 
   return metadata;

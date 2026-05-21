@@ -487,20 +487,21 @@
           "type": "string"
         }
       },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "homePage": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "page.reference"
         },
-        "optional": true
+        "optional": false
+      },
+      "notFoundPage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "page.reference"
+        },
+        "optional": false
       },
       "googleTagManagerId": {
         "type": "objectAttribute",
@@ -572,6 +573,20 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
+        },
+        "optional": true
+      },
+      "noIndex": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "noFollow": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       },

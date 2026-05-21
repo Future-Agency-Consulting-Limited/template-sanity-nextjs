@@ -25,6 +25,8 @@ export const HOME_PAGE_METADATA_QUERY = defineQuery(`
     homePage->{
       metaTitle,
       metaDescription,
+      noIndex,
+      noFollow,
     }
   }
 `);
@@ -44,5 +46,7 @@ export const PAGE_METADATA_QUERY = defineQuery(`
     slug,
     metaTitle,
     metaDescription,
+    noIndex,
+    noFollow,
   }
 `);

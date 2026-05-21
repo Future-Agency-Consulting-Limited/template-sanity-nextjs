@@ -39,6 +39,10 @@ export async function generateMetadata({
   const metadata: Metadata = {
     title: data?.metaTitle || "",
     description: data?.metaDescription || "",
+    robots: {
+      index: !data?.noIndex,
+      follow: !data?.noFollow,
+    },
   };
   return metadata;
 }
