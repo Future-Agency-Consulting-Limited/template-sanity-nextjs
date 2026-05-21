@@ -96,6 +96,7 @@ export type SiteSettings = {
   _rev: string;
   title?: string;
   homePage?: PageReference;
+  googleTagManagerId?: string;
 };
 
 export type Page = {
@@ -409,10 +410,11 @@ export type PAGE_METADATA_QUERY_RESULT = {
 
 // Source: ../website/src/sanity/queries/siteSettings.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[    _type == "siteSettings"    && _id == "siteSettings"  ]{    title  }
-export type SITE_SETTINGS_QUERY_RESULT = Array<{
+// Query: *[    _type == "siteSettings"    && _id == "siteSettings"  ][0]{    title,    googleTagManagerId  }
+export type SITE_SETTINGS_QUERY_RESULT = {
   title: string | null;
-}>;
+  googleTagManagerId: string | null;
+} | null;
 
 // Source: ../website/src/sanity/queries/sitemap.ts
 // Variable: SITEMAP_QUERY
@@ -437,7 +439,7 @@ declare module "@sanity/client" {
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n  }\n': PAGE_METADATA_QUERY_RESULT;
-    '*[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ]{\n    title\n  }': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ][0]{\n    title,\n    googleTagManagerId\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }
 }

@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 import { CogIcon } from "@sanity/icons";
 
 // // Define the actions that should be available for singleton documents
@@ -28,6 +28,12 @@ export const siteSettingsType = defineType({
       name: "homePage",
       type: "reference",
       to: [{ type: "page" }],
+    }),
+    defineField({
+      name: "googleTagManagerId",
+      title: "Google Tag Manager ID",
+      type: "string",
+      description: "The ID for Google Tag Manager (GTM) integration",
     }),
   ],
   preview: {

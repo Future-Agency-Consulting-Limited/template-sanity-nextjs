@@ -1,10 +1,11 @@
 import { defineQuery } from "next-sanity";
 
-export const SITE_SETTINGS_QUERY = defineQuery(
-  `*[
+export const SITE_SETTINGS_QUERY = defineQuery(`
+  *[
     _type == "siteSettings"
     && _id == "siteSettings"
-  ]{
-    title
-  }`,
-);
+  ][0]{
+    title,
+    googleTagManagerId
+  }
+`);

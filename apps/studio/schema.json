@@ -501,6 +501,13 @@
           "name": "page.reference"
         },
         "optional": true
+      },
+      "googleTagManagerId": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

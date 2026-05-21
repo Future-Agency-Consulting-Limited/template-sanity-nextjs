@@ -10,6 +10,7 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
+    "@next/third-parties": "^16.2.6",
     "@sanity/image-url": "^2.1.1",
     "@t3-oss/env-nextjs": "^0.13.11",
     "next": "^16.2.6",
