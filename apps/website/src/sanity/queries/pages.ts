@@ -50,3 +50,13 @@ export const PAGE_METADATA_QUERY = defineQuery(`
     noFollow,
   }
 `);
+
+export const NOT_FOUND_PAGE_QUERY = defineQuery(`
+  *[_id == "siteSettings"][0].notFoundPage->{
+    ...,
+    content[]{
+      ...,
+      _type == "reference" => @->
+    }
+  }
+`);

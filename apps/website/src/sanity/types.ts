@@ -418,6 +418,58 @@ export type PAGE_METADATA_QUERY_RESULT = {
   noFollow: boolean | null;
 } | null;
 
+// Source: ../website/src/sanity/queries/pages.ts
+// Variable: NOT_FOUND_PAGE_QUERY
+// Query: *[_id == "siteSettings"][0].notFoundPage->{    ...,    content[]{      ...,      _type == "reference" => @->    }  }
+export type NOT_FOUND_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  content: Array<
+    | {
+        _key: string;
+        _ref: string;
+        _type: "hubspotForm";
+        _weak?: boolean;
+        _id: string;
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        title: string;
+        formId: string;
+      }
+    | {
+        _key: string;
+        _type: "exampleSection";
+        orientation?: "imageLeft" | "imageRight";
+        title?: string;
+        image?: {
+          asset?: SanityImageAssetReference;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        copy?: Copy;
+      }
+  > | null;
+} | null;
+
 // Source: ../website/src/sanity/queries/siteSettings.ts
 // Variable: SITE_SETTINGS_QUERY
 // Query: *[    _type == "siteSettings"    && _id == "siteSettings"  ][0]{    title,    googleTagManagerId  }
@@ -449,6 +501,7 @@ declare module "@sanity/client" {
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      noFollow,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n    noIndex,\n    noFollow,\n  }\n': PAGE_METADATA_QUERY_RESULT;
+    '\n  *[_id == "siteSettings"][0].notFoundPage->{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': NOT_FOUND_PAGE_QUERY_RESULT;
     '\n  *[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ][0]{\n    title,\n    googleTagManagerId\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }

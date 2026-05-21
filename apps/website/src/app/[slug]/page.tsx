@@ -6,6 +6,7 @@ import {
   PAGE_SLUGS_QUERY,
 } from "@/sanity/queries/pages";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -61,6 +62,10 @@ export default async function Page({
     query: PAGE_QUERY,
     params: await params,
   });
+
+  if (!page || !page.content) {
+    notFound();
+  }
 
   return page?.content ? (
     <PageBuilder
