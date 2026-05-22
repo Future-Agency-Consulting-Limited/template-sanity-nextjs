@@ -7,7 +7,7 @@ import {
 } from "@/sanity/queries/pages";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { WebPageJsonLd } from "@/components/primitives/json-ld/WebPageJsonLd";
+import { WebPageJsonLd } from "@/components/patterns/json-ld/WebPageJsonLd";
 import { env } from "@/env/client";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries/siteSettings";
 

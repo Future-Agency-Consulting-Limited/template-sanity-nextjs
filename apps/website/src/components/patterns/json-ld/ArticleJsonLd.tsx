@@ -1,4 +1,4 @@
-import { JsonLd } from "@/components/primitives/json-ld/JsonLd";
+import { JsonLd } from "@/components/primitives/JsonLd";
 
 export type ArticleJsonLdProps = {
   headline: string;
