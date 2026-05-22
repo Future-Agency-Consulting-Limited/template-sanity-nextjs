@@ -7,9 +7,9 @@ import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { singletonTools } from "sanity-plugin-singleton-management";
 import {
-  SANITY_STUDIO_PROJECT_ID,
   SANITY_STUDIO_DATASET,
   SANITY_STUDIO_FRONTEND_SITE_URL,
+  SANITY_STUDIO_PROJECT_ID,
 } from "@/env";
 
 export default defineConfig({
@@ -18,6 +18,10 @@ export default defineConfig({
 
   projectId: SANITY_STUDIO_PROJECT_ID,
   dataset: SANITY_STUDIO_DATASET,
+
+  releases: {
+    enabled: false, // enterprise tier feature
+  },
 
   plugins: [
     structureTool({ structure }),
