@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { WebPageJsonLd } from "@/components/patterns/json-ld/WebPageJsonLd";
 import { env } from "@/env/client";
-import { SITE_SETTINGS_QUERY } from "@/sanity/queries/siteSettings";
+import { getSiteSettings } from "@/sanity/lib/siteSettings";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -62,9 +62,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = await params;
-  const { data: siteSettings } = await sanityFetch({
-    query: SITE_SETTINGS_QUERY,
-  });
+  const siteSettings = await getSiteSettings();
 
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,

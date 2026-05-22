@@ -1,5 +1,5 @@
 import { env } from "@/env/client";
-import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { SanityLive } from "@/sanity/lib/live";
 import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
@@ -9,8 +9,8 @@ import { DisableDraftMode } from "@/components/util/DisableDraftMode";
 import HubspotTracking from "@/components/util/HubspotTracking";
 import HubspotPageView from "@/components/util/HubspotPageView";
 import { HubspotProvider } from "next-hubspot";
-import { SITE_SETTINGS_QUERY } from "@/sanity/queries/siteSettings";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { getSiteSettings } from "@/sanity/lib/siteSettings";
 
 export function generateMetadata(): Metadata {
   return {
@@ -25,9 +25,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { data: siteSettings } = await sanityFetch({
-    query: SITE_SETTINGS_QUERY,
-  });
+  const siteSettings = await getSiteSettings();
 
   //coerce null to undefined
   const googleTagManagerId: string | undefined =
