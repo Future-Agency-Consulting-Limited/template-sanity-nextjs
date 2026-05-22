@@ -7,6 +7,9 @@ import {
 } from "@/sanity/queries/pages";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { WebPageJsonLd } from "@/components/primitives/json-ld/WebPageJsonLd";
+import { env } from "@/env/client";
+import { SITE_SETTINGS_QUERY } from "@/sanity/queries/siteSettings";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -58,9 +61,14 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const resolvedParams = await params;
+  const { data: siteSettings } = await sanityFetch({
+    query: SITE_SETTINGS_QUERY,
+  });
+
   const { data: page } = await sanityFetch({
     query: PAGE_QUERY,
-    params: await params,
+    params: resolvedParams,
   });
 
   if (!page || !page.content) {
@@ -68,10 +76,21 @@ export default async function Page({
   }
 
   return page?.content ? (
-    <PageBuilder
-      documentId={page._id}
-      documentType={page._type}
-      content={page.content}
-    />
+    <>
+      <WebPageJsonLd
+        name={page?.metaTitle}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/${page.slug.current}`}
+        description={page?.metaDescription ?? ""}
+        inLanguage="en"
+        publisherOrgName={siteSettings?.siteName ?? ""}
+        // todo uncomment once you've added image component from dodl
+        publisherLogoUrl={/*siteSettings?.logo?.src ??*/ ""}
+      />
+      <PageBuilder
+        documentId={page._id}
+        documentType={page._type}
+        content={page.content}
+      />
+    </>
   ) : null;
 }

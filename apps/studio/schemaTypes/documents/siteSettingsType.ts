@@ -31,6 +31,14 @@ export const siteSettingsType = defineType({
   // General -------------------------------------------------------------------
   fields: [
     defineField({
+      name: "siteName",
+      title: "Site Name",
+      type: "string",
+      fieldset: "general",
+      group: "general",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "homePage",
       type: "reference",
       to: [{ type: "page" }],

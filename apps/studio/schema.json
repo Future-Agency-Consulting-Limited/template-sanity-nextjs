@@ -487,6 +487,13 @@
           "type": "string"
         }
       },
+      "siteName": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": false
+      },
       "homePage": {
         "type": "objectAttribute",
         "value": {
