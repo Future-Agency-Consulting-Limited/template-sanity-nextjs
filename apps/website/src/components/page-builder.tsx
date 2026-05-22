@@ -1,6 +1,6 @@
 "use client";
 
-import { ExampleSection } from "@/components/organisms/ExampleSection";
+import { ExampleSection } from "@/components/sections/ExampleSection";
 import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY_RESULT } from "@/sanity/types";
 import { createDataAttribute } from "next-sanity";
