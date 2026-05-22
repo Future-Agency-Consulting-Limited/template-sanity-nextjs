@@ -1,4 +1,4 @@
-import { PageBuilder } from "@/components/page-builder";
+import { PageBuilder } from "@/components/PageBuilder";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   HOME_PAGE_METADATA_QUERY,

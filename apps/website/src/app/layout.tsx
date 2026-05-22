@@ -5,7 +5,7 @@ import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import "@/globals.css";
 import { Suspense } from "react";
-import { DisableDraftMode } from "@/components/util/disable-draft-mode";
+import { DisableDraftMode } from "@/components/util/DisableDraftMode";
 import HubspotTracking from "@/components/util/HubspotTracking";
 import HubspotPageView from "@/components/util/HubspotPageView";
 import { HubspotProvider } from "next-hubspot";

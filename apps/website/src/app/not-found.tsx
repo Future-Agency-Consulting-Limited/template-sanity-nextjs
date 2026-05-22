@@ -1,6 +1,6 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { NOT_FOUND_PAGE_QUERY } from "@/sanity/queries/pages";
-import { PageBuilder } from "@/components/page-builder";
+import { PageBuilder } from "@/components/PageBuilder";
 
 export default async function NotFound() {
   const { data: page } = await sanityFetch({
