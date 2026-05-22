@@ -1,11 +1,11 @@
 "use client";
 
-import { ExampleSection } from "@/components/sections/ExampleSection";
 import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY_RESULT } from "@/sanity/types";
 import { createDataAttribute } from "next-sanity";
 import { useOptimistic } from "next-sanity/hooks";
-import HubspotForm from "@/components/HubspotForm";
+import HubspotForm from "@/components/patterns/HubspotForm";
+import { ExampleSection } from "@/components/sections/ExampleSection";
 
 type PageBuilderProps = {
   content: NonNullable<PAGE_QUERY_RESULT>["content"];

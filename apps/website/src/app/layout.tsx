@@ -1,13 +1,13 @@
-import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { env } from "@/env/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import "@/globals.css";
-import HubspotTracking from "@/components/HubspotTracking";
 import { Suspense } from "react";
-import HubspotPageView from "@/components/HubspotPageView";
+import { DisableDraftMode } from "@/components/util/disable-draft-mode";
+import HubspotTracking from "@/components/util/HubspotTracking";
+import HubspotPageView from "@/components/util/HubspotPageView";
 import { HubspotProvider } from "next-hubspot";
 import { SITE_SETTINGS_QUERY } from "@/sanity/queries/siteSettings";
 import { GoogleTagManager } from "@next/third-parties/google";
