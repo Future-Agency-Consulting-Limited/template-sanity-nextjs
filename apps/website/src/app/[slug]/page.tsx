@@ -10,16 +10,21 @@ import { notFound } from "next/navigation";
 import { WebPageJsonLd } from "@/components/patterns/json-ld/WebPageJsonLd";
 import { env } from "@/env/client";
 import { getSiteSettings } from "@/sanity/lib/siteSettings";
+import {
+  PAGE_METADATA_QUERY_RESULT,
+  PAGE_QUERY_RESULT,
+  PAGE_SLUGS_QUERY_RESULT,
+} from "@/sanity/types";
 
 /**
  * Generate static params for the page route so it can be pre-rendered
  */
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
+  const { data } = (await sanityFetch({
     query: PAGE_SLUGS_QUERY,
     perspective: "published",
     stega: false,
-  });
+  })) as { data: PAGE_SLUGS_QUERY_RESULT };
 
   return data;
 }
@@ -33,12 +38,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { data } = await sanityFetch({
+  const { data } = (await sanityFetch({
     query: PAGE_METADATA_QUERY,
     params: await params,
     // Metadata should never contain stega
     stega: false,
-  });
+  })) as { data: PAGE_METADATA_QUERY_RESULT };
 
   const metadata: Metadata = {
     title: data?.metaTitle || "",
@@ -64,10 +69,10 @@ export default async function Page({
   const resolvedParams = await params;
   const siteSettings = await getSiteSettings();
 
-  const { data: page } = await sanityFetch({
+  const { data: page } = (await sanityFetch({
     query: PAGE_QUERY,
     params: resolvedParams,
-  });
+  })) as { data: PAGE_QUERY_RESULT };
 
   if (!page || !page.content) {
     notFound();

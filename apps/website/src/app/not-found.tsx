@@ -1,11 +1,12 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { NOT_FOUND_PAGE_QUERY } from "@/sanity/queries/pages";
 import { PageBuilder } from "@/components/PageBuilder";
+import { NOT_FOUND_PAGE_QUERY_RESULT } from "@/sanity/types";
 
 export default async function NotFound() {
-  const { data: page } = await sanityFetch({
+  const { data: page } = (await sanityFetch({
     query: NOT_FOUND_PAGE_QUERY,
-  });
+  })) as { data: NOT_FOUND_PAGE_QUERY_RESULT };
 
   if (!page) {
     return (
