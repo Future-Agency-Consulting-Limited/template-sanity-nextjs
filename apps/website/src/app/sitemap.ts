@@ -10,7 +10,10 @@ type SitemapItem = {
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { data } = await sanityFetch({ query: SITEMAP_QUERY, stega: false });
+  const { data } = (await sanityFetch({
+    query: SITEMAP_QUERY,
+    stega: false,
+  })) as { data: SITEMAP_QUERY_RESULT };
 
   return data.map(
     (page: SITEMAP_QUERY_RESULT[number]): SitemapItem => ({
