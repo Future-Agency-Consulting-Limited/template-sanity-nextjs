@@ -120,6 +120,11 @@ export type Page = {
     _type: "image";
   };
   content?: PageBuilder;
+  testLinkField?: {
+    linkType?: "page" | "url";
+    page?: PageReference;
+    url?: string;
+  };
 };
 
 export type SanityImageCrop = {
@@ -335,6 +340,11 @@ export type HOME_PAGE_QUERY_RESULT =
               copy?: Copy;
             }
         > | null;
+        testLinkField?: {
+          linkType?: "page" | "url";
+          page?: PageReference;
+          url?: string;
+        };
       };
     }
   | null;
@@ -406,6 +416,11 @@ export type PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
+  testLinkField?: {
+    linkType?: "page" | "url";
+    page?: PageReference;
+    url?: string;
+  };
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -469,6 +484,11 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
+  testLinkField?: {
+    linkType?: "page" | "url";
+    page?: PageReference;
+    url?: string;
+  };
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts

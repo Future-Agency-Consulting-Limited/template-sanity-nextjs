@@ -651,6 +651,47 @@
           "name": "pageBuilder"
         },
         "optional": true
+      },
+      "testLinkField": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "linkType": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "page"
+                  },
+                  {
+                    "type": "string",
+                    "value": "url"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "page": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "page.reference"
+              },
+              "optional": true
+            },
+            "url": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
       }
     }
   },
