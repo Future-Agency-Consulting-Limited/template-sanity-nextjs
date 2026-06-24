@@ -7,9 +7,9 @@ import { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/types";
  */
 export const getSiteSettings: () => Promise<SITE_SETTINGS_QUERY_RESULT> =
   async function (): Promise<SITE_SETTINGS_QUERY_RESULT> {
-    const { data: siteSettings } = await sanityFetch({
+    const { data: siteSettings } = (await sanityFetch({
       query: SITE_SETTINGS_QUERY,
-    });
+    })) as { data: SITE_SETTINGS_QUERY_RESULT };
 
     // add parsing logic here if needed, or preferably in the query itself
 
