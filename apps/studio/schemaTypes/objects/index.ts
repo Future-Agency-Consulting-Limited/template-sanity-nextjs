@@ -5,5 +5,6 @@
  * Sanity studio.
  */
 import { exampleSectionType } from "@/schemaTypes/objects/exampleSectionType";
+import { linkType } from "@/schemaTypes/objects/linkType";
 
-export const objectSchemaTypes = [exampleSectionType];
+export const objectSchemaTypes = [exampleSectionType, linkType];

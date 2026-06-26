@@ -1,7 +1,6 @@
 import { seoGroup } from "@/schemaParts/groups/seoGroup";
 import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { linkField } from "@/schemaParts/fields/references";
 
 export const pageType = defineType({
   name: "page",
@@ -46,15 +45,12 @@ export const pageType = defineType({
       group: "pageContent",
       fieldset: "pageContent",
     }),
-    //...pageOrUrlReference(),
-    // pageReference("seo", "seo"),
-    // urlReference("seo", "seo"),
-    linkField({
-      name: "testLinkField",
-      title: "Test Link Field",
-      fieldset: "seo",
-      group: "seo",
-    }),
+    // defineField({
+    //   name: "link",
+    //   title: "Link",
+    //   type: "link",
+    //   options: { collapsible: true, collapsed: false },
+    // }),
   ],
   preview: {
     select: {

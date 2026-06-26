@@ -50,6 +50,21 @@ export type Copy = Array<{
   _key: string;
 }>;
 
+export type PageReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "page";
+};
+
+export type Link = {
+  _type: "link";
+  label: string;
+  page?: PageReference;
+  url?: string;
+  openInNewTab?: boolean;
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
@@ -79,13 +94,6 @@ export type HubspotForm = {
   _rev: string;
   title: string;
   formId: string;
-};
-
-export type PageReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "page";
 };
 
 export type SiteSettings = {
@@ -120,11 +128,7 @@ export type Page = {
     _type: "image";
   };
   content?: PageBuilder;
-  testLinkField?: {
-    linkType?: "page" | "url";
-    page?: PageReference;
-    url?: string;
-  };
+  link?: Link;
 };
 
 export type SanityImageCrop = {
@@ -259,10 +263,11 @@ export type AllSanitySchemaTypes =
   | HubspotFormReference
   | PageBuilder
   | Copy
+  | PageReference
+  | Link
   | SanityImageAssetReference
   | ExampleSection
   | HubspotForm
-  | PageReference
   | SiteSettings
   | Page
   | SanityImageCrop
@@ -340,11 +345,7 @@ export type HOME_PAGE_QUERY_RESULT =
               copy?: Copy;
             }
         > | null;
-        testLinkField?: {
-          linkType?: "page" | "url";
-          page?: PageReference;
-          url?: string;
-        };
+        link?: Link;
       };
     }
   | null;
@@ -416,11 +417,7 @@ export type PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  testLinkField?: {
-    linkType?: "page" | "url";
-    page?: PageReference;
-    url?: string;
-  };
+  link?: Link;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -484,11 +481,7 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  testLinkField?: {
-    linkType?: "page" | "url";
-    page?: PageReference;
-    url?: string;
-  };
+  link?: Link;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts
