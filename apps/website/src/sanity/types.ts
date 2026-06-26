@@ -128,7 +128,6 @@ export type Page = {
     _type: "image";
   };
   content?: PageBuilder;
-  link?: Link;
 };
 
 export type SanityImageCrop = {
@@ -345,7 +344,6 @@ export type HOME_PAGE_QUERY_RESULT =
               copy?: Copy;
             }
         > | null;
-        link?: Link;
       };
     }
   | null;
@@ -417,7 +415,6 @@ export type PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  link?: Link;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -481,7 +478,6 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  link?: Link;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts

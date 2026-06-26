@@ -696,14 +696,6 @@
           "name": "pageBuilder"
         },
         "optional": true
-      },
-      "link": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "link"
-        },
-        "optional": true
       }
     }
   },
