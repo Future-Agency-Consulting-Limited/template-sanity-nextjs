@@ -286,13 +286,13 @@ export type AllSanitySchemaTypes =
 
 // Source: ../website/src/sanity/queries/links.ts
 // Variable: LINK_URL_PATH_QUERY
-// Query: *[  defined(slug.current) &&  _id == $_id][0]{  _id,  _type,  "slug": slug.current,  "parentSlugs": [    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->slug.current,    parentPage->slug.current  ][defined(@)],  "nextParentPage": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage}
+// Query: *[  defined(slug.current) &&  _id == $_id][0]{  _id,  _type,  "slug": slug.current,  "parentSlugs": [    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->slug.current,    parentPage->slug.current  ][defined(@)],  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id}
 export type LINK_URL_PATH_QUERY_RESULT = {
   _id: string;
   _type: "page";
   slug: string;
   parentSlugs: Array<string | null>;
-  nextParentPage: PageReference | null;
+  nextParentPageId: string | null;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -533,7 +533,7 @@ export type SITEMAP_QUERY_RESULT = Array<
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPage": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage\n}\n': LINK_URL_PATH_QUERY_RESULT;
+    '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id\n}\n': LINK_URL_PATH_QUERY_RESULT;
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _type == "reference" => @->\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      noFollow,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;

@@ -1,14 +1,15 @@
 import { defineQuery } from "next-sanity";
 
 /**
- * construct a URL path from a page reference.
+ * get an array of 5 levels of parent documents from a document id
+ *
+ * can be used recursively to construct a URL path from a page reference.
  *
  * Works generically for any document type that has fields:
  * - slug: slug
  * - parentPage: reference.
  *
  * params:
- * - _type: string - document type
  * - _id: string - document id
  */
 export const LINK_URL_PATH_QUERY = defineQuery(`
@@ -26,6 +27,6 @@ export const LINK_URL_PATH_QUERY = defineQuery(`
     parentPage->parentPage->slug.current,
     parentPage->slug.current
   ][defined(@)],
-  "nextParentPage": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage
+  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id
 }
 `);

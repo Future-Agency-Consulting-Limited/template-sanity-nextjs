@@ -30,6 +30,12 @@ export const pageType = defineType({
   fields: [
     ...seoGroup("seo", "seo"),
     defineField({
+      name: "parentPage",
+      title: "Parent Page",
+      type: "reference",
+      to: [{ type: "page" }],
+    }),
+    defineField({
       name: "mainImage",
       type: "image",
       group: "pageContent",
@@ -45,12 +51,12 @@ export const pageType = defineType({
       group: "pageContent",
       fieldset: "pageContent",
     }),
-    // defineField({
-    //   name: "link",
-    //   title: "Link",
-    //   type: "link",
-    //   options: { collapsible: true, collapsed: false },
-    // }),
+    defineField({
+      name: "link",
+      title: "Link",
+      type: "link",
+      options: { collapsible: true, collapsed: false },
+    }),
   ],
   preview: {
     select: {
