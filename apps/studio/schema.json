@@ -614,34 +614,6 @@
         },
         "optional": false
       },
-      "metaTitle": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "metaDescription": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "noIndex": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "noFollow": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
       "parentPage": {
         "type": "objectAttribute",
         "value": {
@@ -705,11 +677,31 @@
         },
         "optional": true
       },
-      "link": {
+      "metaTitle": {
         "type": "objectAttribute",
         "value": {
-          "type": "inline",
-          "name": "link"
+          "type": "string"
+        },
+        "optional": false
+      },
+      "metaDescription": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "noIndex": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "noFollow": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       }

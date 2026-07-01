@@ -61,8 +61,6 @@ export async function generateMetadata({
     },
   };
 
-  console.log("metadata", metadata);
-
   return metadata;
 }
 

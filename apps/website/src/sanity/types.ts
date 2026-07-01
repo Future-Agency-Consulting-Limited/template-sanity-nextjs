@@ -116,10 +116,6 @@ export type Page = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
   parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
@@ -129,7 +125,10 @@ export type Page = {
     _type: "image";
   };
   content?: PageBuilder;
-  link?: Link;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 };
 
 export type SanityImageCrop = {
@@ -318,10 +317,6 @@ export type HOME_PAGE_QUERY_RESULT =
         _rev: string;
         title: string;
         slug: Slug;
-        metaTitle: string;
-        metaDescription?: string;
-        noIndex?: boolean;
-        noFollow?: boolean;
         parentPage?: PageReference;
         mainImage?: {
           asset?: SanityImageAssetReference;
@@ -358,7 +353,10 @@ export type HOME_PAGE_QUERY_RESULT =
               copy?: Copy;
             }
         > | null;
-        link?: Link;
+        metaTitle: string;
+        metaDescription?: string;
+        noIndex?: boolean;
+        noFollow?: boolean;
       };
     }
   | null;
@@ -391,10 +389,6 @@ export type PAGE_QUERY_RESULT = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
   parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
@@ -431,7 +425,10 @@ export type PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  link?: Link;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -456,10 +453,6 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
   parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
@@ -496,7 +489,10 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
-  link?: Link;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts

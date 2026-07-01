@@ -1,6 +1,7 @@
 import { seoGroup } from "@/schemaParts/groups/seoGroup";
 import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { pageSettingsGroup } from "@/schemaParts/groups/pageSettingsGroup";
 
 export const pageType = defineType({
   name: "page",
@@ -9,32 +10,34 @@ export const pageType = defineType({
   icon: DocumentIcon,
   groups: [
     {
-      name: "seo",
-      title: "SEO",
+      name: "page",
+      title: "Page",
     },
     {
       name: "pageContent",
       title: "Page Content",
+    },
+    {
+      name: "seo",
+      title: "SEO",
     },
   ],
   fieldsets: [
     {
-      name: "seo",
-      title: "SEO",
+      name: "page",
+      title: "Page",
     },
     {
       name: "pageContent",
       title: "Page Content",
     },
+    {
+      name: "seo",
+      title: "SEO",
+    },
   ],
   fields: [
-    ...seoGroup("seo", "seo"),
-    defineField({
-      name: "parentPage",
-      title: "Parent Page",
-      type: "reference",
-      to: [{ type: "page" }],
-    }),
+    ...pageSettingsGroup("page", "page", "page"),
     defineField({
       name: "mainImage",
       type: "image",
@@ -51,12 +54,13 @@ export const pageType = defineType({
       group: "pageContent",
       fieldset: "pageContent",
     }),
-    defineField({
-      name: "link",
-      title: "Link",
-      type: "link",
-      options: { collapsible: true, collapsed: false },
-    }),
+    ...seoGroup("seo", "seo"),
+    // defineField({
+    //   name: "link",
+    //   title: "Link",
+    //   type: "link",
+    //   options: { collapsible: true, collapsed: false },
+    // }),
   ],
   preview: {
     select: {
