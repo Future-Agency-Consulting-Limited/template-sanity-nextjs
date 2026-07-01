@@ -517,15 +517,17 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../website/src/sanity/queries/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]    {      "slug": slug.current,      _updatedAt    }  ]
+// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt,    "_id": homePage->_id  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]{    "slug": slug.current,    _updatedAt,    _id  }    {      "slug": slug.current,      _updatedAt,      _id    }  ]
 export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      slug: null;
+      _updatedAt: string;
+      _id: string;
+    }
   | {
       slug: "";
       _updatedAt: string;
-    }
-  | {
-      slug: string;
-      _updatedAt: string;
+      _id: string;
     }
 >;
 
@@ -541,6 +543,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n    noIndex,\n    noFollow,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0].notFoundPage->{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': NOT_FOUND_PAGE_QUERY_RESULT;
     '\n  *[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ][0]{\n    ...,\n    "notFoundPageSlug": notFoundPage->slug.current,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
+    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt,\n    "_id": homePage->_id\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]{\n    "slug": slug.current,\n    _updatedAt,\n    _id\n  }\n\n    {\n      "slug": slug.current,\n      _updatedAt,\n      _id\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }
 }

@@ -65,10 +65,8 @@ async function parseUrl(link: Link): Promise<string> {
  * @param {string} documentId - The document ID to parse.
  * @return {Promise<string>} A promise that resolves to the parsed URL string.
  */
-async function parseLinkRef(documentId: string): Promise<string> {
+export async function parseLinkRef(documentId: string): Promise<string> {
   const slugs = await collectPathSlugs(documentId);
-
-  console.log(slugs);
 
   const map = documentTypeUrlPrefixMap.find(
     (item) => item.documentType === slugs._type,
@@ -76,6 +74,13 @@ async function parseLinkRef(documentId: string): Promise<string> {
 
   if (!map) {
     throw new Error("Invalid document type");
+  }
+
+  if (map.documentType === "page") {
+    // remove first item from array if it's "home"
+    if (slugs.slugs[0] === "home") {
+      slugs.slugs.shift();
+    }
   }
 
   return `${map.urlPrefix}/${slugs.slugs.join("/")}`;
