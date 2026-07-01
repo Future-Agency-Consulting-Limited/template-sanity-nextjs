@@ -297,9 +297,9 @@ export type LINK_URL_PATH_QUERY_RESULT = {
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_SLUGS_QUERY
-// Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": slug.current }
+// Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": [slug.current] }
 export type PAGE_SLUGS_QUERY_RESULT = Array<{
-  slug: string;
+  slug: Array<string>;
 }>;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -534,7 +534,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id\n}\n': LINK_URL_PATH_QUERY_RESULT;
-    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": [slug.current] }\n': PAGE_SLUGS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _type == "reference" => @->\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      noFollow,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': PAGE_QUERY_RESULT;

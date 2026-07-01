@@ -16,6 +16,10 @@ import {
   PAGE_SLUGS_QUERY_RESULT,
 } from "@/sanity/types";
 
+function getPageSlug(slug?: string[]) {
+  return slug?.[slug.length - 1] ?? "home";
+}
+
 /**
  * Generate static params for the page route so it can be pre-rendered
  */
@@ -36,11 +40,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const pageSlug = getPageSlug(resolvedParams.slug);
+
   const { data } = (await sanityFetch({
     query: PAGE_METADATA_QUERY,
-    params: await params,
+    params: { slug: pageSlug },
     // Metadata should never contain stega
     stega: false,
   })) as { data: PAGE_METADATA_QUERY_RESULT };
@@ -53,25 +60,30 @@ export async function generateMetadata({
       follow: !data?.noFollow,
     },
   };
+
+  console.log("metadata", metadata);
+
   return metadata;
 }
 
 /**
  * Page component for the page route
+ *
  * @param params
  * @returns
  */
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const resolvedParams = await params;
+  const pageSlug = getPageSlug(resolvedParams.slug);
   const siteSettings = await getSiteSettings();
 
   const { data: page } = (await sanityFetch({
     query: PAGE_QUERY,
-    params: resolvedParams,
+    params: { slug: pageSlug },
   })) as { data: PAGE_QUERY_RESULT };
 
   if (!page || !page.content) {
@@ -82,7 +94,7 @@ export default async function Page({
     <>
       <WebPageJsonLd
         name={page?.metaTitle}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/${page.slug.current}`}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/${resolvedParams.slug.join("/")}`}
         description={page?.metaDescription ?? ""}
         inLanguage="en"
         publisherOrgName={siteSettings?.siteName ?? ""}
