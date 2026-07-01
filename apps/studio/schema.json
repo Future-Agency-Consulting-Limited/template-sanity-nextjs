@@ -642,6 +642,14 @@
         },
         "optional": true
       },
+      "parentPage": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "page.reference"
+        },
+        "optional": true
+      },
       "mainImage": {
         "type": "objectAttribute",
         "value": {
@@ -694,6 +702,14 @@
         "value": {
           "type": "inline",
           "name": "pageBuilder"
+        },
+        "optional": true
+      },
+      "link": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "link"
         },
         "optional": true
       }
