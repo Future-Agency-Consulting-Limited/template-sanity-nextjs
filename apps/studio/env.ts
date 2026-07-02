@@ -10,6 +10,10 @@ export const SANITY_STUDIO_DATASET = assertValue(
   process.env.SANITY_STUDIO_DATASET,
   "Missing environment variable: SANITY_STUDIO_DATASET",
 );
+export const SANITY_STUDIO_SANITY_API_VERSION = assertValue(
+  process.env.SANITY_STUDIO_SANITY_API_VERSION,
+  "Missing environment variable: SANITY_STUDIO_SANITY_API_VERSION",
+);
 export const SANITY_STUDIO_FRONTEND_SITE_URL = assertValue(
   process.env.SANITY_STUDIO_FRONTEND_SITE_URL,
   "Missing environment variable: SANITY_STUDIO_FRONTEND_SITE_URL",

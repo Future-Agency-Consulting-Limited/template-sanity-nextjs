@@ -1,4 +1,5 @@
 import { defineField } from "sanity";
+import { client } from "@/utils/client";
 
 export const pageSettingsGroup = (
   documentType: string,
@@ -71,15 +72,17 @@ export const pageSettingsGroup = (
             }
 
             // Fetch the next ancestor's parentPage ref
-            // todo cleanup sanity API fetch
-            const result = await context
-              .getClient({ apiVersion: "2024-01-01" })
-              .fetch<{ parentRef: string | null }>(
-                `*[_type == "${documentType}" && _id in [$id, "drafts." + $id]][0]{
-                  "parentRef": parentPage._ref
-                }`,
-                { id: ancestorId },
-              );
+            const result = await client.fetch<{ parentRef: string | null }>(
+              `
+              *[
+                _type == "${documentType}" &&
+                _id in [$id, "drafts." + $id]
+              ][0]{
+                "parentRef": parentPage._ref
+              }
+              `,
+              { id: ancestorId },
+            );
 
             ancestorId = result?.parentRef?.replace(/^drafts\./, "") ?? null;
           }
