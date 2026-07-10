@@ -1,19 +1,19 @@
 import { defineArrayMember, defineType } from "sanity";
+import { sectionTypes } from "@/schemaTypes/sections/index";
 
 export const pageBuilderType = defineType({
   name: "pageBuilder",
   type: "array",
   of: [
+    ...sectionTypes.map((sectionType) =>
+      defineArrayMember({ type: sectionType.name }),
+    ),
     defineArrayMember({ type: "exampleSection" }),
     defineArrayMember({
       type: "reference",
       to: [{ type: "hubspotForm" }],
       title: "HubSpot Form",
     }),
-    // defineArrayMember({ type: "hero" }),
-    // defineArrayMember({ type: "splitImage" }),
-    // defineArrayMember({ type: "features" }),
-    // defineArrayMember({ type: "faqs" }),
   ],
   options: {
     insertMenu: {
