@@ -1,5 +1,5 @@
-import path from "path";
 import { defineCliConfig } from "sanity/cli";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 // using process.env for environment variables in the CLI, as they won't have loaded yet if we use `apps/studio/env.ts`
 
@@ -18,11 +18,7 @@ export default defineCliConfig({
     autoUpdates: true,
   },
   vite: {
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname),
-      },
-    },
+    plugins: [tsconfigPaths()],
   },
   typegen: {
     path: "../website/src/**/*.{ts,tsx,js,jsx}", // glob pattern to your typescript files. Can also be an array of paths
