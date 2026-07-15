@@ -10,27 +10,29 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
-    "@sanity/image-url": "^2.0.3",
+    "@next/third-parties": "^16.2.6",
+    "@sanity/image-url": "^2.1.1",
     "@t3-oss/env-nextjs": "^0.13.11",
-    "next": "^16.2.1",
+    "next": "^16.2.6",
     "next-hubspot": "^2.0.1",
-    "next-sanity": "^12.1.6",
+    "next-sanity": "^13.0.11",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "tailwind-merge": "^3.5.0",
-    "zod": "^4.3.6"
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@portabletext/types": "^4.0.2",
-    "@tailwindcss/postcss": "^4.2.2",
+    "@sanity/client": "^7.23.0",
+    "@tailwindcss/postcss": "^4.3.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/node": "^20.19.37",
-    "@types/react": "^19.2.14",
+    "@types/node": "^20.19.41",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4.2.2",
+    "tailwindcss": "^4.3.0",
     "typescript": "^5.9.3"
   }
 }

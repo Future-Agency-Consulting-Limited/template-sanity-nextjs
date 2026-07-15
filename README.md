@@ -18,6 +18,8 @@ Website & CMS Backend built using [Next.js](https://nextjs.org) & [Sanity](https
 - [React](https://reactjs.org) – Library for building user interfaces from components
 - [Next.js](https://nextjs.org) – Framework for server and client rendered React apps and APIs
 - [Tailwind CSS](https://tailwindcss.com) – Utility-first CSS framework
+- [Dodl](https://github.com/future-agency-consulting-limited/dodl) – Component library for Next.js and Tailwind CSS by
+  Future Group
 
 ### Programming Languages
 
@@ -74,6 +76,36 @@ Please make sure you have the following installed before local setup
 - Website at [http://localhost:3000](http://localhost:3000)
 - Sanity Studio at [http://localhost:3333](http://localhost:3333)
 
+### Setting up Dodl
+
+To be able to use Dodl, you need to have a GitHub token with access to the Dodl repository. You can get one
+from [GitHub](https://github.com/settings/tokens).
+
+In your terminal, create or edit a global .npmrc file:
+
+```bash
+nano ~/.npmrc
+```
+
+Add the following to your `.npmrc` file:
+
+```
+@future-agency-consulting-limited:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken={TOKEN}
+```
+
+To add Dodl to your project, run the following command:
+
+```bash
+pnpx @future-agency-consulting-limited/dodl init
+```
+
+To add new components from Dodl to your project, run the following command:
+
+```bash
+pnpx @future-agency-consulting-limited/dodl add
+```
+
 ## Useful Commands
 
 - Fix formatting issues: `pnpm run format-fix`
@@ -85,18 +117,20 @@ Please make sure you have the following installed before local setup
 
 1. Create a new branch from `main`
    name it in the format `<type>/<jira-ticket>-<description>`
-   - eg. `feature/BGR-67-video-player` or `bugfix/LASM-486-homepage-links`
-   - Type can be:
 
-     | Type      | Description                                                            |
-     | --------- | ---------------------------------------------------------------------- |
-     | `feature` | Adding a new feature                                                   |
-     | `bugfix`  | Fixing a bug                                                           |
-     | `hotfix`  | Fixing a production issue. only use this for urgent out-of-band issues |
-     | `release` | Merging multiple branches to prepare for a release to production       |
+- eg. `feature/BGR-67-video-player` or `bugfix/LASM-486-homepage-links`
+- Type can be:
 
-   - Jira ticket is the board code and number for the ticket, eg. `AO-693` for the Jira ticket https://ecosystem.atlassian.net/browse/AO-693
-   - Description is a short description of the change. It should be `kebab-cased`.
+| Type      | Description                                                            |
+| --------- | ---------------------------------------------------------------------- |
+| `feature` | Adding a new feature                                                   |
+| `bugfix`  | Fixing a bug                                                           |
+| `hotfix`  | Fixing a production issue. only use this for urgent out-of-band issues |
+| `release` | Merging multiple branches to prepare for a release to production       |
+
+- Jira ticket is the board code and number for the ticket, eg. `AO-693` for the Jira
+  ticket https://ecosystem.atlassian.net/browse/AO-693
+- Description is a short description of the change. It should be `kebab-cased`.
 
 2. Make and test your changes locally
 3. Run `pnpm run fix-all` to ensure pre-commit checks pass

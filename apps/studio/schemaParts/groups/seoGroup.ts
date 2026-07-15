@@ -36,5 +36,23 @@ export const seoGroup = (group?: string, fieldset?: string) => {
       ...(group && { group: group }),
       ...(fieldset && { fieldset: fieldset }),
     }),
+    defineField({
+      name: "noIndex",
+      title: "No Index",
+      description: "Instruct search engines not to index this page.",
+      type: "boolean",
+      initialValue: false,
+      ...(group && { group: group }),
+      ...(fieldset && { fieldset: fieldset }),
+    }),
+    defineField({
+      name: "noFollow",
+      title: "No Follow",
+      description: "Instruct search engines not to follow links on this page.",
+      type: "boolean",
+      initialValue: false,
+      ...(group && { group: group }),
+      ...(fieldset && { fieldset: fieldset }),
+    }),
   ];
 };

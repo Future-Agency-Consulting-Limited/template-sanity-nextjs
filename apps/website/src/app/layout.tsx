@@ -1,14 +1,16 @@
-import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { env } from "@/env/client";
 import { SanityLive } from "@/sanity/lib/live";
 import type { Metadata } from "next";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { draftMode } from "next/headers";
 import "@/globals.css";
-import HubspotTracking from "@/components/HubspotTracking";
 import { Suspense } from "react";
-import HubspotPageView from "@/components/HubspotPageView";
+import { DisableDraftMode } from "@/components/util/DisableDraftMode";
+import HubspotTracking from "@/components/util/HubspotTracking";
+import HubspotPageView from "@/components/util/HubspotPageView";
 import { HubspotProvider } from "next-hubspot";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { getSiteSettings } from "@/sanity/lib/siteSettings";
 
 export function generateMetadata(): Metadata {
   return {
@@ -23,9 +25,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteSettings = await getSiteSettings();
+
+  //coerce null to undefined
+  const googleTagManagerId: string | undefined =
+    siteSettings?.googleTagManagerId ?? undefined;
+
   return (
     <html lang="en">
       <body>
+        {googleTagManagerId && <GoogleTagManager gtmId={googleTagManagerId} />}
         <HubspotTracking />
         <Suspense fallback={null}>
           <HubspotPageView />

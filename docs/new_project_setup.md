@@ -22,22 +22,26 @@
 5. [ ] Put the Preview token in `apps/website/.env` -> `SANITY_API_READ_TOKEN`
        and the Deploy Studio token in `apps/studio/.env` -> `SANITY_AUTH_TOKEN`
 
-6. [ ] Initial deployment of Sanity studio:
-   - Ensure you are already logged in to the correct sanity account in your browser
-   - when logging in from the CLI, choose `E-mail / password` and follow the link. You'll be automatically logged
-     in on the CLI using the same account you're logged in to in your browser.
-   - when running the deploy command:
-     - enter a studio hostname (eg. `project-name-fg`)
-     - If it asks about upgrading, choose `Upgrade local versions (recommended). You will need to run the deploy command again`
-     - copy the appId value to `apps/studio/.env` -> `SANITY_STUDIO_APP_ID`
-   ```bash
-   cd apps/studio
-   pnpx sanity@latest logout
-   pnpx sanity@latest login
-   pnpx sanity@latest projects list
-   pnpx sanity@latest deploy
-   pnpx sanity@latest logout
-   ```
+6. [ ] Initial deployment of Sanity Studio:
+
+- Ensure you are already logged in to the correct sanity account in your browser
+- when logging in from the CLI, choose `E-mail / password` and follow the link. You'll be automatically logged
+  in on the CLI using the same account you're logged in to in your browser.
+- when running the deploy command:
+  - enter a studio hostname (eg. `project-name-fg`)
+  - If it asks about upgrading, choose
+    `Upgrade local versions (recommended). You will need to run the deploy command again`
+  - copy the appId value to `apps/studio/.env` -> `SANITY_STUDIO_APP_ID`
+
+  ```bash
+  cd apps/studio
+  pnpx sanity@latest logout
+  pnpx sanity@latest login
+  pnpx sanity@latest projects list
+  pnpx sanity@latest deploy
+  pnpx sanity@latest logout
+  ```
+
 7. [ ] remove the value from `apps/studio/.env` -> `SANITY_AUTH_TOKEN` to prevent accidental future deployments
 
 8. [ ] CORS origins: In Your org -> Your project -> API -> CORS origins,
@@ -74,8 +78,9 @@ If you need to host the frontend on a different platform, you will need to inves
        the project and use the main branch.
 
 3. [ ] Add environment variables to the Amplify app. You need to add values from both:
-   - `apps/studio/.env`
-   - `apps/web/.env`
+
+- `apps/studio/.env`
+- `apps/web/.env`
 
 4. [ ] Run a build and deploy to verify the studio and web apps are working
 
@@ -91,9 +96,13 @@ If you need to host the frontend on a different platform, you will need to inves
 
 ### Vercel
 
-Note that a paid Vercel account is required to connect to a private GitHub repository.
+Any PRs being merged into main will need to be raised under the devteam account, otherwise deployment will fail.
 
-# TODO these steps only setup the Next.js frontend, they don't handle deploying Sanity Studio
+Once merged, the PR will be automatically deployed to Vercel.
+
+You can check the deployment status by logging in using the devteam account at https://vercel.com/tessaract
+
+#### Next.js Frontend
 
 1. [ ] Create a Vercel account for the client if one hasn't already been created
        (or obtain access if using a client's account) and save the login details
@@ -114,3 +123,22 @@ Note that a paid Vercel account is required to connect to a private GitHub repos
 6. [ ] Environment variables - paste in the keys and values from from `apps/website/.env`
 
 7. [ ] Deploy the project and verify it's working
+
+#### Sanity Studio
+
+1. [ ] Create a second Vercel project for the studio and import the GitHub repository
+
+2. [ ] Change the root directory to `apps/studio`
+
+3. [ ] Set commands
+
+- **Build command:**
+  `pnpm run deploy && mkdir -p dummy-vercel-build && echo '<meta http-equiv=\"refresh\" content=\"0;url=https://<INSERT-PROJECT-NAME>.sanity.studio\">' > dummy-vercel-build/index.html`
+- **Output directory:** `dummy-vercel-build`
+- **Install command:** `pnpm install --frozen-lockfile`
+
+4. [ ] Environment variables - paste in the keys and values from from `apps/studio/.env`
+
+5. [ ] Under: Settings → Environments → Preview - disable branch tracking
+
+Note that the devteam account will need to raise the PR into main on GitHub in order for Vercel to allow the deployment.

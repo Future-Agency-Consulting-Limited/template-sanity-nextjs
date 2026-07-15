@@ -1,6 +1,12 @@
 import { env } from "@/env/client";
 import { createClient } from "next-sanity";
 
+/**
+ * Create a client for fetching data from Sanity.
+ *
+ * Don't use this client directly, use `sanityFetch()` in `live.ts` instead so that
+ * live content updates and Preview Mode in the studio are supported.
+ */
 export const client = createClient({
   projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: env.NEXT_PUBLIC_SANITY_DATASET,
