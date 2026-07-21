@@ -27,15 +27,16 @@ export type parsedLink = {
 
 /**
  * Recursively walks a Sanity GROQ query result (object, array, or primitive)
- * and augments any `link`-typed object with a `parsedLink` property containing
- * the resolved label/url/openInNewTab, while leaving the original `link` object intact.
+ * and augments any `button`-typed object that has a `link` field by setting
+ * its `href` property to the resolved URL from that link, while leaving the
+ * original `link` object intact.
  *
  * Works for any query result shape (e.g. HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT, etc.)
  * since it doesn't depend on a specific structure — it just looks for objects
- * with `_type === "link"` anywhere in the tree.
+ * with `_type === "button"` that have a `link` property anywhere in the tree.
  *
  * @param page Any Sanity query result (object, array, or primitive value).
- * @return A deep copy of `page` with every `link` object extended with a `parsed` property.
+ * @return A deep copy of `page` with every `button` object that has a `link` extended with an `href` property.
  */
 export async function parsePageLinks<T>(page: T): Promise<T> {
   if (Array.isArray(page)) {
@@ -45,12 +46,17 @@ export async function parsePageLinks<T>(page: T): Promise<T> {
   }
 
   if (page !== null && typeof page === "object") {
-    if ((page as { _type?: string })._type === "link") {
-      const parsed = await parseLink(page as unknown as Link);
+    if (
+      (page as { _type?: string })._type === "button" &&
+      (page as { link?: Link }).link
+    ) {
+      const { link } = page as { link: Link };
+      const { label, url } = await parseLink(link);
 
       return {
         ...page,
-        parsed,
+        label,
+        href: url,
       } as unknown as T;
     }
 
