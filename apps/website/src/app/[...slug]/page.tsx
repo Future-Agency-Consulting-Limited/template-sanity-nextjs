@@ -15,6 +15,7 @@ import {
   PAGE_QUERY_RESULT,
   PAGE_SLUGS_QUERY_RESULT,
 } from "@/sanity/types";
+import { parsePageLinks } from "@/sanity/lib/link";
 
 function getPageSlug(slug?: string[]) {
   return slug?.[slug.length - 1] ?? "home";
@@ -88,21 +89,23 @@ export default async function Page({
     notFound();
   }
 
-  return page?.content ? (
+  const parsedPage = await parsePageLinks(page);
+
+  return parsedPage?.content ? (
     <>
       <WebPageJsonLd
-        name={page?.metaTitle}
+        name={parsedPage?.metaTitle}
         url={`${env.NEXT_PUBLIC_SITE_URL}/${resolvedParams.slug.join("/")}`}
-        description={page?.metaDescription ?? ""}
+        description={parsedPage?.metaDescription ?? ""}
         inLanguage="en"
         publisherOrgName={siteSettings?.siteName ?? ""}
         // todo uncomment once you've added image component from dodl
         publisherLogoUrl={/*siteSettings?.logo?.src ??*/ ""}
       />
       <PageBuilder
-        documentId={page._id}
-        documentType={page._type}
-        content={page.content}
+        documentId={parsedPage._id}
+        documentType={parsedPage._type}
+        content={parsedPage.content}
       />
     </>
   ) : null;

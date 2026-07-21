@@ -26,6 +26,47 @@ export type parsedLink = {
 };
 
 /**
+ * Recursively walks a Sanity GROQ query result (object, array, or primitive)
+ * and augments any `link`-typed object with a `parsedLink` property containing
+ * the resolved label/url/openInNewTab, while leaving the original `link` object intact.
+ *
+ * Works for any query result shape (e.g. HOME_PAGE_QUERY_RESULT, PAGE_QUERY_RESULT, etc.)
+ * since it doesn't depend on a specific structure — it just looks for objects
+ * with `_type === "link"` anywhere in the tree.
+ *
+ * @param page Any Sanity query result (object, array, or primitive value).
+ * @return A deep copy of `page` with every `link` object extended with a `parsed` property.
+ */
+export async function parsePageLinks<T>(page: T): Promise<T> {
+  if (Array.isArray(page)) {
+    return (await Promise.all(
+      page.map((item) => parsePageLinks(item)),
+    )) as unknown as T;
+  }
+
+  if (page !== null && typeof page === "object") {
+    if ((page as { _type?: string })._type === "link") {
+      const parsed = await parseLink(page as unknown as Link);
+
+      return {
+        ...page,
+        parsed,
+      } as unknown as T;
+    }
+
+    const entries = await Promise.all(
+      Object.entries(page as Record<string, unknown>).map(
+        async ([key, value]) => [key, await parsePageLinks(value)] as const,
+      ),
+    );
+
+    return Object.fromEntries(entries) as T;
+  }
+
+  return page;
+}
+
+/**
  * Convert a sanity link object to a URL with label and settings that can be used in anchor tags
  *
  * @param link sanity link object
