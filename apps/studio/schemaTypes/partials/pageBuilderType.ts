@@ -1,11 +1,11 @@
 import { defineArrayMember, defineType } from "sanity";
-import { sectionTypes } from "@/schemaTypes/sections/index";
+import { sectionsSchemaTypes } from "@/schemaTypes/sections/index";
 
 export const pageBuilderType = defineType({
   name: "pageBuilder",
   type: "array",
   of: [
-    ...sectionTypes.map((sectionType) =>
+    ...sectionsSchemaTypes.map((sectionType) =>
       defineArrayMember({ type: sectionType.name }),
     ),
     defineArrayMember({ type: "exampleSection" }),
