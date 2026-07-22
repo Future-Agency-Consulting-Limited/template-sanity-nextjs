@@ -12,6 +12,7 @@ import {
   HOME_PAGE_METADATA_QUERY_RESULT,
   HOME_PAGE_QUERY_RESULT,
 } from "@/sanity/types";
+import { parsePageLinks } from "@/sanity/lib/link";
 
 export const revalidate = false; // Indefinitely cache this page
 
@@ -43,21 +44,23 @@ export default async function Page() {
     query: HOME_PAGE_QUERY,
   })) as { data: HOME_PAGE_QUERY_RESULT };
 
-  return page?.homePage?.content ? (
+  const parsedPage = await parsePageLinks(page);
+
+  return parsedPage?.homePage?.content ? (
     <>
       <WebPageJsonLd
-        name={page?.homePage?.metaTitle}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/${page?.homePage.slug.current}`}
-        description={page?.homePage?.metaDescription ?? ""}
+        name={parsedPage?.homePage?.metaTitle}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/${parsedPage?.homePage.slug.current}`}
+        description={parsedPage?.homePage?.metaDescription ?? ""}
         inLanguage="en"
         publisherOrgName={siteSettings?.siteName ?? ""}
         // todo uncomment once you've added image component from dodl
         publisherLogoUrl={/*siteSettings?.logo?.src ??*/ ""}
       />
       <PageBuilder
-        documentId={page?.homePage._id}
-        documentType={page?.homePage._type}
-        content={page?.homePage.content}
+        documentId={parsedPage?.homePage._id}
+        documentType={parsedPage?.homePage._type}
+        content={parsedPage?.homePage.content}
       />
     </>
   ) : null;

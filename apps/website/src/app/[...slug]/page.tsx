@@ -15,6 +15,11 @@ import {
   PAGE_QUERY_RESULT,
   PAGE_SLUGS_QUERY_RESULT,
 } from "@/sanity/types";
+import { parsePageLinks } from "@/sanity/lib/link";
+
+function getPageSlug(slug?: string[]) {
+  return slug?.[slug.length - 1] ?? "home";
+}
 
 /**
  * Generate static params for the page route so it can be pre-rendered
@@ -36,11 +41,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const pageSlug = getPageSlug(resolvedParams.slug);
+
   const { data } = (await sanityFetch({
     query: PAGE_METADATA_QUERY,
-    params: await params,
+    params: { slug: pageSlug },
     // Metadata should never contain stega
     stega: false,
   })) as { data: PAGE_METADATA_QUERY_RESULT };
@@ -53,46 +61,51 @@ export async function generateMetadata({
       follow: !data?.noFollow,
     },
   };
+
   return metadata;
 }
 
 /**
  * Page component for the page route
+ *
  * @param params
  * @returns
  */
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const resolvedParams = await params;
+  const pageSlug = getPageSlug(resolvedParams.slug);
   const siteSettings = await getSiteSettings();
 
   const { data: page } = (await sanityFetch({
     query: PAGE_QUERY,
-    params: resolvedParams,
+    params: { slug: pageSlug },
   })) as { data: PAGE_QUERY_RESULT };
 
   if (!page || !page.content) {
     notFound();
   }
 
-  return page?.content ? (
+  const parsedPage = await parsePageLinks(page);
+
+  return parsedPage?.content ? (
     <>
       <WebPageJsonLd
-        name={page?.metaTitle}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/${page.slug.current}`}
-        description={page?.metaDescription ?? ""}
+        name={parsedPage?.metaTitle}
+        url={`${env.NEXT_PUBLIC_SITE_URL}/${resolvedParams.slug.join("/")}`}
+        description={parsedPage?.metaDescription ?? ""}
         inLanguage="en"
         publisherOrgName={siteSettings?.siteName ?? ""}
         // todo uncomment once you've added image component from dodl
         publisherLogoUrl={/*siteSettings?.logo?.src ??*/ ""}
       />
       <PageBuilder
-        documentId={page._id}
-        documentType={page._type}
-        content={page.content}
+        documentId={parsedPage._id}
+        documentType={parsedPage._type}
+        content={parsedPage.content}
       />
     </>
   ) : null;

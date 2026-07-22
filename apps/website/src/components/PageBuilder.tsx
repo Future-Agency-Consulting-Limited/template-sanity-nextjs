@@ -6,19 +6,32 @@ import { createDataAttribute } from "next-sanity";
 import { useOptimistic } from "next-sanity/hooks";
 import HubspotForm from "@/components/patterns/HubspotForm";
 import { ExampleSection } from "@/components/sections/ExampleSection";
-//import { AccordionsSection, AccordionsSectionProps } from "@/components/sections/accordions-section";
-//import { cardCarousel, CardCarouselProps } from "@/components/sections/card-carousel";
-//import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
+// import {
+//   AccordionsSection,
+//   AccordionsSectionProps,
+// } from "@/components/sections/accordions-section";
+// import {
+//   CardCarousel,
+//   CardCarouselProps,
+// } from "@/components/sections/card-carousel";
+// import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
 //import { ContactSection, ContactSectionProps } from "@/components/sections/contact-section";
-//import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
-//import { HeroSimple, HeroSimpleProps } from "@/components/sections/hero-simple";
+// import {
+//   CtaCardSection,
+//   CtaCardSectionProps,
+// } from "@/components/sections/cta-card-section";
+// import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
+// import { HeroSimple, HeroSimpleProps } from "@/components/sections/hero-simple";
 // import {
 //   MarqueeLogos,
 //   MarqueeLogosProps,
 // } from "@/components/sections/marquee-logos";
-//import { MarqueeText, MarqueeTextProps } from "@/components/sections/marquee-text";
-//import { NewsCarousel, NewsCarouselProps } from "@/components/sections/news-carousel";
-//import { NewsGrid, NewsGridProps } from "@/components/sections/news-grid";
+// import { MarqueeText, MarqueeTextProps } from "@/components/sections/marquee-text";
+// import {
+//   NewsCarousel,
+//   NewsCarouselProps,
+// } from "@/components/sections/news-carousel";
+// import { NewsGrid, NewsGridProps } from "@/components/sections/news-grid";
 // import {
 //   TwoUpGroup,
 //   TwoUpGroupProps,
@@ -94,6 +107,7 @@ export function PageBuilder({
                 <HubspotForm formId={block.formId} />
               </DragHandle>
             );
+
           /*
           case "accordionsSection":
             return (
@@ -102,6 +116,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "cardCarousel":
             return (
@@ -109,7 +124,8 @@ export function PageBuilder({
                 <CardCarousel {...(block as CardCarouselProps)} />
               </DragHandle>
             );
-           */
+          */
+
           /*
           case "cardGrid":
             return (
@@ -117,7 +133,8 @@ export function PageBuilder({
                 <CardGrid {...(block as CardGridProps)} />
               </DragHandle>
             );
-           */
+          */
+
           /*
           case "contactSection":
             return (
@@ -125,7 +142,17 @@ export function PageBuilder({
                 <ContactSection {...(block as ContactSectionProps)} />
               </DragHandle>
             );
-           */
+          */
+
+          /*
+          case "ctaCardSection":
+            return (
+              <DragHandle key={block._key}>
+                <CtaCardSection {...(block as CtaCardSectionProps)} />
+              </DragHandle>
+            );
+          */
+
           /*
           case "heroMedia":
             return (
@@ -134,6 +161,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "heroSimple":
             return (
@@ -142,6 +170,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "marqueeLogos":
             return (
@@ -150,6 +179,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "marqueeText":
             return (
@@ -158,6 +188,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "newsCarousel":
             return (
@@ -166,6 +197,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "newsGrid":
             return (
@@ -174,6 +206,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           /*
           case "twoUpGroup":
             return (
@@ -182,6 +215,7 @@ export function PageBuilder({
               </DragHandle>
             );
           */
+
           default: {
             const fallbackBlock = block as {
               _key: string;
@@ -189,7 +223,10 @@ export function PageBuilder({
             };
 
             return (
-              <div key={fallbackBlock._key}>
+              <div
+                className="bg-pink-500 border-8 border-dashed border-yellow-300 text-white p-8 text-center text-lg text-bold"
+                key={fallbackBlock._key}
+              >
                 Block not found: {fallbackBlock._type}
               </div>
             );

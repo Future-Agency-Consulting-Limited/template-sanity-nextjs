@@ -108,10 +108,7 @@ export type Page = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
+  parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -120,6 +117,10 @@ export type Page = {
     _type: "image";
   };
   content?: PageBuilder;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 };
 
 export type SanityImageCrop = {
@@ -273,11 +274,22 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../website/src/sanity/queries/links.ts
+// Variable: LINK_URL_PATH_QUERY
+// Query: *[  defined(slug.current) &&  _id == $_id][0]{  _id,  _type,  "slug": slug.current,  "parentSlugs": [    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->slug.current,    parentPage->slug.current  ][defined(@)],  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id}
+export type LINK_URL_PATH_QUERY_RESULT = {
+  _id: string;
+  _type: "page";
+  slug: string;
+  parentSlugs: Array<string | null>;
+  nextParentPageId: string | null;
+} | null;
+
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_SLUGS_QUERY
-// Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": slug.current }
+// Query: *[    _type == "page" &&    defined(slug.current) &&    slug.current != *[_id == "siteSettings"][0].homePage->slug.current  ]{ "slug": [slug.current] }
 export type PAGE_SLUGS_QUERY_RESULT = Array<{
-  slug: string;
+  slug: Array<string>;
 }>;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -296,10 +308,7 @@ export type HOME_PAGE_QUERY_RESULT =
         _rev: string;
         title: string;
         slug: Slug;
-        metaTitle: string;
-        metaDescription?: string;
-        noIndex?: boolean;
-        noFollow?: boolean;
+        parentPage?: PageReference;
         mainImage?: {
           asset?: SanityImageAssetReference;
           media?: unknown;
@@ -335,6 +344,10 @@ export type HOME_PAGE_QUERY_RESULT =
               copy?: Copy;
             }
         > | null;
+        metaTitle: string;
+        metaDescription?: string;
+        noIndex?: boolean;
+        noFollow?: boolean;
       };
     }
   | null;
@@ -367,10 +380,7 @@ export type PAGE_QUERY_RESULT = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
+  parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -406,6 +416,10 @@ export type PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -430,10 +444,7 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
   _rev: string;
   title: string;
   slug: Slug;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
+  parentPage?: PageReference;
   mainImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -469,6 +480,10 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
         copy?: Copy;
       }
   > | null;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts
@@ -489,15 +504,17 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../website/src/sanity/queries/sitemap.ts
 // Variable: SITEMAP_QUERY
-// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]    {      "slug": slug.current,      _updatedAt    }  ]
+// Query: [    ...  *[    _type == "siteSettings" &&    defined(homePage->_id)  ][0...1]{    "slug": "",    "_updatedAt": homePage->_updatedAt,    "_id": homePage->_id  },    ...  *[    _type == "page" &&    _id != *[_type == "siteSettings"][0].homePage._ref  ]{    "slug": slug.current,    _updatedAt,    _id  }    {      "slug": slug.current,      _updatedAt,      _id    }  ]
 export type SITEMAP_QUERY_RESULT = Array<
+  | {
+      slug: null;
+      _updatedAt: string;
+      _id: string;
+    }
   | {
       slug: "";
       _updatedAt: string;
-    }
-  | {
-      slug: string;
-      _updatedAt: string;
+      _id: string;
     }
 >;
 
@@ -505,13 +522,14 @@ export type SITEMAP_QUERY_RESULT = Array<
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": slug.current }\n': PAGE_SLUGS_QUERY_RESULT;
+    '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id\n}\n': LINK_URL_PATH_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": [slug.current] }\n': PAGE_SLUGS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _type == "reference" => @->\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      noFollow,\n    }\n  }\n': HOME_PAGE_METADATA_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': PAGE_QUERY_RESULT;
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n    noIndex,\n    noFollow,\n  }\n': PAGE_METADATA_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0].notFoundPage->{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': NOT_FOUND_PAGE_QUERY_RESULT;
     '\n  *[\n    _type == "siteSettings"\n    && _id == "siteSettings"\n  ][0]{\n    ...,\n    "notFoundPageSlug": notFoundPage->slug.current,\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]\n\n    {\n      "slug": slug.current,\n      _updatedAt\n    }\n  ]': SITEMAP_QUERY_RESULT;
+    '[\n    ...\n  *[\n    _type == "siteSettings" &&\n    defined(homePage->_id)\n  ][0...1]{\n    "slug": "",\n    "_updatedAt": homePage->_updatedAt,\n    "_id": homePage->_id\n  }\n,\n    ...\n  *[\n    _type == "page" &&\n    _id != *[_type == "siteSettings"][0].homePage._ref\n  ]{\n    "slug": slug.current,\n    _updatedAt,\n    _id\n  }\n\n    {\n      "slug": slug.current,\n      _updatedAt,\n      _id\n    }\n  ]': SITEMAP_QUERY_RESULT;
   }
 }
