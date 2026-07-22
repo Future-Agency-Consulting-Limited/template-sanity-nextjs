@@ -49,7 +49,7 @@ export async function parsePageLinks<T>(page: T): Promise<T> {
       (page as { _type?: string })._type === "button" &&
       (page as { link?: Link }).link
     ) {
-      const { link } = page as { link: Link };
+      const { link } = page as unknown as { link: Link };
       const { label, url } = await parseLink(link);
 
       return {
