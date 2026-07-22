@@ -55,12 +55,6 @@ export const pageType = defineType({
       fieldset: "pageContent",
     }),
     ...seoGroup("seo", "seo"),
-    // defineField({
-    //   name: "link",
-    //   title: "Link",
-    //   type: "link",
-    //   options: { collapsible: true, collapsed: false },
-    // }),
   ],
   preview: {
     select: {
