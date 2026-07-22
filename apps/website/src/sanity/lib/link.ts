@@ -22,7 +22,6 @@ export const documentTypeUrlPrefixMap: DocumentTypeUrlPrefixMap = [
 export type parsedLink = {
   label: string;
   url: string;
-  openInNewTab: boolean;
 };
 
 /**
@@ -83,7 +82,6 @@ export async function parseLink(link: Link): Promise<parsedLink> {
   return {
     label: link.label,
     url: url,
-    openInNewTab: link.openInNewTab ?? false,
   };
 }
 
