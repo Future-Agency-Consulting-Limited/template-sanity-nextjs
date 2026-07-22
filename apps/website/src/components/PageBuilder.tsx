@@ -223,7 +223,10 @@ export function PageBuilder({
             };
 
             return (
-              <div key={fallbackBlock._key}>
+              <div
+                className="bg-pink-500 border-8 border-dashed border-yellow-300 text-white p-8 text-center text-lg text-bold"
+                key={fallbackBlock._key}
+              >
                 Block not found: {fallbackBlock._type}
               </div>
             );
