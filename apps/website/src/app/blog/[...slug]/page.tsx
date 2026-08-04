@@ -105,7 +105,6 @@ export default async function Page({
 
   return parsedPage?.content ? (
     <>
-      {/* todo update with appropriate metadata for a blog article */}
       <ArticleJsonLd
         headline={page.metaTitle || page.title}
         description={page.metaDescription ?? page.excerpt ?? ""}
