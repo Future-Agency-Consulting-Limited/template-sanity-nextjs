@@ -3,7 +3,7 @@ import {
   singletonDocumentListItem,
 } from "sanity-plugin-singleton-management";
 import type { StructureResolver } from "sanity/structure";
-import { SANITY_STUDIO_FEATURE_FLAG_BLOG } from "@/env";
+import { env } from "@/env";
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
@@ -29,7 +29,7 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
 
       /** -- Blog Document Types--------------------------------------------- */
-      ...(SANITY_STUDIO_FEATURE_FLAG_BLOG === "true"
+      ...(env.SANITY_STUDIO_FEATURE_FLAG_BLOG
         ? [
             S.documentTypeListItem("blog").title("Blogs"),
             S.documentTypeListItem("author").title("Authors"),
