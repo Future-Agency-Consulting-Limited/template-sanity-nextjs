@@ -18,6 +18,10 @@ export const SANITY_STUDIO_FRONTEND_SITE_URL = assertValue(
   process.env.SANITY_STUDIO_FRONTEND_SITE_URL,
   "Missing environment variable: SANITY_STUDIO_FRONTEND_SITE_URL",
 );
+export const SANITY_STUDIO_FEATURE_FLAG_BLOG = assertValue(
+  process.env.SANITY_STUDIO_FEATURE_FLAG_BLOG,
+  "Missing environment variable: SANITY_STUDIO_FEATURE_FLAG_BLOG",
+);
 
 function assertValue<T>(value: T | undefined, errorMessage: string): T {
   if (value === undefined) {

@@ -3,6 +3,7 @@ import {
   singletonDocumentListItem,
 } from "sanity-plugin-singleton-management";
 import type { StructureResolver } from "sanity/structure";
+import { SANITY_STUDIO_FEATURE_FLAG_BLOG } from "@/env";
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
@@ -26,6 +27,17 @@ export const structure: StructureResolver = (S, context) =>
         ),
 
       S.divider(),
+
+      /** -- Blog Document Types--------------------------------------------- */
+      ...(SANITY_STUDIO_FEATURE_FLAG_BLOG === "true"
+        ? [
+            S.documentTypeListItem("blog").title("Blogs"),
+            S.documentTypeListItem("author").title("Authors"),
+            S.documentTypeListItem("blogCategory").title("Blog Categories"),
+            S.divider(),
+          ]
+        : []),
+
       /** -- Settings Document Types----------------------------------------- */
       singletonDocumentListItem({
         S,
@@ -47,6 +59,9 @@ export const structure: StructureResolver = (S, context) =>
         (item) =>
           item.getId() !== "media.tag" &&
           item.getId() !== "page" &&
-          item.getId() !== "hubspotForm",
+          item.getId() !== "hubspotForm" &&
+          item.getId() !== "blog" &&
+          item.getId() !== "author" &&
+          item.getId() !== "blogCategory",
       ),
     ]);
