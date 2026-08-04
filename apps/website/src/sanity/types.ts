@@ -57,10 +57,17 @@ export type PageReference = {
   [internalGroqTypeReferenceTo]?: "page";
 };
 
+export type BlogReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blog";
+};
+
 export type Link = {
   _type: "link";
   label: string;
-  page?: PageReference;
+  page?: PageReference | BlogReference;
   url?: string;
 };
 
@@ -102,13 +109,6 @@ export type BlogCategory = {
   _updatedAt: string;
   _rev: string;
   title: string;
-};
-
-export type BlogReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "blog";
 };
 
 export type AuthorReference = {
@@ -356,12 +356,12 @@ export type AllSanitySchemaTypes =
   | PageBuilder
   | Copy
   | PageReference
+  | BlogReference
   | Link
   | SanityImageAssetReference
   | ExampleSection
   | HubspotForm
   | BlogCategory
-  | BlogReference
   | AuthorReference
   | BlogCategoryReference
   | Blog
@@ -390,7 +390,7 @@ export type BLOG_PAGE_SLUGS_QUERY_RESULT = Array<{
 
 // Source: ../website/src/sanity/queries/blog.ts
 // Variable: BLOG_PAGE_QUERY
-// Query: *[_type == "blog" && slug.current == $slug][0]{    ...,    content[]{      ...,      _type == "reference" => @->    }  }
+// Query: *[_type == "blog" && slug.current == $slug][0]{    ...,    author->,    categories[]->,    content[]{      ...,      _type == "reference" => @->    }  }
 export type BLOG_PAGE_QUERY_RESULT = {
   _id: string;
   _type: "blog";
@@ -401,12 +401,48 @@ export type BLOG_PAGE_QUERY_RESULT = {
   slug: Slug;
   parentPage?: BlogReference;
   date: string;
-  author?: AuthorReference;
-  categories?: Array<
-    {
+  author: {
+    _id: string;
+    _type: "author";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    name: string;
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    bio?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
       _key: string;
-    } & BlogCategoryReference
-  >;
+    }>;
+    linkedin?: string;
+  } | null;
+  categories: Array<{
+    _id: string;
+    _type: "blogCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+  }> | null;
   excerpt?: string;
   content: Array<{
     _key: string;
@@ -697,7 +733,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[\n    _type == "blog" &&\n    defined(slug.current)\n  ]{ "slug": [slug.current] }\n': BLOG_PAGE_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "blog" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': BLOG_PAGE_QUERY_RESULT;
+    '\n  *[_type == "blog" && slug.current == $slug][0]{\n    ...,\n    author->,\n    categories[]->,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': BLOG_PAGE_QUERY_RESULT;
     '\n  *[_type == "blog" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n    noIndex,\n    noFollow,\n  }\n': BLOG_PAGE_METADATA_QUERY_RESULT;
     '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id\n}\n': LINK_URL_PATH_QUERY_RESULT;
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": [slug.current] }\n': PAGE_SLUGS_QUERY_RESULT;
