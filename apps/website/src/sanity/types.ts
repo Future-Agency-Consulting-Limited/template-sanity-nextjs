@@ -95,6 +95,121 @@ export type HubspotForm = {
   formId: string;
 };
 
+export type BlogCategory = {
+  _id: string;
+  _type: "blogCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+};
+
+export type BlogReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blog";
+};
+
+export type AuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "author";
+};
+
+export type BlogCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blogCategory";
+};
+
+export type Blog = {
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  parentPage?: BlogReference;
+  date: string;
+  author?: AuthorReference;
+  categories?: Array<
+    {
+      _key: string;
+    } & BlogCategoryReference
+  >;
+  excerpt?: string;
+  content?: Array<
+    {
+      _key: string;
+    } & ExampleSection
+  >;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+};
+
+export type Author = {
+  _id: string;
+  _type: "author";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  bio?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  linkedin?: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -128,28 +243,6 @@ export type Page = {
   metaDescription?: string;
   noIndex?: boolean;
   noFollow?: boolean;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 
 export type MediaTag = {
@@ -267,11 +360,17 @@ export type AllSanitySchemaTypes =
   | SanityImageAssetReference
   | ExampleSection
   | HubspotForm
-  | SiteSettings
-  | Page
+  | BlogCategory
+  | BlogReference
+  | AuthorReference
+  | BlogCategoryReference
+  | Blog
+  | Author
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | SiteSettings
+  | Page
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -282,16 +381,83 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../website/src/sanity/queries/blog.ts
+// Variable: BLOG_PAGE_SLUGS_QUERY
+// Query: *[    _type == "blog" &&    defined(slug.current)  ]{ "slug": [slug.current] }
+export type BLOG_PAGE_SLUGS_QUERY_RESULT = Array<{
+  slug: Array<string>;
+}>;
+
+// Source: ../website/src/sanity/queries/blog.ts
+// Variable: BLOG_PAGE_QUERY
+// Query: *[_type == "blog" && slug.current == $slug][0]{    ...,    content[]{      ...,      _type == "reference" => @->    }  }
+export type BLOG_PAGE_QUERY_RESULT = {
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  parentPage?: BlogReference;
+  date: string;
+  author?: AuthorReference;
+  categories?: Array<
+    {
+      _key: string;
+    } & BlogCategoryReference
+  >;
+  excerpt?: string;
+  content: Array<{
+    _key: string;
+    _type: "exampleSection";
+    orientation?: "imageLeft" | "imageRight";
+    title?: string;
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    copy?: Copy;
+  }> | null;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+} | null;
+
+// Source: ../website/src/sanity/queries/blog.ts
+// Variable: BLOG_PAGE_METADATA_QUERY
+// Query: *[_type == "blog" && slug.current == $slug][0]{    slug,    metaTitle,    metaDescription,    noIndex,    noFollow,  }
+export type BLOG_PAGE_METADATA_QUERY_RESULT = {
+  slug: Slug;
+  metaTitle: string;
+  metaDescription: string | null;
+  noIndex: boolean | null;
+  noFollow: boolean | null;
+} | null;
+
 // Source: ../website/src/sanity/queries/links.ts
 // Variable: LINK_URL_PATH_QUERY
 // Query: *[  defined(slug.current) &&  _id == $_id][0]{  _id,  _type,  "slug": slug.current,  "parentSlugs": [    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->parentPage->slug.current,    parentPage->parentPage->slug.current,    parentPage->slug.current  ][defined(@)],  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id}
-export type LINK_URL_PATH_QUERY_RESULT = {
-  _id: string;
-  _type: "page";
-  slug: string;
-  parentSlugs: Array<string | null>;
-  nextParentPageId: string | null;
-} | null;
+export type LINK_URL_PATH_QUERY_RESULT =
+  | {
+      _id: string;
+      _type: "blog";
+      slug: string;
+      parentSlugs: Array<string | null>;
+      nextParentPageId: string | null;
+    }
+  | {
+      _id: string;
+      _type: "page";
+      slug: string;
+      parentSlugs: Array<string | null>;
+      nextParentPageId: string | null;
+    }
+  | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
 // Variable: PAGE_SLUGS_QUERY
@@ -530,6 +696,9 @@ export type SITEMAP_QUERY_RESULT = Array<
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '\n  *[\n    _type == "blog" &&\n    defined(slug.current)\n  ]{ "slug": [slug.current] }\n': BLOG_PAGE_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "blog" && slug.current == $slug][0]{\n    ...,\n    content[]{\n      ...,\n      _type == "reference" => @->\n    }\n  }\n': BLOG_PAGE_QUERY_RESULT;
+    '\n  *[_type == "blog" && slug.current == $slug][0]{\n    slug,\n    metaTitle,\n    metaDescription,\n    noIndex,\n    noFollow,\n  }\n': BLOG_PAGE_METADATA_QUERY_RESULT;
     '\n*[\n  defined(slug.current) &&\n  _id == $_id\n][0]{\n  _id,\n  _type,\n  "slug": slug.current,\n  "parentSlugs": [\n    parentPage->parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->parentPage->slug.current,\n    parentPage->parentPage->slug.current,\n    parentPage->slug.current\n  ][defined(@)],\n  "nextParentPageId": parentPage->parentPage->parentPage->parentPage->parentPage->parentPage->_id\n}\n': LINK_URL_PATH_QUERY_RESULT;
     '\n  *[\n    _type == "page" &&\n    defined(slug.current) &&\n    slug.current != *[_id == "siteSettings"][0].homePage->slug.current\n  ]{ "slug": [slug.current] }\n': PAGE_SLUGS_QUERY_RESULT;
     '\n  *[_id == "siteSettings"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _type == "reference" => @->\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;

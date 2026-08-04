@@ -24,6 +24,12 @@ const optionalTrimmedStringSchema: z.ZodType<string | undefined> = z.preprocess(
   z.string().optional(),
 );
 
+const optionalStringBoolDefaultFalseSchema = z.preprocess((value) => {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  return trimmed === "" ? undefined : trimmed;
+}, z.stringbool().default(false));
+
 /**
  * Client-side environment variable schema.
  *
@@ -46,6 +52,7 @@ export const env = createEnv({
     NEXT_PUBLIC_ALLOW_CRAWLER_BOTS: z.stringbool(),
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: optionalTrimmedStringSchema,
     NEXT_PUBLIC_HUBSPOT_PORTAL_ID: z.string().trim(),
+    NEXT_PUBLIC_FEATURE_FLAG_BLOG: optionalStringBoolDefaultFalseSchema,
   },
   runtimeEnv: {
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
@@ -58,5 +65,6 @@ export const env = createEnv({
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION:
       process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     NEXT_PUBLIC_HUBSPOT_PORTAL_ID: process.env.NEXT_PUBLIC_HUBSPOT_PORTAL_ID,
+    NEXT_PUBLIC_FEATURE_FLAG_BLOG: process.env.NEXT_PUBLIC_FEATURE_FLAG_BLOG,
   },
 });
