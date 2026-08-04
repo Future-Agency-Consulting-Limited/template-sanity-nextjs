@@ -20,6 +20,7 @@ applications:
             - echo "NEXT_PUBLIC_SANITY_API_VERSION=$NEXT_PUBLIC_SANITY_API_VERSION" >> apps/website/.env
             - echo "NEXT_PUBLIC_SANITY_STUDIO_URL=$NEXT_PUBLIC_SANITY_STUDIO_URL" >> apps/website/.env
             - echo "NEXT_PUBLIC_REVALIDATE=$NEXT_PUBLIC_REVALIDATE" >> apps/website/.env
+            - echo "NEXT_PUBLIC_FEATURE_FLAG_BLOG=$NEXT_PUBLIC_FEATURE_FLAG_BLOG" >> apps/website/.env
             - echo "SANITY_API_READ_TOKEN=$SANITY_API_READ_TOKEN" >> apps/website/.env
         build:
           commands:
