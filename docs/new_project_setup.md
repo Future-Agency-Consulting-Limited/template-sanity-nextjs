@@ -2,17 +2,16 @@
 
 ## Sanity
 
-1. [ ] Create a sanity account at https://sanity.io/signup with an email address
-       specifically for this project, eg devteam+projectname@fg.agency if one
-       hasn't already been created
+1. [ ] Create a sanity account at https://sanity.io/signup with an email address specifically for this project, eg
+       devteam+projectname@fg.agency if one hasn't already been created
 
 2. [ ] Save the login details in our password manager
 
-3. [ ] Once you have an account, organisation and project created in Sanity, insert the
-       project id and dataset in in `apps/studio/.env` and `apps/web/.env`
+3. [ ] Once you have an account, organisation and project created in Sanity, insert the project id and dataset in in
+       `apps/studio/.env` and `apps/web/.env`
 
-4. [ ] API Tokens: In Your org -> Your project -> API -> Tokens, you will need
-       to create the following tokens and save them in our password manager:
+4. [ ] API Tokens: In Your org -> Your project -> API -> Tokens, you will need to create the following tokens and save
+       them in our password manager:
 
    | Name          | Permissions                |
    | ------------- | -------------------------- |
@@ -25,8 +24,8 @@
 6. [ ] Initial deployment of Sanity Studio:
 
 - Ensure you are already logged in to the correct sanity account in your browser
-- when logging in from the CLI, choose `E-mail / password` and follow the link. You'll be automatically logged
-  in on the CLI using the same account you're logged in to in your browser.
+- when logging in from the CLI, choose `E-mail / password` and follow the link. You'll be automatically logged in on the
+  CLI using the same account you're logged in to in your browser.
 - when running the deploy command:
   - enter a studio hostname (eg. `project-name-fg`)
   - If it asks about upgrading, choose
@@ -44,8 +43,7 @@
 
 7. [ ] remove the value from `apps/studio/.env` -> `SANITY_AUTH_TOKEN` to prevent accidental future deployments
 
-8. [ ] CORS origins: In Your org -> Your project -> API -> CORS origins,
-       you will need to add these entries:
+8. [ ] CORS origins: In Your org -> Your project -> API -> CORS origins, you will need to add these entries:
 
    | Origin                                   | Credentials       |
    | ---------------------------------------- | ----------------- |
@@ -70,12 +68,11 @@ If you need to host the frontend on a different platform, you will need to inves
 
 ### AWS Amplify
 
-1. [ ] Create an AWS account for the client if one hasn't already been created
-       (or if the client and isn't granting access to their own AWS account)
+1. [ ] Create an AWS account for the client if one hasn't already been created (or if the client and isn't granting
+       access to their own AWS account)
        and save the login details in our password manager
 
-2. [ ] Create an AWS Amplify app for the project. Connect it to the GitHub repo for
-       the project and use the main branch.
+2. [ ] Create an AWS Amplify app for the project. Connect it to the GitHub repo for the project and use the main branch.
 
 3. [ ] Add environment variables to the Amplify app. You need to add values from both:
 
@@ -84,11 +81,9 @@ If you need to host the frontend on a different platform, you will need to inves
 
 4. [ ] Run a build and deploy to verify the studio and web apps are working
 
-5. [ ] Check the build logs or Sanity studio to obtain the App Id and add it to
-       Amplify's environment variables
+5. [ ] Check the build logs or Sanity studio to obtain the App Id and add it to Amplify's environment variables
 
-6. [ ] Create a custom subdomain with your Domain Name Registrar for the site, e.g.
-       projectname.production.fg.agency
+6. [ ] Create a custom subdomain with your Domain Name Registrar for the site, e.g. projectname.production.fg.agency
 
 7. [ ] Update Amplify to use the custom domain
 
@@ -100,25 +95,25 @@ Any PRs being merged into main will need to be raised under the devteam account,
 
 Once merged, the PR will be automatically deployed to Vercel.
 
-You can check the deployment status by logging in using the devteam account at https://vercel.com/tessaract
+You can check the deployment status by logging in using the devteam account at https://vercel.com/insert-project-name
 
 #### Next.js Frontend
 
-1. [ ] Create a Vercel account for the client if one hasn't already been created
-       (or obtain access if using a client's account) and save the login details
-       in our password manager
+1. [ ] Create a Vercel account for the client if one hasn't already been created (or obtain access if using a client's
+       account) and save the login details in our password manager
 
-2. [ ] Connect the Vercel project to the Dev Team GitHub account and grant
-       access to the specific repository for the project.
+2. [ ] Connect the Vercel project to the Dev Team GitHub account and grant access to the specific repository for the
+       project.
 
 3. [ ] Add a new Project and import the repository into Vercel.
 
 4. [ ] Change the root directory to `apps/website`
 
 5. [ ] Set commands
-   - **Build command:** `pnpm run build`
-   - **Output directory:** leave as Next.js default
-   - **Install command:** `pnpm install --frozen-lockfile`
+
+- **Build command:** `pnpm run build`
+- **Output directory:** leave as Next.js default
+- **Install command:** `pnpm install --frozen-lockfile`
 
 6. [ ] Environment variables - paste in the keys and values from from `apps/website/.env`
 
