@@ -1,5 +1,6 @@
 import { defineField, defineType, FieldDefinition } from "sanity";
 import { LinkIcon } from "@sanity/icons";
+import { env } from "@/env";
 
 const labelField = (options?: { fieldset?: string; group?: string }) =>
   defineField({
@@ -25,7 +26,10 @@ const pageRefField = ({
   to?: { type: string }[];
   ops?: object;
 } = {}) => {
-  const defaultTo = [{ type: "page" }];
+  const defaultTo = [
+    { type: "page" },
+    ...(env.SANITY_STUDIO_FEATURE_FLAG_BLOG ? [{ type: "blog" }] : []),
+  ];
 
   return defineField({
     name: "page",
