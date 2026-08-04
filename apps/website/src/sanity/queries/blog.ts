@@ -10,6 +10,8 @@ export const BLOG_PAGE_SLUGS_QUERY = defineQuery(`
 export const BLOG_PAGE_QUERY = defineQuery(`
   *[_type == "blog" && slug.current == $slug][0]{
     ...,
+    author->,
+    categories[]->,
     content[]{
       ...,
       _type == "reference" => @->

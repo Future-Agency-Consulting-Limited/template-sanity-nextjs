@@ -7,7 +7,6 @@ import {
 } from "@/sanity/queries/blog";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { WebPageJsonLd } from "@/components/patterns/json-ld/WebPageJsonLd";
 import { env } from "@/env/client";
 import { getSiteSettings } from "@/sanity/lib/siteSettings";
 import { parsePageLinks } from "@/sanity/lib/link";
@@ -16,6 +15,7 @@ import {
   BLOG_PAGE_QUERY_RESULT,
   BLOG_PAGE_SLUGS_QUERY_RESULT,
 } from "@/sanity/types";
+import { ArticleJsonLd } from "@/components/patterns/json-ld/ArticleJsonLd";
 
 function getPageSlug(slug?: string[]) {
   return slug?.[slug.length - 1] ?? "home";
@@ -106,15 +106,19 @@ export default async function Page({
   return parsedPage?.content ? (
     <>
       {/* todo update with appropriate metadata for a blog article */}
-      <WebPageJsonLd
-        name={parsedPage?.metaTitle}
-        url={`${env.NEXT_PUBLIC_SITE_URL}/blog/${resolvedParams.slug.join("/")}`}
-        description={parsedPage?.metaDescription ?? ""}
-        inLanguage="en"
+      <ArticleJsonLd
+        headline={page.metaTitle || page.title}
+        description={page.metaDescription ?? page.excerpt ?? ""}
+        // todo uncomment once you've added image component from dodl
+        imageUrl={/*page.mainImage?.src ??*/ ""}
+        authorName={page.author?.name ?? ""}
         publisherOrgName={siteSettings?.siteName ?? ""}
         // todo uncomment once you've added image component from dodl
-        publisherLogoUrl={/*siteSettings?.logo?.src ??*/ ""}
+        publisherLogoUrl={/* siteSettings?.logo?.src ??*/ ""}
+        datePublished={page.date ?? "1970-01-01"}
+        articleSection={page.categories?.[0]?.title ?? ""}
       />
+
       <PageBuilder
         documentId={parsedPage._id}
         documentType={parsedPage._type}
