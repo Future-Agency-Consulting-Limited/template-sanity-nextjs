@@ -12,6 +12,7 @@ applications:
             - echo "SANITY_STUDIO_DATASET=$SANITY_STUDIO_DATASET" >> apps/studio/.env.local
             - echo "SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN" >> apps/studio/.env.local
             - echo "SANITY_STUDIO_FRONTEND_SITE_URL=$SANITY_STUDIO_FRONTEND_SITE_URL" >> apps/studio/.env.local
+            - echo "SANITY_STUDIO_FEATURE_FLAG_BLOG=$SANITY_STUDIO_FEATURE_FLAG_BLOG" >> apps/studio/.env.local
 
             - echo "NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID" >> apps/website/.env
             - echo "NEXT_PUBLIC_SANITY_APP_ID=$NEXT_PUBLIC_SANITY_APP_ID" >> apps/website/.env
@@ -19,6 +20,7 @@ applications:
             - echo "NEXT_PUBLIC_SANITY_API_VERSION=$NEXT_PUBLIC_SANITY_API_VERSION" >> apps/website/.env
             - echo "NEXT_PUBLIC_SANITY_STUDIO_URL=$NEXT_PUBLIC_SANITY_STUDIO_URL" >> apps/website/.env
             - echo "NEXT_PUBLIC_REVALIDATE=$NEXT_PUBLIC_REVALIDATE" >> apps/website/.env
+            - echo "NEXT_PUBLIC_FEATURE_FLAG_BLOG=$NEXT_PUBLIC_FEATURE_FLAG_BLOG" >> apps/website/.env
             - echo "SANITY_API_READ_TOKEN=$SANITY_API_READ_TOKEN" >> apps/website/.env
         build:
           commands:
