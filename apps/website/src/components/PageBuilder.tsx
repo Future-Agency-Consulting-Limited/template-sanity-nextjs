@@ -1,53 +1,65 @@
 "use client";
 
-import { client } from "@/sanity/lib/client";
-import { PAGE_QUERY_RESULT } from "@/sanity/types";
+import { useMemo } from "react";
 import { createDataAttribute } from "next-sanity";
 import { useOptimistic } from "next-sanity/hooks";
+
+import { client } from "@/sanity/lib/client";
+import { PAGE_QUERY_RESULT } from "@/sanity/types";
+import { urlFor } from "@/sanity/lib/image";
+
 import HubspotForm from "@/components/patterns/HubspotForm";
 import { ExampleSection } from "@/components/sections/ExampleSection";
+import { PageSection } from "@/components/primitives/page-section";
+import {
+  AccordionsSection,
+  AccordionsSectionProps,
+} from "@/components/sections/accordions-section";
+import {
+  CardCarousel,
+  CardCarouselProps,
+} from "@/components/sections/card-carousel";
+import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
 // import {
-//   AccordionsSection,
-//   AccordionsSectionProps,
-// } from "@/components/sections/accordions-section";
-// import {
-//   CardCarousel,
-//   CardCarouselProps,
-// } from "@/components/sections/card-carousel";
-// import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
-//import { ContactSection, ContactSectionProps } from "@/components/sections/contact-section";
-// import {
-//   CtaCardSection,
-//   CtaCardSectionProps,
-// } from "@/components/sections/cta-card-section";
-// import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
+//   ContactSection,
+//   ContactSectionProps,
+// } from "@/components/sections/contact-section";
+import {
+  CtaCardSection,
+  CtaCardSectionProps,
+} from "@/components/sections/cta-card-section";
+import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
 // import { HeroSimple, HeroSimpleProps } from "@/components/sections/hero-simple";
+import {
+  MarqueeLogos,
+  MarqueeLogosProps,
+} from "@/components/sections/marquee-logos";
 // import {
-//   MarqueeLogos,
-//   MarqueeLogosProps,
-// } from "@/components/sections/marquee-logos";
-// import { MarqueeText, MarqueeTextProps } from "@/components/sections/marquee-text";
-// import {
-//   NewsCarousel,
-//   NewsCarouselProps,
-// } from "@/components/sections/news-carousel";
+//   MarqueeText,
+//   MarqueeTextProps,
+// } from "@/components/sections/marquee-text";
+import {
+  NewsCarousel,
+  NewsCarouselProps,
+} from "@/components/sections/news-carousel";
 // import { NewsGrid, NewsGridProps } from "@/components/sections/news-grid";
-// import {
-//   TwoUpGroup,
-//   TwoUpGroupProps,
-// } from "@/components/sections/two-up-group";
+import {
+  TwoUpGroup,
+  TwoUpGroupProps,
+} from "@/components/sections/two-up-group";
 
-type PageBuilderProps = {
-  content: NonNullable<PAGE_QUERY_RESULT>["content"];
-  documentId: string;
-  documentType: string;
-};
-
+// Static Sanity config defined outside of render
 const { projectId, dataset, stega } = client.config();
 export const createDataAttributeConfig = {
   projectId,
   dataset,
   baseUrl: typeof stega.studioUrl === "string" ? stega.studioUrl : "",
+};
+
+type PageBuilderProps = {
+  content: NonNullable<PAGE_QUERY_RESULT>["content"];
+  documentId: string;
+  documentType: string;
 };
 
 export function PageBuilder({
@@ -67,171 +79,115 @@ export function PageBuilder({
     return state;
   });
 
+  // Memoize main container attribute string
+  const mainDataSanity = useMemo(
+    () =>
+      createDataAttribute({
+        ...createDataAttributeConfig,
+        id: documentId,
+        type: documentType,
+        path: "content",
+      }).toString(),
+    [documentId, documentType],
+  );
+
   if (!Array.isArray(blocks)) {
     return null;
   }
 
   return (
-    <main
-      data-sanity={createDataAttribute({
-        ...createDataAttributeConfig,
-        id: documentId,
-        type: documentType,
-        path: "content",
-      }).toString()}
-    >
+    <main data-sanity={mainDataSanity}>
       {blocks.map((block) => {
-        const DragHandle = ({ children }: { children: React.ReactNode }) => (
-          <div
-            data-sanity={createDataAttribute({
-              ...createDataAttributeConfig,
-              id: documentId,
-              type: documentType,
-              path: `content[_key=="${block._key}"]`,
-            }).toString()}
-          >
-            {children}
+        if (!block?._key || !block?._type) return null;
+
+        // Visual Drag Handle attribute computed per block
+        const dragHandleAttribute = createDataAttribute({
+          ...createDataAttributeConfig,
+          id: documentId,
+          type: documentType,
+          path: `content[_key=="${block._key}"]`,
+        }).toString();
+
+        const renderBlockContent = () => {
+          switch (block._type) {
+            case "exampleSection":
+              return <ExampleSection {...block} />;
+
+            case "hubspotForm":
+              return <HubspotForm formId={block.formId} />;
+
+            case "accordionsSection":
+              return (
+                <AccordionsSection {...(block as AccordionsSectionProps)} />
+              );
+
+            case "cardCarousel":
+              return <CardCarousel {...(block as CardCarouselProps)} />;
+
+            case "cardGrid":
+              return <CardGrid {...(block as CardGridProps)} />;
+
+            // case "contactSection":
+            //   return <ContactSection {...(block as ContactSectionProps)} />;
+
+            case "ctaCardSection":
+              return <CtaCardSection {...(block as CtaCardSectionProps)} />;
+
+            case "heroMedia":
+              return <HeroMedia {...(block as HeroMediaProps)} />;
+
+            // case "heroSimple":
+            //   return <HeroSimple {...(block as HeroSimpleProps)} />;
+
+            case "marqueeLogos":
+              return <MarqueeLogos {...(block as MarqueeLogosProps)} />;
+
+            // case "marqueeText":
+            //   return <MarqueeText {...(block as MarqueeTextProps)} />;
+
+            case "newsCarousel":
+              return <NewsCarousel {...(block as NewsCarouselProps)} />;
+
+            // case "newsGrid":
+            //   return <NewsGrid {...(block as NewsGridProps)} />;
+
+            case "twoUpGroup":
+              return <TwoUpGroup {...(block as TwoUpGroupProps)} />;
+
+            default:
+              null;
+          }
+        };
+
+        const blockContent = renderBlockContent();
+
+        if (!blockContent) {
+          return (
+            <div
+              key={block._key}
+              className="bg-pink-500 border-2 -mb-2 border-dashed border-yellow-300 text-white p-8 text-center text-lg font-bold"
+            >
+              Block not found: {(block as { _type: string })._type}
+            </div>
+          );
+        }
+
+        return (
+          <div key={block._key} data-sanity={dragHandleAttribute}>
+            <PageSection
+              backgroundImage={
+                block?.backgroundImage
+                  ? urlFor(block.backgroundImage).width(1920).height(1080).url()
+                  : undefined
+              }
+              background={block?.background}
+              size={block?.size}
+              fullWidth={block?.fullWidth}
+            >
+              {blockContent}
+            </PageSection>
           </div>
         );
-
-        switch (block._type) {
-          case "exampleSection":
-            return (
-              <DragHandle key={block._key}>
-                <ExampleSection {...block} />
-              </DragHandle>
-            );
-          case "hubspotForm":
-            return (
-              <DragHandle key={block._key}>
-                <HubspotForm formId={block.formId} />
-              </DragHandle>
-            );
-
-          /*
-          case "accordionsSection":
-            return (
-              <DragHandle key={block._key}>
-                <AccordionsSection {...(block as AccordionsSectionProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "cardCarousel":
-            return (
-              <DragHandle key={block._key}>
-                <CardCarousel {...(block as CardCarouselProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "cardGrid":
-            return (
-              <DragHandle key={block._key}>
-                <CardGrid {...(block as CardGridProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "contactSection":
-            return (
-              <DragHandle key={block._key}>
-                <ContactSection {...(block as ContactSectionProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "ctaCardSection":
-            return (
-              <DragHandle key={block._key}>
-                <CtaCardSection {...(block as CtaCardSectionProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "heroMedia":
-            return (
-              <DragHandle key={block._key}>
-                <HeroMedia {...(block as HeroMediaProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "heroSimple":
-            return (
-              <DragHandle key={block._key}>
-                <HeroSimple {...(block as HeroSimpleProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "marqueeLogos":
-            return (
-              <DragHandle key={block._key}>
-                <MarqueeLogos {...(block as MarqueeLogosProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "marqueeText":
-            return (
-              <DragHandle key={block._key}>
-                <MarqueeText {...(block as MarqueeTextProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "newsCarousel":
-            return (
-              <DragHandle key={block._key}>
-                <NewsCarousel {...(block as NewsCarouselProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "newsGrid":
-            return (
-              <DragHandle key={block._key}>
-                <NewsGrid {...(block as NewsGridProps)} />
-              </DragHandle>
-            );
-          */
-
-          /*
-          case "twoUpGroup":
-            return (
-              <DragHandle key={block._key}>
-                <TwoUpGroup {...(block as TwoUpGroupProps)} />
-              </DragHandle>
-            );
-          */
-
-          default: {
-            const fallbackBlock = block as {
-              _key: string;
-              _type: string;
-            };
-
-            return (
-              <div
-                className="bg-pink-500 border-8 border-dashed border-yellow-300 text-white p-8 text-center text-lg text-bold"
-                key={fallbackBlock._key}
-              >
-                Block not found: {fallbackBlock._type}
-              </div>
-            );
-          }
-        }
       })}
     </main>
   );
