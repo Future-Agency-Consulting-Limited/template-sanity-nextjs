@@ -11,42 +11,42 @@ import { urlFor } from "@/sanity/lib/image";
 import HubspotForm from "@/components/patterns/HubspotForm";
 import { ExampleSection } from "@/components/sections/ExampleSection";
 import { PageSection } from "@/components/primitives/page-section";
-import {
-  AccordionsSection,
-  AccordionsSectionProps,
-} from "@/components/sections/accordions-section";
-import {
-  CardCarousel,
-  CardCarouselProps,
-} from "@/components/sections/card-carousel";
-import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
+// import {
+//   AccordionsSection,
+//   AccordionsSectionProps,
+// } from "@/components/sections/accordions-section";
+// import {
+//   CardCarousel,
+//   CardCarouselProps,
+// } from "@/components/sections/card-carousel";
+// import { CardGrid, CardGridProps } from "@/components/sections/card-grid";
 // import {
 //   ContactSection,
 //   ContactSectionProps,
 // } from "@/components/sections/contact-section";
-import {
-  CtaCardSection,
-  CtaCardSectionProps,
-} from "@/components/sections/cta-card-section";
-import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
+// import {
+//   CtaCardSection,
+//   CtaCardSectionProps,
+// } from "@/components/sections/cta-card-section";
+// import { HeroMedia, HeroMediaProps } from "@/components/sections/hero-media";
 // import { HeroSimple, HeroSimpleProps } from "@/components/sections/hero-simple";
-import {
-  MarqueeLogos,
-  MarqueeLogosProps,
-} from "@/components/sections/marquee-logos";
+// import {
+//   MarqueeLogos,
+//   MarqueeLogosProps,
+// } from "@/components/sections/marquee-logos";
 // import {
 //   MarqueeText,
 //   MarqueeTextProps,
 // } from "@/components/sections/marquee-text";
-import {
-  NewsCarousel,
-  NewsCarouselProps,
-} from "@/components/sections/news-carousel";
+// import {
+//   NewsCarousel,
+//   NewsCarouselProps,
+// } from "@/components/sections/news-carousel";
 // import { NewsGrid, NewsGridProps } from "@/components/sections/news-grid";
-import {
-  TwoUpGroup,
-  TwoUpGroupProps,
-} from "@/components/sections/two-up-group";
+// import {
+//   TwoUpGroup,
+//   TwoUpGroupProps,
+// } from "@/components/sections/two-up-group";
 
 // Static Sanity config defined outside of render
 const { projectId, dataset, stega } = client.config();
@@ -116,43 +116,43 @@ export function PageBuilder({
             case "hubspotForm":
               return <HubspotForm formId={block.formId} />;
 
-            case "accordionsSection":
-              return (
-                <AccordionsSection {...(block as AccordionsSectionProps)} />
-              );
+            // case "accordionsSection":
+            //   return (
+            //     <AccordionsSection {...(block as AccordionsSectionProps)} />
+            //   );
 
-            case "cardCarousel":
-              return <CardCarousel {...(block as CardCarouselProps)} />;
+            // case "cardCarousel":
+            //   return <CardCarousel {...(block as CardCarouselProps)} />;
 
-            case "cardGrid":
-              return <CardGrid {...(block as CardGridProps)} />;
+            // case "cardGrid":
+            //   return <CardGrid {...(block as CardGridProps)} />;
 
             // case "contactSection":
             //   return <ContactSection {...(block as ContactSectionProps)} />;
 
-            case "ctaCardSection":
-              return <CtaCardSection {...(block as CtaCardSectionProps)} />;
+            // case "ctaCardSection":
+            //   return <CtaCardSection {...(block as CtaCardSectionProps)} />;
 
-            case "heroMedia":
-              return <HeroMedia {...(block as HeroMediaProps)} />;
+            // case "heroMedia":
+            //   return <HeroMedia {...(block as HeroMediaProps)} />;
 
             // case "heroSimple":
             //   return <HeroSimple {...(block as HeroSimpleProps)} />;
 
-            case "marqueeLogos":
-              return <MarqueeLogos {...(block as MarqueeLogosProps)} />;
+            // case "marqueeLogos":
+            //   return <MarqueeLogos {...(block as MarqueeLogosProps)} />;
 
             // case "marqueeText":
             //   return <MarqueeText {...(block as MarqueeTextProps)} />;
 
-            case "newsCarousel":
-              return <NewsCarousel {...(block as NewsCarouselProps)} />;
+            // case "newsCarousel":
+            //   return <NewsCarousel {...(block as NewsCarouselProps)} />;
 
             // case "newsGrid":
             //   return <NewsGrid {...(block as NewsGridProps)} />;
 
-            case "twoUpGroup":
-              return <TwoUpGroup {...(block as TwoUpGroupProps)} />;
+            // case "twoUpGroup":
+            //   return <TwoUpGroup {...(block as TwoUpGroupProps)} />;
 
             default:
               null;
