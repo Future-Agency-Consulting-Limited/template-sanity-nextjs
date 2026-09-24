@@ -71,6 +71,19 @@ export type Link = {
   url?: string;
 };
 
+export type GrowthbookExperiment = {
+  _type: "growthbookExperiment";
+  key: string;
+  name?: string;
+  active?: boolean;
+  variations: Array<{
+    key: number;
+    redirectPage?: PageReference | BlogReference;
+    _type: "variation";
+    _key: string;
+  }>;
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
@@ -109,6 +122,46 @@ export type BlogCategory = {
   _updatedAt: string;
   _rev: string;
   title: string;
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  siteName: string;
+  homePage: PageReference;
+  notFoundPage: PageReference;
+  googleTagManagerId?: string;
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  parentPage?: PageReference;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  content?: PageBuilder;
+  metaTitle: string;
+  metaDescription?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+  experiments?: Array<
+    {
+      _key: string;
+    } & GrowthbookExperiment
+  >;
 };
 
 export type AuthorReference = {
@@ -208,41 +261,6 @@ export type Slug = {
   _type: "slug";
   current: string;
   source?: string;
-};
-
-export type SiteSettings = {
-  _id: string;
-  _type: "siteSettings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  siteName: string;
-  homePage: PageReference;
-  notFoundPage: PageReference;
-  googleTagManagerId?: string;
-};
-
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  parentPage?: PageReference;
-  mainImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  content?: PageBuilder;
-  metaTitle: string;
-  metaDescription?: string;
-  noIndex?: boolean;
-  noFollow?: boolean;
 };
 
 export type MediaTag = {
@@ -358,10 +376,13 @@ export type AllSanitySchemaTypes =
   | PageReference
   | BlogReference
   | Link
+  | GrowthbookExperiment
   | SanityImageAssetReference
   | ExampleSection
   | HubspotForm
   | BlogCategory
+  | SiteSettings
+  | Page
   | AuthorReference
   | BlogCategoryReference
   | Blog
@@ -369,8 +390,6 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
-  | SiteSettings
-  | Page
   | MediaTag
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -558,6 +577,11 @@ export type HOME_PAGE_QUERY_RESULT =
         metaDescription?: string;
         noIndex?: boolean;
         noFollow?: boolean;
+        experiments?: Array<
+          {
+            _key: string;
+          } & GrowthbookExperiment
+        >;
       };
     }
   | null;
@@ -630,6 +654,11 @@ export type PAGE_QUERY_RESULT = {
   metaDescription?: string;
   noIndex?: boolean;
   noFollow?: boolean;
+  experiments?: Array<
+    {
+      _key: string;
+    } & GrowthbookExperiment
+  >;
 } | null;
 
 // Source: ../website/src/sanity/queries/pages.ts
@@ -694,6 +723,11 @@ export type NOT_FOUND_PAGE_QUERY_RESULT = {
   metaDescription?: string;
   noIndex?: boolean;
   noFollow?: boolean;
+  experiments?: Array<
+    {
+      _key: string;
+    } & GrowthbookExperiment
+  >;
 } | null;
 
 // Source: ../website/src/sanity/queries/siteSettings.ts

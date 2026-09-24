@@ -1,7 +1,8 @@
+import { experimentGroup } from "@/schemaParts/groups/experimentGroup";
+import { pageSettingsGroup } from "@/schemaParts/groups/pageSettingsGroup";
 import { seoGroup } from "@/schemaParts/groups/seoGroup";
 import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { pageSettingsGroup } from "@/schemaParts/groups/pageSettingsGroup";
 
 export const pageType = defineType({
   name: "page",
@@ -21,6 +22,10 @@ export const pageType = defineType({
       name: "seo",
       title: "SEO",
     },
+    {
+      name: "experiment",
+      title: "Experiment",
+    },
   ],
   fieldsets: [
     {
@@ -34,6 +39,14 @@ export const pageType = defineType({
     {
       name: "seo",
       title: "SEO",
+    },
+    {
+      name: "experiment",
+      title: "Experiment",
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     },
   ],
   fields: [
@@ -55,6 +68,7 @@ export const pageType = defineType({
       fieldset: "pageContent",
     }),
     ...seoGroup("seo", "seo"),
+    ...experimentGroup("experiment", "experiment"),
   ],
   preview: {
     select: {

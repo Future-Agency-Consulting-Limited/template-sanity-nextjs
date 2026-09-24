@@ -72,8 +72,9 @@ export const pageSettingsGroup = (
             }
 
             // Fetch the next ancestor's parentPage ref
-            const result = await client.fetch<{ parentRef: string | null }>(
-              `
+            const result: { parentRef: string | null } | null =
+              await client.fetch<{ parentRef: string | null }>(
+                `
               *[
                 _type == "${documentType}" &&
                 _id in [$id, "drafts." + $id]
@@ -81,8 +82,8 @@ export const pageSettingsGroup = (
                 "parentRef": parentPage._ref
               }
               `,
-              { id: ancestorId },
-            );
+                { id: ancestorId },
+              );
 
             ancestorId = result?.parentRef?.replace(/^drafts\./, "") ?? null;
           }
