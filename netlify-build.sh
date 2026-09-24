@@ -41,7 +41,7 @@ echo "[[🏗️ Step 4]] build"
 pnpm run build
 
 echo "[[🚀 Step 5]] deploy sanity studio backend"
-if [ "$BRANCH" = "main" ]; then
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "feature/2026-09-24-netlify" ]; then
   echo "On $BRANCH branch, deploying Sanity studio backend"
   (cd apps/studio && pnpm dlx sanity@latest deploy && cd ../../)
 else
