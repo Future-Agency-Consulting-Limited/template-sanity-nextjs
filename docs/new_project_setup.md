@@ -66,6 +66,29 @@ Choose from the following options for hosting the frontend and follow the releva
 
 If you need to host the frontend on a different platform, you will need to investigate this yourself.
 
+### Netlify
+
+1. [ ] Create a Netlify account for the client if one hasn't already been created (or if the client and isn't granting
+       access to their own Netlify account)
+       and save the login details in our password manager
+
+2. [ ] Create a Netlify project. Connect it to the GitHub repo for the project and use the main branch.
+
+3. [ ] Add environment variables to the Netlify project. You need to add values from both:
+
+- `apps/studio/.env`
+- `apps/web/.env`
+
+4. [ ] Run a build and deploy to verify the studio and web apps are working
+
+5. [ ] Check the build logs or Sanity studio to obtain the App Id and add it to Netlify's environment variables
+
+6. [ ] Create a custom subdomain with your Domain Name Registrar for the site, e.g. my-project.production.fgdev.site
+
+7. [ ] Update Netlify to use the custom domain
+
+8. [ ] Enable Basic Auth and store the credentials in our password manager
+
 ### AWS Amplify
 
 1. [ ] Create an AWS account for the client if one hasn't already been created (or if the client and isn't granting

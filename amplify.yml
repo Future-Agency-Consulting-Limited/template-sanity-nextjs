@@ -4,28 +4,52 @@ applications:
       phases:
         preBuild:
           commands:
+            # Install pnpm and dependencies
             - npm install -g pnpm
             - pnpm install --frozen-lockfile
 
-            - echo "SANITY_STUDIO_PROJECT_ID=$SANITY_STUDIO_PROJECT_ID" >> apps/studio/.env.local
-            - echo "SANITY_STUDIO_APP_ID=$SANITY_STUDIO_APP_ID" >> apps/studio/.env.local
-            - echo "SANITY_STUDIO_DATASET=$SANITY_STUDIO_DATASET" >> apps/studio/.env.local
-            - echo "SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN" >> apps/studio/.env.local
-            - echo "SANITY_STUDIO_FRONTEND_SITE_URL=$SANITY_STUDIO_FRONTEND_SITE_URL" >> apps/studio/.env.local
-            - echo "SANITY_STUDIO_FEATURE_FLAG_BLOG=$SANITY_STUDIO_FEATURE_FLAG_BLOG" >> apps/studio/.env.local
+            # Sanity studio .env
+            - echo "SANITY_STUDIO_PROJECT_ID=$SANITY_STUDIO_PROJECT_ID" >> apps/studio/.env
+            - echo "SANITY_STUDIO_APP_ID=$SANITY_STUDIO_APP_ID" >> apps/studio/.env
+            - echo "SANITY_STUDIO_DATASET=$SANITY_STUDIO_DATASET" >> apps/studio/.env
+            - echo "SANITY_STUDIO_SANITY_API_VERSION=$SANITY_STUDIO_SANITY_API_VERSION" >> apps/studio/.env
+            - echo "SANITY_STUDIO_FRONTEND_SITE_URL=$SANITY_STUDIO_FRONTEND_SITE_URL" >> apps/studio/.env
+            - echo "SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN" >> apps/studio/.env
+            - echo "SANITY_STUDIO_FEATURE_FLAG_BLOG=$SANITY_STUDIO_FEATURE_FLAG_BLOG" >> apps/studio/.env
 
-            - echo "NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID" >> apps/website/.env
-            - echo "NEXT_PUBLIC_SANITY_APP_ID=$NEXT_PUBLIC_SANITY_APP_ID" >> apps/website/.env
-            - echo "NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET" >> apps/website/.env
+            # Next.js .env
             - echo "NEXT_PUBLIC_SANITY_API_VERSION=$NEXT_PUBLIC_SANITY_API_VERSION" >> apps/website/.env
+            - echo "NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET" >> apps/website/.env
+            - echo "NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID" >> apps/website/.env
             - echo "NEXT_PUBLIC_SANITY_STUDIO_URL=$NEXT_PUBLIC_SANITY_STUDIO_URL" >> apps/website/.env
+            - echo "NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL" >> apps/website/.env
             - echo "NEXT_PUBLIC_REVALIDATE=$NEXT_PUBLIC_REVALIDATE" >> apps/website/.env
-            - echo "NEXT_PUBLIC_FEATURE_FLAG_BLOG=$NEXT_PUBLIC_FEATURE_FLAG_BLOG" >> apps/website/.env
+            - echo "NEXT_PUBLIC_ALLOW_CRAWLER_BOTS=$NEXT_PUBLIC_ALLOW_CRAWLER_BOTS" >> apps/website/.env
+            - echo "NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION" >> apps/website/.env
+            - echo "NEXT_PUBLIC_HUBSPOT_PORTAL_ID=$NEXT_PUBLIC_HUBSPOT_PORTAL_ID" >> apps/website/.env
             - echo "SANITY_API_READ_TOKEN=$SANITY_API_READ_TOKEN" >> apps/website/.env
+            - echo "NEXT_PUBLIC_FEATURE_FLAG_BLOG=$NEXT_PUBLIC_FEATURE_FLAG_BLOG" >> apps/website/.env
+
         build:
           commands:
+            - echo "build directory is " && pwd
             - rm -rf apps/website/.next
-            - pnpm run deploy:amplify
+            - echo "[[🦋 Step 1]] check formatting"
+            - pnpm run format-check
+            - echo "[[🧹 Step 2]] check linting"
+            - pnpm run lint-check
+            - echo "[[🏗️ Step 3]] build"
+            - pnpm run build
+            - echo "[[🚀 Step 4]] deploy sanity studio backend"
+            - |
+              if [ "$AWS_BRANCH" = "main" ]; then
+                echo "On $AWS_BRANCH branch, deploying Sanity studio backend"
+                cd ./apps/studio
+                pnpm dlx sanity@latest deploy
+                cd ../../
+              else
+                echo "Skipping Sanity deploy — not on main branch (current: $AWS_BRANCH)"
+              fi
       artifacts:
         baseDirectory: apps/website/.next
         files:
@@ -36,3 +60,9 @@ applications:
           - node_modules/**/*
       buildPath: /
     appRoot: apps/website
+    customHeaders:
+#      - pattern: "**/*"
+#        headers:
+#          # temporarily disable cloudfront caching static assets (defaults to 1 year)
+#          - key: "Cache-Control"
+#            value: "s-maxage=1, must-revalidate"
