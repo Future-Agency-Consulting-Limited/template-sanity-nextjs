@@ -2,7 +2,6 @@
 set -euo pipefail
 
 echo "[[📦 Step 0]] install dependencies"
-npm install -g pnpm
 pnpm install --frozen-lockfile
 
 echo "[[📝 Step 1]] write env files"
@@ -44,7 +43,7 @@ pnpm run build
 echo "[[🚀 Step 5]] deploy sanity studio backend"
 if [ "$BRANCH" = "main" ]; then
   echo "On $BRANCH branch, deploying Sanity studio backend"
-  (cd apps/studio && pnpm dlx sanity@latest deploy)
+  (cd apps/studio && pnpm dlx sanity@latest deploy && cd ../../)
 else
   echo "Skipping Sanity deploy — not on main branch (current: $BRANCH)"
 fi
