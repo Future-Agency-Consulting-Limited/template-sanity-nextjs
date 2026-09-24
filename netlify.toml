@@ -1,48 +1,7 @@
-
 [build]
 base = ""
 publish = "apps/website/.next"
-command = """
-    npm install -g pnpm && \
-    pnpm install --frozen-lockfile && \
-    echo "SANITY_STUDIO_PROJECT_ID=$SANITY_STUDIO_PROJECT_ID" >> apps/studio/.env && \
-    echo "SANITY_STUDIO_APP_ID=$SANITY_STUDIO_APP_ID" >> apps/studio/.env && \
-    echo "SANITY_STUDIO_DATASET=$SANITY_STUDIO_DATASET" >> apps/studio/.env && \
-    echo "SANITY_STUDIO_SANITY_API_VERSION=$SANITY_STUDIO_SANITY_API_VERSION" >> apps/studio/.env && \
-    echo "SANITY_STUDIO_FRONTEND_SITE_URL=$SANITY_STUDIO_FRONTEND_SITE_URL" >> apps/studio/.env && \
-    echo "SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN" >> apps/studio/.env && \
-    echo "SANITY_STUDIO_FEATURE_FLAG_BLOG=$SANITY_STUDIO_FEATURE_FLAG_BLOG" >> apps/studio/.env && \
-    echo "NEXT_PUBLIC_SANITY_API_VERSION=$NEXT_PUBLIC_SANITY_API_VERSION" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_SANITY_STUDIO_URL=$NEXT_PUBLIC_SANITY_STUDIO_URL" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_REVALIDATE=$NEXT_PUBLIC_REVALIDATE" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_ALLOW_CRAWLER_BOTS=$NEXT_PUBLIC_ALLOW_CRAWLER_BOTS" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=$NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_HUBSPOT_PORTAL_ID=$NEXT_PUBLIC_HUBSPOT_PORTAL_ID" >> apps/website/.env && \
-    echo "SANITY_API_READ_TOKEN=$SANITY_API_READ_TOKEN" >> apps/website/.env && \
-    echo "NEXT_PUBLIC_FEATURE_FLAG_BLOG=$NEXT_PUBLIC_FEATURE_FLAG_BLOG" >> apps/website/.env && \
-    rm -rf apps/website/.next && \
-    echo "[[🦋 Step 1]] check formatting" && \
-    pnpm run format-check && \
-    echo "[[🧹 Step 2]] check linting" && \
-    pnpm run lint-check && \
-    echo "[[🏗️ Step 3]] build" && \
-    pnpm run build && \
-    echo "[[🚀 Step 4]] deploy sanity studio backend" && \
-    if [ "$BRANCH" = "main" ]; then \
-      echo "On $BRANCH branch, deploying Sanity studio backend"; \
-      cd ./apps/studio; \
-      pnpm dlx sanity@latest deploy; \
-      cd ../../; \
-    else \
-      echo "Skipping Sanity deploy — not on main branch (current: $BRANCH)"; \
-    fi
-  """
-
-[build.environment]
-NODE_VERSION = "22.22.0"
+command = "bash netlify-build.sh"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"
