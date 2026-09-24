@@ -6,11 +6,9 @@ import { useOptimistic } from "next-sanity/hooks";
 
 import { client } from "@/sanity/lib/client";
 import { PAGE_QUERY_RESULT } from "@/sanity/types";
-import { urlFor } from "@/sanity/lib/image";
 
 import HubspotForm from "@/components/patterns/HubspotForm";
 import { ExampleSection } from "@/components/sections/ExampleSection";
-import { PageSection } from "@/components/primitives/page-section";
 // import {
 //   AccordionsSection,
 //   AccordionsSectionProps,
@@ -174,18 +172,7 @@ export function PageBuilder({
 
         return (
           <div key={block._key} data-sanity={dragHandleAttribute}>
-            <PageSection
-              backgroundImage={
-                block?.backgroundImage
-                  ? urlFor(block.backgroundImage).width(1920).height(1080).url()
-                  : undefined
-              }
-              background={block?.background}
-              size={block?.size}
-              fullWidth={block?.fullWidth}
-            >
-              {blockContent}
-            </PageSection>
+            {blockContent}
           </div>
         );
       })}
