@@ -23,6 +23,19 @@ importers:
         specifier: ^3.8.3
         version: 3.8.3
 
+  apps/sanity-functions:
+    dependencies:
+      '@sanity/functions':
+        specifier: ^1.8.0
+        version: 1.8.0(@aws-lite/client@0.23.6)(@aws-lite/dynamodb@0.3.9)(@aws-lite/lambda@0.1.5)(@aws-lite/sns@0.0.8)(@aws-lite/sqs@0.2.4)
+    devDependencies:
+      '@sanity/blueprints':
+        specifier: 0.27.0
+        version: 0.27.0
+      node:
+        specifier: runtime:^24.21.0
+        version: runtime:24.21.0
+
   apps/studio:
     dependencies:
       '@sanity/cli':
@@ -255,8 +268,24 @@ packages:
     resolution: {integrity: sha512-37oDevQKNCv5GpZ+4J7awO7B4BfHMisek6Z3ofEE9XOmxMrRrLnBBH8/Qf/ByR/qpygy293WW4ekVNiR1MUu+Q==}
     engines: {node: '>=16'}
 
+  '@aws-lite/dynamodb@0.3.9':
+    resolution: {integrity: sha512-jrMAWwxoAMVJ3z0/mI/GzPM5AfGmH+xzTpNIbjg3+2WdYJRqvIf8025XJdCDtS9/4x8zogdchEp3ZelXnwYyqw==}
+    engines: {node: '>=16'}
+
+  '@aws-lite/lambda@0.1.5':
+    resolution: {integrity: sha512-Sa6AxBQwzqGsUr2ifxcpAvFlTkoDwIQIYgcEFVQ+0qKeV9ci+ggsOOSRGBxrGEdRsnQxUsQ2x0ES/29c8crzQw==}
+    engines: {node: '>=16'}
+
   '@aws-lite/s3@0.1.22':
     resolution: {integrity: sha512-9OL95fTvHV80JvFTxLx8hhWQ6DgwHUts02KpXITA8syCDnYgua2rNcpwQ5b6GZzpL7yNXU0dud/Y6edThbffig==}
+    engines: {node: '>=16'}
+
+  '@aws-lite/sns@0.0.8':
+    resolution: {integrity: sha512-MIzHe66kLNyzPFY/DX30uN7DlVQsnBiHPYbq/7syNWuoYSG8bkWuUX2CVIuSL7Ji5jaLpQ4lf8/VQ+SiAeoIZA==}
+    engines: {node: '>=16'}
+
+  '@aws-lite/sqs@0.2.4':
+    resolution: {integrity: sha512-a1M3HDdkNE/xJfASlfisAaZ8XF6FpvoJbJsH/gr6pogEFWgNQyvmPVNRElnDY7JW3ee82sEOkMukYRdAbjytNQ==}
     engines: {node: '>=16'}
 
   '@aws-lite/ssm@0.2.5':
@@ -2384,6 +2413,15 @@ packages:
     resolution: {integrity: sha512-mWgAMVq9VaKUrEs7FmBbYFRBa5YvNb4FUjHOh2Ie05Qzhqlv90UX8o4fWMZPANhoebu36zridWs0B0tgGi+2Tw==}
     engines: {node: '>=20'}
 
+  '@sanity/blueprints@0.27.0':
+    resolution: {integrity: sha512-WIvZ9IfuDV2AArsLAIqAYGiN0IGJ+Mux2Jet3wSib3rZRrAz7L85lBLPS4ndDIzn7uarHqSKbwFZ7YPp35Ksgw==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      vite: '>= 8'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+
   '@sanity/cli-build@0.2.2':
     resolution: {integrity: sha512-/q3vsxUOMCQAc33FlelwozHDMUvrio9bb9nhOempjviXL2VtA1g633wE/d4Np3aH1cjk9gsBZ+cXf8uLrp2IlQ==}
     engines: {node: '>=20.19.1 <22 || >=22.12'}
@@ -2495,6 +2533,16 @@ packages:
     resolution: {integrity: sha512-qu/I3EZIjj36lBQ2FLhBJSPqYZF2t2UO7/jtfYJQ0Qi5LBqVrtlVFOZ/niNg8gu4FUFoOuKTOxXY+V76xw/19Q==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     hasBin: true
+
+  '@sanity/functions@1.8.0':
+    resolution: {integrity: sha512-FDoGFckxc9yEZZYS6srb1NmR0hT+VK+V++bOX/SgN5T/VVtlp6dstI1oX7A/pDZ8Ktx91sCih8D0bHfd136niw==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      '@aws-lite/client': ^0.23.6
+      '@aws-lite/dynamodb': ^0.3.9
+      '@aws-lite/lambda': ^0.1.5
+      '@aws-lite/sns': ^0.0.8
+      '@aws-lite/sqs': ^0.2.4
 
   '@sanity/generate-help-url@4.0.0':
     resolution: {integrity: sha512-Ooa4xkLT3TLaX+mw/13fq3IeGdnAkx4rbpVASvRVixzBBvvcL6jPqj50fjlCd+EhgB5GRXBCNNAy/hWXwjZEUA==}
@@ -5340,6 +5388,105 @@ packages:
   node-releases@2.0.44:
     resolution: {integrity: sha512-5WUyunoPMsvvEhS8AxHtRzP+oA8UCkJ7YRxatWKjngndhDGLiqEVAQKWjFAiAiuL8zMRGzGSJxFnLetoa43qGQ==}
 
+  node@runtime:24.21.0:
+    resolution:
+      type: variations
+      variants:
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-rseyRkr7mfB4wZywbSAdVDvTsxHLoHEoK84bF8l+WLs=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-aix-ppc64.tar.gz
+          targets:
+            - cpu: ppc64
+              os: aix
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-vtfupTJeEQjzLOUijd1qXw8IpJnuQqp0Qq6lg3AvYFc=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-darwin-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-FGLLOzBGuBXPjqQ209pFDsGp8R2sflpGsK2lMF1+gJc=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-darwin-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: darwin
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-ckKCw7Q67JmKqVJzgEZbRdIp4CG1gDX19PYwleq/5dU=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-linux-arm64.tar.gz
+          targets:
+            - cpu: arm64
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-UcXVMGbukpILYXg7A7Buy5nzZhFg97Fcp36EdBFaZ7w=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-linux-ppc64le.tar.gz
+          targets:
+            - cpu: ppc64le
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-Xy+jdCLgx13jXBaG/lHXgyTywqj+LMI5pB2cAAop2Tg=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-linux-s390x.tar.gz
+          targets:
+            - cpu: s390x
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-PWNAX8ZaDS0pdsHwvC/Se7C9ByEkaecFqsPwOuWrTJw=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-linux-x64-musl.tar.gz
+          targets:
+            - cpu: x64-musl
+              os: linux
+        - resolution:
+            archive: tarball
+            bin: bin/node
+            integrity: sha256-bh24fvWLiBnl1UAu/xU2SRsY7djre+5e94l4duiNxf8=
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-linux-x64.tar.gz
+          targets:
+            - cpu: x64
+              os: linux
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-h3mxveHTn41CDjtXqmV7OYka9DTT3kSpGQRM7AZ4WSE=
+            prefix: node-v24.21.0-win-arm64
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-win-arm64.zip
+          targets:
+            - cpu: arm64
+              os: win32
+        - resolution:
+            archive: zip
+            bin: node.exe
+            integrity: sha256-FY92hbRN5R9sDfHRU1JsvNPhvHOajfxgdyHO913p5UE=
+            prefix: node-v24.21.0-win-x64
+            type: binary
+            url: https://nodejs.org/download/release/v24.21.0/node-v24.21.0-win-x64.zip
+          targets:
+            - cpu: x64
+              os: win32
+    version: 24.21.0
+    hasBin: true
+
   normalize-package-data@8.0.0:
     resolution: {integrity: sha512-RWk+PI433eESQ7ounYxIp67CYuVsS1uYSonX3kA6ps/3LWfjVQa/ptEg6Y3T6uAMq1mWpX9PQ+qx+QaHpsc7gQ==}
     engines: {node: ^20.17.0 || >=22.9.0}
@@ -5468,6 +5615,9 @@ packages:
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
+
+  parse-duration@2.1.9:
+    resolution: {integrity: sha512-q73c2djLx0fPIEcnW4Eb9LBZnH+NunMUzKh3/UwHyMz8LKxd4hF0OVq3nap8x0AevX1QEyCojF7QO/vAb6PFiA==}
 
   parse-entities@4.0.2:
     resolution: {integrity: sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw==}
@@ -6972,7 +7122,15 @@ snapshots:
     dependencies:
       aws4: 1.13.2
 
+  '@aws-lite/dynamodb@0.3.9': {}
+
+  '@aws-lite/lambda@0.1.5': {}
+
   '@aws-lite/s3@0.1.22': {}
+
+  '@aws-lite/sns@0.0.8': {}
+
+  '@aws-lite/sqs@0.2.4': {}
 
   '@aws-lite/ssm@0.2.5': {}
 
@@ -9189,6 +9347,10 @@ snapshots:
 
   '@sanity/blueprints@0.20.2': {}
 
+  '@sanity/blueprints@0.27.0':
+    dependencies:
+      parse-duration: 2.1.9
+
   '@sanity/cli-build@0.2.2(@noble/hashes@2.2.0)(@types/node@20.19.41)(@types/react@19.2.15)(babel-plugin-react-compiler@1.0.0)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.22.4)(yaml@2.9.0)':
     dependencies:
       '@oclif/core': 4.11.11
@@ -9589,6 +9751,14 @@ snapshots:
       - bare-buffer
       - react-native-b4a
       - supports-color
+
+  '@sanity/functions@1.8.0(@aws-lite/client@0.23.6)(@aws-lite/dynamodb@0.3.9)(@aws-lite/lambda@0.1.5)(@aws-lite/sns@0.0.8)(@aws-lite/sqs@0.2.4)':
+    dependencies:
+      '@aws-lite/client': 0.23.6
+      '@aws-lite/dynamodb': 0.3.9
+      '@aws-lite/lambda': 0.1.5
+      '@aws-lite/sns': 0.0.8
+      '@aws-lite/sqs': 0.2.4
 
   '@sanity/generate-help-url@4.0.0': {}
 
@@ -11534,7 +11704,7 @@ snapshots:
       '@next/eslint-plugin-next': 16.1.6
       eslint: 9.39.4(jiti@2.7.0)
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.4(jiti@2.7.0))
       eslint-plugin-react: 7.37.5(eslint@9.39.4(jiti@2.7.0))
@@ -11557,7 +11727,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0)):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3(supports-color@8.1.1)
@@ -11582,13 +11752,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0)):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       eslint: 9.39.4(jiti@2.7.0)
       eslint-import-resolver-node: 0.3.10
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.4(jiti@2.7.0))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))
     transitivePeerDependencies:
       - supports-color
 
@@ -11632,7 +11802,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.4(jiti@2.7.0)
       eslint-import-resolver-node: 0.3.10
-      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.4(jiti@2.7.0))
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.10)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0)))(eslint@9.39.4(jiti@2.7.0))
       hasown: 2.0.3
       is-core-module: 2.16.2
       is-glob: 4.0.3
@@ -13010,6 +13180,8 @@ snapshots:
 
   node-releases@2.0.44: {}
 
+  node@runtime:24.21.0: {}
+
   normalize-package-data@8.0.0:
     dependencies:
       hosted-git-info: 9.0.3
@@ -13158,6 +13330,8 @@ snapshots:
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
+
+  parse-duration@2.1.9: {}
 
   parse-entities@4.0.2:
     dependencies:

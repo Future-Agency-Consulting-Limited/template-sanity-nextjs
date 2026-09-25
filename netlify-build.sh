@@ -43,8 +43,9 @@ pnpm run build
 echo "[[🚀 Step 5]] deploy sanity studio backend"
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "feature/2026-09-24-netlify" ]; then
   echo "On $BRANCH branch, deploying Sanity studio backend"
-  echo "SANITY_STUDIO_FRONTEND_SITE_URL: ${SANITY_STUDIO_FRONTEND_SITE_URL}"
   (cd apps/studio && pnpm dlx sanity@latest deploy && cd ../../)
+
+  # todo pnpm dlx sanity blueprints deploy
 else
   echo "Skipping Sanity deploy — not on main branch (current: $BRANCH)"
 fi
