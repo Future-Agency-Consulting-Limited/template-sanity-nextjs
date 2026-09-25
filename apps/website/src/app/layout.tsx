@@ -43,7 +43,13 @@ export default async function RootLayout({
           {/*<Header />*/}
           <main className="bg-white min-h-screen">
             {children}
-            <SanityLive />
+            <SanityLive
+              waitFor={
+                env.NEXT_PUBLIC_SANITY_LIVE_CACHE_INVALIDATE === true
+                  ? "function"
+                  : undefined
+              }
+            />
             {(await draftMode()).isEnabled && (
               <>
                 <DisableDraftMode />
