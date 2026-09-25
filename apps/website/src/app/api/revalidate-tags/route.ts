@@ -31,6 +31,10 @@ export async function POST(request: Request) {
   for (const tag of tags) {
     // A 'max' expiration (instead of {expire: 0}) ensures the ISR cache is updated in the background, instead of blocking the `router.refresh()` render.
     // This works since `router.refresh()` is called multiple times in a sequence to ensure distributed eventual consistency.
+    //
+    // Unfortunately, 'max' or {expire: 0} is not supported in @netlify/plugin-nextjs@5.16.0
+    // As a workaround we're pinning @netlify/plugin-nextjs@5.15.11
+    // see: https://github.com/opennextjs/opennextjs-netlify/issues/3536
     revalidateTag(tag, "max");
   }
 

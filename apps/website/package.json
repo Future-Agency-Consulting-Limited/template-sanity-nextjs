@@ -22,7 +22,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.16.0",
+    "@netlify/plugin-nextjs": "5.15.11",
     "@portabletext/types": "^4.0.2",
     "@sanity/client": "^7.23.0",
     "@tailwindcss/postcss": "^4.3.0",
