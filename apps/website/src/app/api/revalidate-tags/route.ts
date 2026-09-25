@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     // Unfortunately, 'max' or {expire: 0} is not supported in @netlify/plugin-nextjs@5.16.0
     // As a workaround we're pinning @netlify/plugin-nextjs@5.15.11
     // see: https://github.com/opennextjs/opennextjs-netlify/issues/3536
-    revalidateTag(tag, "max");
+    revalidateTag(tag, { expire: 0 });
   }
 
   return Response.json({ revalidated: tags });
